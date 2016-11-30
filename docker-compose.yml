@@ -1,0 +1,17 @@
+db:
+  image: imhotek/mariadb:0.2.0
+  environment:
+    - MYSQL_USER=super
+    - MYSQL_PASS=${MYSQL_PASS}
+    - DB_NAME=opentickets
+  expose:
+    - 3306
+
+webapp:
+  image: imhotek/webapp:0.5.0
+  ports:
+    - 80
+  links:
+    - db:db
+  volumes:
+    - ./:/data

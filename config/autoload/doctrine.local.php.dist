@@ -1,0 +1,21 @@
+<?php
+$data = file_get_contents("/etc/container_environment.json");
+$data = json_decode($data);
+
+return array(
+    'doctrine' => array(
+        'connection' => array(
+            // default connection name
+            'orm_default' => array(
+                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
+                'params' => array(
+                    'host'     => 'db',
+                    'port'     => '3306',
+                    'user'     => $data->DB_ENV_MYSQL_USER,
+                    'password' => $data->DB_ENV_MYSQL_PASS,
+                    'dbname'   => $data->DB_ENV_DB_NAME,
+                )
+            )
+        )
+    ),
+);
