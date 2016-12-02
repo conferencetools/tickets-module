@@ -59,7 +59,7 @@ class Ticket extends AbstractMethodNameMessageHandler
             throw new \RuntimeException('Must specify at least 1 ticket for purchase');
         }
 
-        $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), $tickets);
+        $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), ...$tickets);
 
         $this->repository->save($purchase);
     }
@@ -67,7 +67,7 @@ class Ticket extends AbstractMethodNameMessageHandler
     protected function handleMakePayment(MakePayment $command)
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
-        $purchase->markAsPaid();
+        $purchase->markAsPaid($command->getPurchaserEmail());
         $this->repository->save($purchase);
     }
 
@@ -88,7 +88,7 @@ class Ticket extends AbstractMethodNameMessageHandler
     protected function handleCompletePurchase(CompletePurchase $command)
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
-        $purchase->completePurchase($command->getDelegateInformation());
+        $purchase->completePurchase($command->getPurchaseEmail(), ...$command->getDelegateInformation());
         $this->repository->save($purchase);
     }
     

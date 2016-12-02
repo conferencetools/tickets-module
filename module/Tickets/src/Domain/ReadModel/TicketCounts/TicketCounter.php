@@ -70,7 +70,7 @@ class TicketCounter
         $this->remaining -= $number;
     }
 
-    public function ticketsRelease(int $number)
+    public function ticketsReleased(int $number)
     {
         $this->remaining += $number;
     }

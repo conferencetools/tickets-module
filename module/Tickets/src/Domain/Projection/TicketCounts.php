@@ -19,14 +19,19 @@ class TicketCounts extends AbstractMethodNameMessageHandler
 
     protected function handleTicketReserved(TicketReserved $event)
     {
-        $counter = $this->em->getRepository(TicketCounter::class)->findOneBy(['ticketType' => $event->getTicketType()]);
+        $counter = $this->em->getRepository(TicketCounter::class)->findOneBy(
+            ['ticketType.identifier' => $event->getTicketType()->getIdentifier()]
+        );
         $counter->ticketsReserved(1);
         $this->em->flush();
     }
     
     protected function handleTicketReleased(TicketReleased $event)
     {
-        $counter = $this->em->getRepository(TicketCounter::class)->findOneBy(['ticketType' => $event->getTicketType()]);
+        $counter = $this->em->getRepository(TicketCounter::class)->findOneBy(
+            ['ticketType.identifier' => $event->getTicketType()->getIdentifier()]
+        );
+
         $counter->ticketsReleased(1);
         $this->em->flush();
     }

@@ -7,7 +7,8 @@ return array(
         'DoctrineORMModule',
         'Carnage\Cqrs',
         'Carnage\Cqorms',
-        'ZfcRbac',
+        //'ZfcRbac',
+        'ZfrStripeModule',
         'OpenTickets\Tickets',
     ),
 

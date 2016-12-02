@@ -66,6 +66,18 @@ class Delegate
         return new static('', '', '', '', '', '', '');
     }
 
+    public static function fromArray(array $data)
+    {
+        return new static(
+            $data['firstname'],
+            $data['lastname'],
+            $data['email'],
+            $data['company'],
+            $data['twitter'],
+            $data['requirements']
+        );
+    }
+
     /**
      * @return string
      */

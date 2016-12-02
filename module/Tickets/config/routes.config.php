@@ -2,18 +2,36 @@
 
 return [
     'root' => [
-        'type'    => 'Literal',
+        'type'    => 'Segment',
         'options' => [
             'route'    => '/',
             'defaults' => [
-                '__NAMESPACE__' => 'OpenTickets\Tickets\Controller',
-                'controller'    => 'Index',
+                'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
                 'action'        => 'index',
             ],
         ],
         'may_terminate' => true,
         'child_routes' => [
-
+            'select-tickets' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => 'select-tickets',
+                    'defaults' => [
+                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'action'        => 'select-tickets',
+                    ],
+                ],
+            ],
+            'purchase' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => 'purchase/:purchaseId',
+                    'defaults' => [
+                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'action'        => 'purchase',
+                    ],
+                ],
+            ]
         ],
     ],
 ];

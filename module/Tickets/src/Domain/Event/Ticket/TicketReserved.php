@@ -4,13 +4,24 @@ namespace OpenTickets\Tickets\Domain\Event\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
 use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use JMS\Serializer\Annotation as Jms;
 
 class TicketReserved implements EventInterface
 {
+    /**
+     * @Jms\Type("string")
+     * @var string
+     */
     private $id;
 
-    private $ticketType;
     /**
+     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\TicketType")
+     * @var TicketType
+     */
+    private $ticketType;
+
+    /**
+     * @Jms\Type("string")
      * @var string
      */
     private $purchaseId;

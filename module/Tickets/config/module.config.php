@@ -10,12 +10,16 @@ return [
         'default' => require __DIR__ . '/navigation.config.php'
     ],
     'service_manager' => [
+        'abstract_factories' => [
+            \Zend\Log\LoggerAbstractServiceFactory::class
+        ]
     ],
     'command_handlers' => [
         'factories' => [
             \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class => \OpenTickets\Tickets\Service\Factory\CommandHandler\Ticket::class
         ],
     ],
+    'process_managers' => [],
     'command_subscriptions' => [
         \OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
         \OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
@@ -47,10 +51,26 @@ return [
     ],
     'controllers' => [
         'factories' => [
-            
+            \OpenTickets\Tickets\Controller\TicketController::class => \OpenTickets\Tickets\Service\Factory\ControllerFactory::class
         ],
     ],
+    'view_helpers' => [
+        'invokables' => [
+            'flashMessenger' => \OpenTickets\Tickets\View\Helper\FlashMessenger::class
+        ]
+    ],
     'view_manager' => [
+        'display_not_found_reason' => true,
+        'display_exceptions'       => true,
+        'doctype'                  => 'HTML5',
+        'not_found_template'       => 'error/404',
+        'exception_template'       => 'error/index',
+        'template_map' => [
+            'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
+            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
+            'error/404'               => __DIR__ . '/../view/error/404.phtml',
+            'error/index'             => __DIR__ . '/../view/error/index.phtml',
+        ],
         'controller_map' => [
             'OpenTickets\Tickets\Controller' => 'tickets',
         ],
@@ -74,10 +94,49 @@ return [
             ],
             'orm_default' => [
                 'drivers' => [
-                    'OpenTickets\Tickets\Domain\ReadModel' => 'opentickets_tickets_read_orm_driver'
+                    'OpenTickets\Tickets\Domain\ReadModel' => 'opentickets_tickets_read_orm_driver',
+                    'OpenTickets\Tickets\Domain\ValueObject' => 'opentickets_tickets_read_orm_driver'
                 ]
             ],
 
         ],
+    ],
+    'log' => [
+        'Log\\Application' => [
+            'writers' => [
+                [
+                    'name' => 'syslog',
+                ],
+            ],
+        ],
+        'Log\\CommandBusLog'  => [
+            'writers' => [
+                [
+                    'name' => 'syslog',
+                ],
+            ],
+        ],
+        'Log\\EventManagerLog'  => [
+            'writers' => [
+                [
+                    'name' => 'syslog',
+                ],
+            ],
+        ],
+    ],
+
+    'message_handlers' => [
+        'CommandHandlerManager' => [
+            'logger' => 'Log\\Application',
+        ],
+        'ProjectionManager' => [
+            'logger' => 'Log\\Application',
+        ],
+        'EventListenerManager' => [
+            'logger' => 'Log\\Application',
+        ],
+        'EventSubscriberManager' => [
+            'logger' => 'Log\\Application',
+        ]
     ],
 ];

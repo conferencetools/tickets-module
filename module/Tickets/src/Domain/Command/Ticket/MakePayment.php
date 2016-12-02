@@ -23,14 +23,20 @@ class MakePayment implements CommandInterface
      * @var string
      */
     private $purchaseId;
+    /**
+     * @var string
+     */
+    private $purchaserEmail;
 
     /**
      * MakePayment constructor.
-     * @param $purchaseId
+     * @param string $purchaseId
+     * @param string $purchaserEmail
      */
-    public function __construct(string $purchaseId)
+    public function __construct(string $purchaseId, string $purchaserEmail)
     {
         $this->purchaseId = $purchaseId;
+        $this->purchaserEmail = $purchaserEmail;
     }
 
     /**
@@ -39,5 +45,13 @@ class MakePayment implements CommandInterface
     public function getPurchaseId(): string
     {
         return $this->purchaseId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPurchaserEmail(): string
+    {
+        return $this->purchaserEmail;
     }
 }

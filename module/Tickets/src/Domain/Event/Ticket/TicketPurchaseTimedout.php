@@ -9,10 +9,12 @@
 namespace OpenTickets\Tickets\Domain\Event\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
+use JMS\Serializer\Annotation as Jms;
 
 class TicketPurchaseTimedout implements EventInterface
 {
     /**
+     * @Jms\Type("string")
      * @var string
      */
     private $id;

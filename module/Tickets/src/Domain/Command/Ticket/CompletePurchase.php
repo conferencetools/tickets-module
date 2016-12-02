@@ -23,16 +23,22 @@ class CompletePurchase implements CommandInterface
      * @var Delegate[]
      */
     private $delegateInformation;
+    /**
+     * @var string
+     */
+    private $purchaseEmail;
 
     /**
      * CompletePurchase constructor.
-     * @param $purchaseId
-     * @param $delegateInformation
+     * @param string $purchaseId
+     * @param string $purchaseEmail
+     * @param Delegate[] ...$delegateInformation
      */
-    public function __construct(string $purchaseId, Delegate ...$delegateInformation)
+    public function __construct(string $purchaseId, string $purchaseEmail, Delegate ...$delegateInformation)
     {
         $this->purchaseId = $purchaseId;
         $this->delegateInformation = $delegateInformation;
+        $this->purchaseEmail = $purchaseEmail;
     }
 
     /**
@@ -41,6 +47,14 @@ class CompletePurchase implements CommandInterface
     public function getPurchaseId(): string
     {
         return $this->purchaseId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPurchaseEmail(): string
+    {
+        return $this->purchaseEmail;
     }
 
     /**

@@ -1,0 +1,235 @@
+<?php $total = 0; $tickets = 0;?>
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default credit-card-box">
+            <div class="panel-heading display-table" >
+                <div class="row display-tr" >
+                    <h3 class="panel-title display-td" >Your order</h3>
+                    <div class="display-td" ></div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <?php foreach($this->tickets as $ticketRecord):
+                        ?>
+                        <tr>
+                            <td class="col-xs-6">
+                                <?=$ticketRecord['ticketType']->getDisplayName()?>
+                            </td>
+                            <td class="col-xs-6">
+                <span class="col-xs-4">
+                £<?=$ticketRecord['ticketType']->getPrice()->getAmount()?> +VAT
+                </span>
+                                <span class="col-xs-4">
+                <?=$ticketRecord['quantity']?>
+                </span>
+                                <span class="col-xs-4">
+                    <?php $total += $ticketRecord['quantity'] * $ticketRecord['ticketType']->getPrice()->getAmount(); ?>
+                                    <?php $tickets += $ticketRecord['quantity']?>
+                                    £<?=$ticketRecord['quantity'] * $ticketRecord['ticketType']->getPrice()->getAmount()?> +VAT
+                </span>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                    <tr>
+                        <td class="col-xs-6">
+
+                        </td>
+                        <td class="col-xs-6">
+                <span class="col-xs-4">
+
+                </span>
+                            <span class="col-xs-4">
+                <strong>Discount Code</strong>
+                </span>
+                            <span class="col-xs-4">
+                None
+                </span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="col-xs-6">
+
+                        </td>
+                        <td class="col-xs-6">
+                <span class="col-xs-4">
+
+                </span>
+                            <span class="col-xs-4">
+                <strong>Total</strong>
+                </span>
+                            <span class="col-xs-4">
+                £<?=$total?> +VAT
+                </span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xs-12">
+        <?php $this->form->prepare();?>
+        <form id="delegate-form" method="POST">
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading display-table" >
+                    <div class="row display-tr" >
+                        <h3 class="panel-title display-td" >Purchaser Information</h3>
+                        <div class="display-td" ></div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <?=$this->formHidden($this->form->get('stripe_token'));?>
+                    <?=$this->formRow($this->form->get('purchase_email'));?>
+                </div>
+            </div>
+
+            <?php for($i = 0; $i < $tickets; $i++):?>
+                <div class="panel panel-default credit-card-box">
+                    <div class="panel-heading display-table" >
+                        <div class="row display-tr" >
+                            <h3 class="panel-title display-td" >Delegate Information <?=$i+1?></h3>
+                            <div class="display-td" ></div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <?php echo $this->formCollection($this->form->get('delegates_' . $i));?>
+                    </div>
+                </div>
+            <?php endfor;?>
+        </form>
+    </div>
+    <div class="col-md-6 col-xs-12">
+        <div class="panel panel-default credit-card-box">
+            <div class="panel-heading display-table" >
+                <div class="row display-tr" >
+                    <h3 class="panel-title display-td" >Payment Details</h3>
+                    <div class="display-td" >
+                        <img class="img-responsive pull-right" src="http://i76.imgup.net/accepted_c22e0.png">
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <?php if (!$this->noPayment):?>
+                <form role="form" id="payment-form" method="POST" action="javascript:void(0);">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardNumber">Card number</label>
+                                <div class="input-group">
+                                    <input
+                                            type="tel"
+                                            class="form-control"
+                                            name="cardNumber"
+                                            placeholder="Valid Card Number"
+                                            autocomplete="cc-number"
+                                            required autofocus
+                                    />
+                                    <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7 col-md-7">
+                            <div class="form-group">
+                                <label for="cardExpiry"><span class="hidden-xs">Expiration</span><span class="visible-xs-inline">Exp</span> Date</label>
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        name="cardExpiry"
+                                        placeholder="MM / YY"
+                                        autocomplete="cc-exp"
+                                        required
+                                />
+                            </div>
+                        </div>
+                        <div class="col-xs-5 col-md-5 pull-right">
+                            <div class="form-group">
+                                <label for="cardCVC">CVC</label>
+                                <input
+                                        type="tel"
+                                        class="form-control"
+                                        name="cardCVC"
+                                        placeholder="CVC"
+                                        autocomplete=false
+                                        required
+                                />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardName">Name on Card</label>
+                                <input type="text" class="form-control" name="cardName" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardLine1">Address Line 1</label>
+                                <input type="text" class="form-control" name="cardLine1" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardLine2">Address Line 2</label>
+                                <input type="text" class="form-control" name="cardLine2" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardCity">City</label>
+                                <input type="text" class="form-control" name="cardCity" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardState">County</label>
+                                <input type="text" class="form-control" name="cardState" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardZip">Postcode</label>
+                                <input type="text" class="form-control" name="cardZip" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div class="form-group">
+                                <label for="cardCountry">Country</label>
+                                <input type="text" class="form-control" name="cardCountry" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="display:none;">
+                        <div class="col-xs-12">
+                            <p class="payment-errors"></p>
+                        </div>
+                    </div>
+                </form>
+                <?php else:?>
+                    Payment details already provided
+                <?php endif;?>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="form-group col-xs-offset-10 col-xs-2">
+        <button id="submit-payment" type="submit" class="btn btn-default">Complete Purchase</button>
+    </div>
+</div>

@@ -3,35 +3,38 @@
  * Created by PhpStorm.
  * User: imhotek
  * Date: 28/11/16
- * Time: 18:20
+ * Time: 18:21
  */
 
 namespace OpenTickets\Tickets\Domain\Event\Ticket;
 
 use JMS\Serializer\Annotation as Jms;
 use Carnage\Cqrs\Event\EventInterface;
+use OpenTickets\Tickets\Domain\ValueObject\Money;
 
-class TicketPurchasePaid implements EventInterface
+class TicketPurchaseTotalPriceCalculated implements EventInterface
 {
     /**
      * @Jms\Type("string")
      * @var string
      */
     private $id;
-    /**
-     * @var string
-     */
-    private $purchaserEmail;
 
     /**
-     * TicketPurchasePaid constructor.
-     * @param string $id
-     * @param string $purchaserEmail
+     * @var Money
+     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Money")
      */
-    public function __construct(string $id, string $purchaserEmail)
+    private $total;
+
+    /**
+     * TicketPurchaseTotalPriceCalculated constructor.
+     * @param string $id
+     * @param Money $total
+     */
+    public function __construct(string $id, Money $total)
     {
         $this->id = $id;
-        $this->purchaserEmail = $purchaserEmail;
+        $this->total = $total;
     }
 
     /**
@@ -43,10 +46,10 @@ class TicketPurchasePaid implements EventInterface
     }
 
     /**
-     * @return string
+     * @return Money
      */
-    public function getPurchaserEmail(): string
+    public function getTotal()
     {
-        return $this->purchaserEmail;
+        return $this->total;
     }
 }

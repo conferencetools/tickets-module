@@ -4,8 +4,9 @@ namespace OpenTickets\Tickets\Domain\Model\Ticket;
 
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
+use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
+use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
@@ -48,6 +49,9 @@ class TicketPurchase extends AbstractAggregate
     public static function create(string $id, TicketReservation ...$tickets)
     {
         $instance = new static();
+        $event = new TicketPurchaseCreated($id);
+        $instance->apply($event);
+
         $total = new Money(0, 'GBP');
 
         foreach ($tickets as $ticket) {
@@ -56,13 +60,13 @@ class TicketPurchase extends AbstractAggregate
             $instance->apply($event);
         }
 
-        $event = new TicketPurchaseCreated($id, $total);
+        $event = new TicketPurchaseTotalPriceCalculated($id, $total);
         $instance->apply($event);
 
         return $instance;
     }
 
-    public function completePurchase(Delegate ...$delegateInformation)
+    public function completePurchase(string $email, Delegate ...$delegateInformation)
     {
         if (count($delegateInformation) !== count($this->tickets)) {
             throw new \DomainException('Number of delegates\' information supplied doesn\'t match number of tickets');
@@ -73,10 +77,10 @@ class TicketPurchase extends AbstractAggregate
         $iterator->attachIterator(new \ArrayIterator($this->tickets), 'ticketId');
 
         foreach ($iterator as $data) {
-            $this->assignTicketToDelegate($data['ticketId'], $data['delegate']);
+            $this->assignTicketToDelegate($data[1]->getId(), $data[0]);
         }
 
-        $this->markAsPaid();
+        $this->markAsPaid($email);
     }
 
     protected function applyTicketReserved(TicketReserved $event)
@@ -87,6 +91,10 @@ class TicketPurchase extends AbstractAggregate
     protected function applyTicketPurchaseCreated(TicketPurchaseCreated $event)
     {
         $this->id = $event->getId();
+    }
+
+    protected function applyTicketPurchaseTotalPriceCalculated(TicketPurchaseTotalPriceCalculated $event)
+    {
         $this->total = $event->getTotal();
     }
 
@@ -120,9 +128,9 @@ class TicketPurchase extends AbstractAggregate
         $this->isTimedout = true;
     }
 
-    public function markAsPaid()
+    public function markAsPaid(string $email)
     {
-        $event = new TicketPurchasePaid($this->id);
+        $event = new TicketPurchasePaid($this->id, $email);
         $this->apply($event);
     }
 

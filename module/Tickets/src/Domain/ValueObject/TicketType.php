@@ -3,6 +3,7 @@
 namespace OpenTickets\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Jms;
 
 /**
  * Class TicketType
@@ -13,6 +14,7 @@ final class TicketType
 {
     /**
      * @var string
+     * @Jms\Type("string")
      * @ORM\Column(type="string")
      */
     private $identifier;
@@ -20,11 +22,13 @@ final class TicketType
     /**
      * @var Money
      * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Money")
+     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Money")
      */
     private $price;
 
     /**
      * @var string
+     * @Jms\Type("string")
      * @ORM\Column(type="string")
      */
     private $displayName;
