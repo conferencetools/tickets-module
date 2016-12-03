@@ -12,16 +12,6 @@ return [
         ],
         'may_terminate' => true,
         'child_routes' => [
-            'setup' => [
-                'type'    => 'Segment',
-                'options' => [
-                    'route'    => 'setup',
-                    'defaults' => [
-                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
-                        'action'        => 'setup',
-                    ],
-                ],
-            ],
             'select-tickets' => [
                 'type'    => 'Segment',
                 'options' => [

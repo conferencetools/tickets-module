@@ -10,9 +10,7 @@ use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 use OpenTickets\Tickets\Form\PurchaseForm;
 use Zend\View\Model\ViewModel;
 use ZfrStripe\Client\StripeClient;
@@ -20,20 +18,6 @@ use ZfrStripe\Exception\CardErrorException;
 
 class TicketController extends AbstractController
 {
-    public function setupAction()
-    {
-        //@TODO move into projection add replayable projection and resettable projection interfaces
-        $em = $this->getEntityManager();
-        $x = new TicketCounter(new TicketType('sup_early', new Money(70, 'GBP'), 'Super Early Bird'), 25);
-        $y = new TicketCounter(new TicketType('early', new Money(85, 'GBP'), 'Early Bird'), 75);
-        $z = new TicketCounter(new TicketType('std', new Money(100, 'GBP'), 'Standard'), 150);
-
-        $em->persist($x);
-        $em->persist($y);
-        $em->persist($z);
-        $em->flush();
-    }
-
     public function timeoutAction()
     {
         //@TODO move into cron job/cli script
