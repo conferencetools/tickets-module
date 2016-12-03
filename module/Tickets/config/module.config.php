@@ -48,6 +48,11 @@ return [
             \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         ],
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+
     ],
     'controllers' => [
         'factories' => [

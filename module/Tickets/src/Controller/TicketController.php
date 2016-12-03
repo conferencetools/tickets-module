@@ -7,6 +7,7 @@ use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
 use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
@@ -21,6 +22,7 @@ class TicketController extends AbstractController
 {
     public function setupAction()
     {
+        //@TODO move into projection add replayable projection and resettable projection interfaces
         $em = $this->getEntityManager();
         $x = new TicketCounter(new TicketType('sup_early', new Money(70, 'GBP'), 'Super Early Bird'), 25);
         $y = new TicketCounter(new TicketType('early', new Money(85, 'GBP'), 'Early Bird'), 75);
@@ -34,10 +36,11 @@ class TicketController extends AbstractController
 
     public function timeoutAction()
     {
+        //@TODO move into cron job/cli script
         $qb = $this->getEntityManager()->getRepository(TicketRecord::class)->createQueryBuilder('tr');
         /** @var TicketRecord[] $timedout */
         $timedout = $qb->where('tr.createdAt < :time')
-            ->andWhere('tr.delegate.email = \'\'')
+            ->andWhere('tr.delegate.email = \'\'') //@TODO this is an optional field. Need to add a better way to detect
             ->groupBy('tr.purchaseId')
             ->setParameter('time', new \DateTime('-30 minutes'))
             ->getQuery()
@@ -100,27 +103,9 @@ class TicketController extends AbstractController
     {
         $purchaseId = $this->params()->fromRoute('purchaseId');
         $noPayment = false;
-        //@TODO need a view model for calculated puchase information from domain model.
-        $qb = $this->getEntityManager()->getRepository(TicketRecord::class)->createQueryBuilder('tr');
+        $purchase = $this->fetchPurchaseRecord($purchaseId);
 
-        $result = $qb->where('tr.purchaseId = :purchaseId')
-            ->setParameter('purchaseId', $purchaseId)
-            ->getQuery()
-            ->getResult();
-
-        $tickets = [];
-        $totalTickets = 0;
-        foreach ($result as $ticket) {
-            /** @var TicketRecord $ticket */
-            $tickets[$ticket->getTicketType()->getIdentifier()]['ticketType'] = $ticket->getTicketType();
-            if (!isset($tickets[$ticket->getTicketType()->getIdentifier()]['quantity'])) {
-                $tickets[$ticket->getTicketType()->getIdentifier()]['quantity'] = 0;
-            }
-            $tickets[$ticket->getTicketType()->getIdentifier()]['quantity']++;
-            $totalTickets += 1;
-        }
-
-        $form = new PurchaseForm();
+        $form = new PurchaseForm($purchase->getTicketCount());
 
         if ($this->getRequest()->isPost()) {
             $noPayment = true;
@@ -131,21 +116,25 @@ class TicketController extends AbstractController
                 $stripeClient = $this->getServiceLocator()->get(StripeClient::class);
                 try {
                     $stripeClient->createCharge([
-                        "amount" => 7000,
-                        "currency" => 'gbp',
+                        "amount" => $purchase->getTotalCost()->getAmount() * 100,
+                        "currency" => $purchase->getTotalCost()->getCurrency(),
                         'source' => $data['stripe_token'],
                         'email' => $data['purchase_email']
                     ]);
 
                     $delegateInfo = [];
 
-                    for ($i = 0; $i < $totalTickets; $i++) {
+                    for ($i = 0; $i < $purchase->getTicketCount(); $i++) {
                         $delegateInfo[] = Delegate::fromArray($data['delegates_' . $i]);
                     }
 
                     $command = new CompletePurchase($purchaseId, $data['purchase_email'], ...$delegateInfo);
                     $this->getCommandBus()->dispatch($command);
-
+                    $this->flashMessenger()
+                        ->addSuccessMessage(
+                            'Your ticket purchase is completed. You will recieve an email shortly with your ticket information'
+                        );
+                    $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
                 } catch (CardErrorException $e) {
                     $this->flashMessenger()->addErrorMessage('There was an issue with taking your payment, please try again');
                     $noPayment = false;
@@ -153,6 +142,27 @@ class TicketController extends AbstractController
             }
         }
 
-        return new ViewModel(['tickets' => $tickets, 'form' => $form, 'noPayment' => $noPayment]);
+        return new ViewModel(['purchase' => $purchase, 'form' => $form, 'noPayment' => $noPayment]);
+    }
+
+    public function completeAction()
+    {
+        $purchaseId = $this->params()->fromRoute('purchaseId');
+        $purchase = $this->fetchPurchaseRecord($purchaseId);
+
+        return new ViewModel(['purchase' => $purchase]);
+    }
+
+    /**
+     * @param $purchaseId
+     * @return PurchaseRecord
+     */
+    private function fetchPurchaseRecord($purchaseId): PurchaseRecord
+    {
+        /** @var PurchaseRecord $purchase */
+        $purchase = $this->getEntityManager()->getRepository(PurchaseRecord::class)->findOneBy([
+            'purchaseId' => $purchaseId
+        ]);
+        return $purchase;
     }
 }

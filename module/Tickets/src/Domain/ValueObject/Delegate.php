@@ -3,6 +3,7 @@
 namespace OpenTickets\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Jms;
 
 /**
  * Class Delegate
@@ -14,31 +15,37 @@ class Delegate
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $firstname;
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $lastname;
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $email;
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $company;
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $twitter;
     /**
      * @var string
      * @ORM\Column(type="string")
+     * @JMS\Type("string")
      */
     private $requirements;
 

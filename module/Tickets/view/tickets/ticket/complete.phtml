@@ -1,0 +1,32 @@
+<?php include __DIR__ . '/_orderInformation.phtml';?>
+
+<div class="row">
+    <div class="col-xs-12">
+        <div class="panel panel-default credit-card-box">
+            <div class="panel-heading display-table" >
+                <div class="row display-tr" >
+                    <h3 class="panel-title display-td" >Your tickets</h3>
+                    <div class="display-td" ></div>
+                </div>
+            </div>
+            <div class="panel-body">
+                <table class="table">
+                    <?php foreach($this->purchase->getTickets() as $ticket):?>
+                        <?php $url = $this->url(
+                                'root/manage',
+                                ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()]
+                        )?>
+                        <tr>
+                            <td class="col-xs-6">
+                                <?=$ticket->getTicketType()->getDisplayName()?>
+                            </td>
+                            <td class="col-xs-6">
+                                <a href="<?=$url?>">Manage</a>
+                            </td>
+                        </tr>
+                    <?php endforeach;?>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

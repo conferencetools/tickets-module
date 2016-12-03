@@ -27,9 +27,10 @@ class TicketRecord
 
     /**
      * @var string
-     * @ORM\Column(type="string")
+     * @ORM\ManyToOne(targetEntity="OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord", inversedBy="tickets")
+     * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      */
-    private $purchaseId;
+    private $purchase;
 
     /**
      * @var string
@@ -44,25 +45,18 @@ class TicketRecord
     private $delegate;
 
     /**
-     * @var \DateTime
-     * @ORM\Column(type="datetime")
-     */
-    private $createdAt;
-
-    /**
      * TicketRecord constructor.
      * @param TicketType $ticketType
      * @param string $purchaseId
      * @param string $ticketId
      * @param Delegate $delegate
      */
-    public function __construct(TicketType $ticketType, string $purchaseId, string $ticketId)
+    public function __construct(TicketType $ticketType, PurchaseRecord $purchase, string $ticketId)
     {
         $this->ticketType = $ticketType;
-        $this->purchaseId = $purchaseId;
         $this->ticketId = $ticketId;
         $this->delegate = Delegate::emptyObject();
-        $this->createdAt = new \DateTime();
+        $this->purchase = $purchase;
     }
 
     /**
@@ -84,17 +78,17 @@ class TicketRecord
     /**
      * @return string
      */
-    public function getPurchaseId(): string
+    public function getTicketId(): string
     {
-        return $this->purchaseId;
+        return $this->ticketId;
     }
 
     /**
      * @return string
      */
-    public function getTicketId(): string
+    public function getPurchase(): string
     {
-        return $this->ticketId;
+        return $this->purchase;
     }
 
     /**

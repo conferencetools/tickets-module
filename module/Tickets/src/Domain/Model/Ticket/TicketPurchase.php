@@ -55,7 +55,7 @@ class TicketPurchase extends AbstractAggregate
         $total = new Money(0, 'GBP');
 
         foreach ($tickets as $ticket) {
-            $total->add($ticket->getTicketType()->getPrice());
+            $total = $total->add($ticket->getTicketType()->getPrice());
             $event = new TicketReserved($ticket->getReservationId(), $ticket->getTicketType(), $id);
             $instance->apply($event);
         }

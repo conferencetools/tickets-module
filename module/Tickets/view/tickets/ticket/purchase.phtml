@@ -1,73 +1,4 @@
-<?php $total = 0; $tickets = 0;?>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="panel panel-default credit-card-box">
-            <div class="panel-heading display-table" >
-                <div class="row display-tr" >
-                    <h3 class="panel-title display-td" >Your order</h3>
-                    <div class="display-td" ></div>
-                </div>
-            </div>
-            <div class="panel-body">
-                <table class="table">
-                    <?php foreach($this->tickets as $ticketRecord):
-                        ?>
-                        <tr>
-                            <td class="col-xs-6">
-                                <?=$ticketRecord['ticketType']->getDisplayName()?>
-                            </td>
-                            <td class="col-xs-6">
-                <span class="col-xs-4">
-                £<?=$ticketRecord['ticketType']->getPrice()->getAmount()?> +VAT
-                </span>
-                                <span class="col-xs-4">
-                <?=$ticketRecord['quantity']?>
-                </span>
-                                <span class="col-xs-4">
-                    <?php $total += $ticketRecord['quantity'] * $ticketRecord['ticketType']->getPrice()->getAmount(); ?>
-                                    <?php $tickets += $ticketRecord['quantity']?>
-                                    £<?=$ticketRecord['quantity'] * $ticketRecord['ticketType']->getPrice()->getAmount()?> +VAT
-                </span>
-                            </td>
-                        </tr>
-                    <?php endforeach;?>
-                    <tr>
-                        <td class="col-xs-6">
-
-                        </td>
-                        <td class="col-xs-6">
-                <span class="col-xs-4">
-
-                </span>
-                            <span class="col-xs-4">
-                <strong>Discount Code</strong>
-                </span>
-                            <span class="col-xs-4">
-                None
-                </span>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="col-xs-6">
-
-                        </td>
-                        <td class="col-xs-6">
-                <span class="col-xs-4">
-
-                </span>
-                            <span class="col-xs-4">
-                <strong>Total</strong>
-                </span>
-                            <span class="col-xs-4">
-                £<?=$total?> +VAT
-                </span>
-                        </td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-    </div>
-</div>
+<?php include __DIR__ . '/_orderInformation.phtml';?>
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <?php $this->form->prepare();?>
@@ -85,7 +16,7 @@
                 </div>
             </div>
 
-            <?php for($i = 0; $i < $tickets; $i++):?>
+            <?php for($i = 0; $i < $purchase->getTicketCount(); $i++):?>
                 <div class="panel panel-default credit-card-box">
                     <div class="panel-heading display-table" >
                         <div class="row display-tr" >

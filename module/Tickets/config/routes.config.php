@@ -12,6 +12,16 @@ return [
         ],
         'may_terminate' => true,
         'child_routes' => [
+            'setup' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => 'setup',
+                    'defaults' => [
+                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'action'        => 'setup',
+                    ],
+                ],
+            ],
             'select-tickets' => [
                 'type'    => 'Segment',
                 'options' => [
@@ -29,6 +39,26 @@ return [
                     'defaults' => [
                         'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
                         'action'        => 'purchase',
+                    ],
+                ],
+            ],
+            'complete' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => 'complete/:purchaseId',
+                    'defaults' => [
+                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'action'        => 'complete',
+                    ],
+                ],
+            ],
+            'manage' => [
+                'type'    => 'Segment',
+                'options' => [
+                    'route'    => 'manage/:purchaseId/:ticketId',
+                    'defaults' => [
+                        'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'action'        => 'manage',
                     ],
                 ],
             ]
