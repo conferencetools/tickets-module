@@ -1,3 +1,13 @@
+<?php
+
+$this->inlineScript()
+     ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js')
+     ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js')
+     ->appendFile('https://js.stripe.com/v2/')
+     ->appendScript('Stripe.setPublishableKey(\'pk_test_7Up68KxainTwEsy826jsZ8BK\');')
+     ->appendFile('/js/card.js');
+?>
+
 <?php include __DIR__ . '/_orderInformation.phtml';?>
 <div class="row">
     <div class="col-md-6 col-xs-12">
@@ -29,6 +39,7 @@
                     </div>
                 </div>
             <?php endfor;?>
+            <?php echo $this->formHidden($this->form->get('security'))?>
         </form>
     </div>
     <div class="col-md-6 col-xs-12">

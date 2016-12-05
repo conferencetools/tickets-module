@@ -18,7 +18,9 @@ class TicketPurchasePaid implements EventInterface
      * @var string
      */
     private $id;
+
     /**
+     * @Jms\Type("string")
      * @var string
      */
     private $purchaserEmail;

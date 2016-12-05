@@ -1,0 +1,25 @@
+<form id="delegate-form" method="POST">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6 col-xs-12">
+            <?php $this->form->prepare();?>
+            <div class="panel panel-default credit-card-box">
+                <div class="panel-heading display-table" >
+                    <div class="row display-tr" >
+                        <h3 class="panel-title display-td" >Delegate Information</h3>
+                        <div class="display-td" ></div>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <?php echo $this->formCollection($this->form->get('delegate'));?>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class=" col-xs-offset-7 col-xs-2">
+            <?php echo $this->formHidden($this->form->get('security'))?>
+            <button type="submit" class="btn btn-success pull-right">Update Details</button>
+        </div>
+    </div>
+
+</form>

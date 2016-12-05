@@ -6,6 +6,7 @@ use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Form\Fieldset\DelegateInformation;
 use OpenTickets\Tickets\Hydrator\DelegateHydrator;
 use Zend\Form\Element\Collection;
+use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;
 use Zend\Form\Form;
@@ -14,7 +15,7 @@ use Zend\Validator\NotEmpty;
 
 class PurchaseForm extends Form
 {
-    public function __construct($tickets = 2)
+    public function __construct($tickets)
     {
         parent::__construct('delegate-form');
         $this->add(['type' => Hidden::class, 'name' => 'stripe_token']);
@@ -30,6 +31,8 @@ class PurchaseForm extends Form
         for ($i = 0; $i < $tickets; $i++ ) {
             $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
         }
+
+        $this->add(new Csrf('security'));
 
         $this->getInputFilter()
             ->get('purchase_email')

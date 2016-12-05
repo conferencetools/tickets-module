@@ -2,6 +2,7 @@
 
 namespace OpenTickets\Tickets\Controller;
 
+use OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate;
 use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
 use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
 use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
@@ -11,7 +12,9 @@ use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
+use OpenTickets\Tickets\Form\ManageTicket;
 use OpenTickets\Tickets\Form\PurchaseForm;
+use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 use ZfrStripe\Client\StripeClient;
 use ZfrStripe\Exception\CardErrorException;
@@ -135,6 +138,48 @@ class TicketController extends AbstractController
         $purchase = $this->fetchPurchaseRecord($purchaseId);
 
         return new ViewModel(['purchase' => $purchase]);
+    }
+
+    public function manageAction()
+    {
+        $purchaseId = $this->params()->fromRoute('purchaseId');
+        $ticketId = $this->params()->fromRoute('ticketId');
+
+        $purchase = $this->fetchPurchaseRecord($purchaseId);
+        $ticketRecord = $purchase->getTicketRecord($ticketId);
+        $delegate = $ticketRecord->getDelegate();
+
+        $form = new ManageTicket();
+        $data = [
+            'delegate' => [
+                'firstname' => $delegate->getFirstname(),
+                'lastname' => $delegate->getLastname(),
+                'email' => $delegate->getEmail(),
+                'company' => $delegate->getCompany(),
+                'twitter' => $delegate->getTwitter(),
+                'requirements' => $delegate->getRequirements()
+            ]
+        ];
+
+        $form->bind(new ArrayObject($data));
+
+        if ($this->getRequest()->isPost()) {
+            $form->setData($this->params()->fromPost());
+            if ($form->isValid()) {
+                $data = $form->getData();
+                $newDelegateInfo = Delegate::fromArray($data['delegate']);
+
+                $command = new AssignToDelegate($newDelegateInfo, $ticketId, $purchaseId);
+                $this->getCommandBus()->dispatch($command);
+                $this->flashMessenger()
+                    ->addSuccessMessage(
+                        'Details updated successfully'
+                    );
+                return $this->redirect()->refresh();
+            }
+        }
+
+        return new ViewModel(['purchase' => $purchase, 'form' => $form]);
     }
 
     /**
