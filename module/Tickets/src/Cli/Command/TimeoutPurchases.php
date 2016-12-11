@@ -41,16 +41,16 @@ class TimeoutPurchases extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $qb = $this->em->getRepository(PurchaseRecord::class)->createQueryBuilder('pr');
-        /** @var TicketRecord[] $timedout */
-        $timedout = $qb->where('tr.createdAt < :time')
-            ->andWhere('pr.paid = false')
-            ->setParameter('time', new \DateTime('-30 minutes'))
+        /** @var PurchaseRecord[] $timedout */
+        $timedout = $qb->where('pr.paid = false')
             ->getQuery()
             ->getResult();
 
         foreach ($timedout as $ticketRecord) {
-            $command = new TimeoutPurchase($ticketRecord->getPurchaseId());
-            $this->commandBus->dispatch($command);
+            if ($ticketRecord->hasTimedout()) {
+                $command = new TimeoutPurchase($ticketRecord->getPurchaseId());
+                $this->commandBus->dispatch($command);
+            }
         }
     }
 

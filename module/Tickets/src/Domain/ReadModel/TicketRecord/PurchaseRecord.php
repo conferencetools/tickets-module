@@ -182,4 +182,9 @@ class PurchaseRecord
     {
         $this->totalCost = $totalCost;
     }
+
+    public function hasTimedout()
+    {
+        return ($this->createdAt < new \DateTime('-30 minutes'));
+    }
 }

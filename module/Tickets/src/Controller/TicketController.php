@@ -57,7 +57,7 @@ class TicketController extends AbstractController
                 $this->getCommandBus()->dispatch($command);
                 /** @var TicketPurchaseCreated $event */
                 $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
-                $this->redirect()->toRoute('root/purchase', ['purchaseId' => $event->getId()]);
+                return $this->redirect()->toRoute('root/purchase', ['purchaseId' => $event->getId()]);
             }
 
             foreach ($errors as $error) {
@@ -73,6 +73,16 @@ class TicketController extends AbstractController
         $purchaseId = $this->params()->fromRoute('purchaseId');
         $noPayment = false;
         $purchase = $this->fetchPurchaseRecord($purchaseId);
+
+        if ($purchase === null || $purchase->hasTimedout()) {
+            $this->flashMessenger()->addErrorMessage('Purchase Id invalid or your purchase timed out');
+            return $this->redirect()->toRoute('root/select-tickets');
+        }
+
+        if ($purchase->isPaid()) {
+            $this->flashMessenger()->addInfoMessage('This purchase has already been paid for');
+            return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
+        }
 
         $form = new PurchaseForm($purchase->getTicketCount());
 
@@ -101,7 +111,7 @@ class TicketController extends AbstractController
                         ->addSuccessMessage(
                             'Your ticket purchase is completed. You will recieve an email shortly with your ticket information'
                         );
-                    $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
+                    return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
                 } catch (CardErrorException $e) {
                     $this->flashMessenger()->addErrorMessage('There was an issue with taking your payment, please try again');
                     $noPayment = false;
@@ -109,6 +119,7 @@ class TicketController extends AbstractController
             }
         }
 
+        $this->flashMessenger()->addInfoMessage('Your tickets have been reserved for 30 mins, please complete payment before then');
         return new ViewModel(['purchase' => $purchase, 'form' => $form, 'noPayment' => $noPayment]);
     }
 
@@ -164,9 +175,9 @@ class TicketController extends AbstractController
 
     /**
      * @param $purchaseId
-     * @return PurchaseRecord
+     * @return PurchaseRecord|null
      */
-    private function fetchPurchaseRecord($purchaseId): PurchaseRecord
+    private function fetchPurchaseRecord($purchaseId)
     {
         /** @var PurchaseRecord $purchase */
         $purchase = $this->getEntityManager()->getRepository(PurchaseRecord::class)->findOneBy([
