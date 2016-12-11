@@ -1,0 +1,57 @@
+<?php
+
+namespace OpenTickets\Tickets\Cli\Command;
+
+use Carnage\Cqrs\MessageBus\MessageBusInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
+use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+class TimeoutPurchases extends Command
+{
+    /**
+     * @var EntityManagerInterface
+     */
+    private $em;
+
+    /**
+     * @var MessageBusInterface
+     */
+    private $commandBus;
+
+    public static function build(EntityManagerInterface $em, MessageBusInterface $commandBus)
+    {
+        $instance = new static();
+        $instance->em = $em;
+        $instance->commandBus = $commandBus;
+
+        return $instance;
+    }
+
+    protected function configure()
+    {
+        $this->setName('opentickets:timeout-purchases')
+            ->setDescription('Times out all purchases over 30 mins old.');
+    }
+
+    protected function execute(InputInterface $input, OutputInterface $output)
+    {
+        $qb = $this->em->getRepository(PurchaseRecord::class)->createQueryBuilder('pr');
+        /** @var TicketRecord[] $timedout */
+        $timedout = $qb->where('tr.createdAt < :time')
+            ->andWhere('pr.paid = false')
+            ->setParameter('time', new \DateTime('-30 minutes'))
+            ->getQuery()
+            ->getResult();
+
+        foreach ($timedout as $ticketRecord) {
+            $command = new TimeoutPurchase($ticketRecord->getPurchaseId());
+            $this->commandBus->dispatch($command);
+        }
+    }
+
+}

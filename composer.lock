@@ -4,8 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "2ef0d2d920d1cd752839165664c8e45d",
-    "content-hash": "15423af7166aff9c4879a263cf0d12ba",
+    "hash": "e827014e1f9a19ad8dfa21958e7980e4",
+    "content-hash": "f86487886bc66b08ac5434ec0f513078",
     "packages": [
         {
             "name": "carnage/cqorms",
@@ -17,7 +17,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqorms/zipball/5021537089260dedceb8c471e63e96f6b3cb1537",
+                "url": "https://api.github.com/repos/carnage/cqorms/zipball/a864913d4342e85ee175acb2ce1375f7e1da4090",
                 "reference": "5021537089260dedceb8c471e63e96f6b3cb1537",
                 "shasum": ""
             },
@@ -106,7 +106,7 @@
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqrs/zipball/19fd44e4401c5d23868b8a47ca34630da858102d",
+                "url": "https://api.github.com/repos/carnage/cqrs/zipball/e60c32aaa468daca5448f611f401cd3590c22fd6",
                 "reference": "19fd44e4401c5d23868b8a47ca34630da858102d",
                 "shasum": ""
             },
@@ -210,6 +210,106 @@
             ],
             "description": "Promoting the interoperability of container objects (DIC, SL, etc.)",
             "time": "2014-12-30 15:22:37"
+        },
+        {
+            "name": "crossjoin/css",
+            "version": "v1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crossjoin/Css.git",
+                "reference": "7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crossjoin/Css/zipball/7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3",
+                "reference": "7b50ca94c4bdad60d01cfa327f00b7a600d6f9f3",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Crossjoin\\Css\\": "src/Crossjoin/Css/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Ziegenberg",
+                    "email": "ziegenberg@crossjoin.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "CSS reader and writer with full CSS3 support, already supporting huge parts of the current CSS4 spec. It supports media queries, comments, value optimization and more... It offers full Unicode support and can handle also large CSS sources. Requires PHP 5.4+.",
+            "homepage": "https://github.com/crossjoin/Css",
+            "keywords": [
+                "css",
+                "css parser",
+                "css reader",
+                "css writer",
+                "php"
+            ],
+            "time": "2015-09-29 15:38:43"
+        },
+        {
+            "name": "crossjoin/pre-mailer",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/crossjoin/PreMailer.git",
+                "reference": "e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/crossjoin/PreMailer/zipball/e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561",
+                "reference": "e1fbd426a9f3ba2d5d00f6641b2509c72bf4f561",
+                "shasum": ""
+            },
+            "require": {
+                "crossjoin/css": "^1.0.3",
+                "ext-dom": "*",
+                "ext-mbstring": "*",
+                "php": ">=5.4.0",
+                "symfony/css-selector": "^2.7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Crossjoin\\PreMailer\\": "src/Crossjoin/PreMailer/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Ziegenberg",
+                    "email": "ziegenberg@crossjoin.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Crossjoin\\PreMailer converts CSS in a given HTML source to inline styles and optimizes it for sending it via e-mail. It also creates a text version of the HTML source. Requires PHP 5.4+.",
+            "homepage": "https://github.com/crossjoin/PreMailer",
+            "keywords": [
+                "css",
+                "e-mail",
+                "html",
+                "inline",
+                "mail",
+                "php",
+                "premailer",
+                "styles",
+                "text"
+            ],
+            "time": "2015-12-26 15:44:38"
         },
         {
             "name": "doctrine/annotations",
@@ -2605,6 +2705,59 @@
             "description": "Symfony Console Component",
             "homepage": "https://symfony.com",
             "time": "2016-11-16 22:18:16"
+        },
+        {
+            "name": "symfony/css-selector",
+            "version": "v2.8.14",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/css-selector.git",
+                "reference": "981abbbd6ba49af338a98490cbe29e7f39ca9fa9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/css-selector/zipball/981abbbd6ba49af338a98490cbe29e7f39ca9fa9",
+                "reference": "981abbbd6ba49af338a98490cbe29e7f39ca9fa9",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.9"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.8-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\CssSelector\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jean-François Simon",
+                    "email": "jeanfrancois.simon@sensiolabs.com"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony CssSelector Component",
+            "homepage": "https://symfony.com",
+            "time": "2016-11-03 07:52:58"
         },
         {
             "name": "symfony/debug",

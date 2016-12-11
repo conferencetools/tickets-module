@@ -7,6 +7,7 @@ use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
 use Zend\Form\FormElementManager;
 use Zend\Mvc\Controller\AbstractActionController;
+use ZfrStripe\Client\StripeClient;
 
 /**
  * Class AbstractController
@@ -27,24 +28,24 @@ abstract class AbstractController extends AbstractActionController
     private $entityManager;
 
     /**
-     * @var FormElementManager
+     * @var StripeClient
      */
-    private $formElementManager;
+    private $stripeClient;
 
     /**
      * AbstractController constructor.
      * @param MessageBusInterface $commandBus
-     * @param FormElementManager $formElementManager
      * @param EntityManager $entityManager
+     * @param StripeClient $stripeClient
      */
     public function __construct(
         MessageBusInterface $commandBus,
-        FormElementManager $formElementManager,
-        EntityManager $entityManager
+        EntityManager $entityManager,
+        StripeClient $stripeClient
     ) {
         $this->commandBus = $commandBus;
         $this->entityManager = $entityManager;
-        $this->formElementManager = $formElementManager;
+        $this->stripeClient = $stripeClient;
     }
 
     /**
@@ -64,10 +65,10 @@ abstract class AbstractController extends AbstractActionController
     }
 
     /**
-     * @return FormElementManager
+     * @return StripeClient
      */
-    public function getFormElementManager()
+    public function getStripeClient(): StripeClient
     {
-        return $this->formElementManager;
+        return $this->stripeClient;
     }
 }

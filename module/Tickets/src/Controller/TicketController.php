@@ -21,24 +21,6 @@ use ZfrStripe\Exception\CardErrorException;
 
 class TicketController extends AbstractController
 {
-    public function timeoutAction()
-    {
-        //@TODO move into cron job/cli script
-        $qb = $this->getEntityManager()->getRepository(TicketRecord::class)->createQueryBuilder('tr');
-        /** @var TicketRecord[] $timedout */
-        $timedout = $qb->where('tr.createdAt < :time')
-            ->andWhere('tr.delegate.email = \'\'') //@TODO this is an optional field. Need to add a better way to detect
-            ->groupBy('tr.purchaseId')
-            ->setParameter('time', new \DateTime('-30 minutes'))
-            ->getQuery()
-            ->getResult();
-
-        foreach ($timedout as $ticketRecord) {
-            $command = new TimeoutPurchase($ticketRecord->getPurchaseId());
-            $this->getCommandBus()->dispatch($command);
-        }
-    }
-
     public function selectTicketsAction()
     {
         $qb = $this->getEntityManager()->getRepository(TicketCounter::class)->createQueryBuilder('t', 't.id');
@@ -99,10 +81,8 @@ class TicketController extends AbstractController
             $data = $this->params()->fromPost();
             $form->setData($data);
             if ($form->isValid()) {
-                /** @var StripeClient $stripeClient */
-                $stripeClient = $this->getServiceLocator()->get(StripeClient::class);
                 try {
-                    $stripeClient->createCharge([
+                    $this->getStripeClient()->createCharge([
                         "amount" => $purchase->getTotalCost()->getAmount() * 100,
                         "currency" => $purchase->getTotalCost()->getCurrency(),
                         'source' => $data['stripe_token'],

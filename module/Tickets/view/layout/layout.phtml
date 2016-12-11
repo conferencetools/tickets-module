@@ -12,6 +12,7 @@
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
         <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="/css/card.css">
         <style>
             header#header {
@@ -23,7 +24,7 @@
                 background-color: #0083c9;
                 box-shadow: 0 0 2px rgba(46,49,65,.8);
             }
-            header#header a img {
+            header#header img {
                 margin: 0 .75em;
                 padding: 0 .75em;
                 max-width: 300px;
@@ -34,9 +35,12 @@
                 padding-bottom: 20px;
                 background-color: rgb(78, 161, 206);
             }
+            .alert {
+                margin-bottom: 10px;
+                margin-top: 10px;
+            }
         </style>
-        <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
-        <link rel="stylesheet" href="/css/main.css">
+
         <?php echo $this->headLink() ?>
 
         <script src="/js/vendor/modernizr-2.8.3.min.js"></script>
@@ -44,7 +48,7 @@
     <body>
 
     <header id="header">
-        <div class="logo"><a href="/"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire"></a></div>
+        <div class="logo"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire"></div>
     </header>
 
     <div class="container">
@@ -56,14 +60,10 @@
         </div>
     </div>
 
-
-        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
-
-        <script src="/js/vendor/bootstrap.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="/js/vendor/jquery-1.11.2.min.js"><\/script>')</script>
+    <script src="/js/vendor/bootstrap.min.js"></script>
 
     <?php echo $this->inlineScript();?>
-
-
     </body>
 </html>

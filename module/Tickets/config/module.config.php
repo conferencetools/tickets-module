@@ -10,6 +10,10 @@ return [
         'default' => require __DIR__ . '/navigation.config.php'
     ],
     'service_manager' => [
+        'factories' => [
+            'opentickets.cli' => \OpenTickets\Tickets\Cli\CliFactory::class,
+            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class
+        ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class
         ]
@@ -29,7 +33,7 @@ return [
     ],
     'event_listeners' => [
         'factories' => [
-
+            \OpenTickets\Tickets\EventListener\EmailPurchase::class => \OpenTickets\Tickets\EventListener\EmailPurchaseFactory::class
         ]
     ],
     'projections' => [
@@ -48,7 +52,10 @@ return [
             \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         ],
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => [
+            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+            \OpenTickets\Tickets\EventListener\EmailPurchase::class,
+        ],
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,

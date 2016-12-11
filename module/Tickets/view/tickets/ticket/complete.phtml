@@ -21,7 +21,7 @@
                                 <?=$ticket->getTicketType()->getDisplayName()?>
                             </td>
                             <td class="col-xs-6">
-                                <a href="<?=$url?>">Manage</a>
+                                <a href="<?= $this->serverUrl() . $url?>">Manage</a>
                             </td>
                         </tr>
                     <?php endforeach;?>
