@@ -26,10 +26,10 @@
                                 </td>
                                 <td class="col-xs-3">
                                     <span class="col-xs-6">
-                                    £<?=$ticket->getTicketType()->getPrice()->getAmount()?> +VAT
+                                    £<?=$ticket->getTicketType()->getPrice()->getAmount()?>
                                     </span>
                                     <span class="col-xs-6">
-                                    <input class="form-control" value="0" title="quantity" type="text" name="quantity[<?=$ticket->getId()?>]" />
+                                    <input class="form-control" min="0" max="<?=$ticket->getRemaining()?>" value="0" title="quantity" type="number" name="quantity[<?=$ticket->getId()?>]" />
                                     </span>
                                 </td>
                             </tr>

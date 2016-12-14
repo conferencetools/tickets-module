@@ -27,9 +27,9 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
         $q = $em->createQuery(sprintf('delete from %s', TicketCounter::class));
         $q->execute();
         //** @TODO move this to config */
-        $x = new TicketCounter(new TicketType('sup_early', new Money(70, 'GBP'), 'Super Early Bird'), 25);
-        $y = new TicketCounter(new TicketType('early', new Money(85, 'GBP'), 'Early Bird'), 75);
-        $z = new TicketCounter(new TicketType('std', new Money(100, 'GBP'), 'Standard'), 150);
+        $x = new TicketCounter(new TicketType('sup_early', new Money(70*1.2, 'GBP'), 'Super Early Bird'), 25);
+        $y = new TicketCounter(new TicketType('early', new Money(85*1.2, 'GBP'), 'Early Bird'), 75);
+        $z = new TicketCounter(new TicketType('std', new Money(100*1.2, 'GBP'), 'Standard'), 150);
 
         $em->persist($x);
         $em->persist($y);

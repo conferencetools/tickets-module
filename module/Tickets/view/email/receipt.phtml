@@ -88,6 +88,11 @@
         </div>
     </div>
 </div>
+<?php $url = $this->url(
+    'root/complete',
+    ['purchaseId' => $this->purchase->getPurchaseId()]
+)?>
+Email broken? <a href="<?= $this->serverUrl() . $url?>">Click here to view in a browser</a>
 
 </body>
 </html>
