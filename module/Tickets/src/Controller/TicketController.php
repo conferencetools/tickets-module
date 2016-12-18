@@ -21,6 +21,11 @@ use ZfrStripe\Exception\CardErrorException;
 
 class TicketController extends AbstractController
 {
+    public function indexAction()
+    {
+        return $this->redirect()->toRoute('root/select-tickets');
+    }
+
     public function selectTicketsAction()
     {
         $qb = $this->getEntityManager()->getRepository(TicketCounter::class)->createQueryBuilder('t', 't.id');

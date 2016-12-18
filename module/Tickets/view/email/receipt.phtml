@@ -1,9 +1,7 @@
-<!doctype html>
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<!DOCTYPE html>
+<html lang="" style="font-family: sans-serif; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-size: 10px; -webkit-tap-highlight-color: rgba(0,0,0,0);">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <title></title>
@@ -11,80 +9,133 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-    <style>
-        /*** uncss> filename: http://webapp/css/bootstrap.min.css ***/
-        /*!
-         * Bootstrap v3.3.1 (http://getbootstrap.com)
-         * Copyright 2011-2014 Twitter, Inc.
-         * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-         *//*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}body{margin:0}header{display:block}a{background-color:transparent}a:active,a:hover{outline:0}strong{font-weight:700}img{border:0}table{border-spacing:0;border-collapse:collapse}td{padding:0}/*! Source: https://github.com/h5bp/html5-boilerplate/blob/master/src/css/main.css */@media print{*,:before,:after{color:#000!important;text-shadow:none!important;background:transparent!important;-webkit-box-shadow:none!important;box-shadow:none!important}a,a:visited{text-decoration:underline}a[href]:after{content:" (" attr(href) ")"}tr,img{page-break-inside:avoid}img{max-width:100%!important}h3{orphans:3;widows:3}h3{page-break-after:avoid}.table{border-collapse:collapse!important}.table td{background-color:#fff!important}}@font-face{font-family:'Glyphicons Halflings';src:url(../fonts/glyphicons-halflings-regular.eot);src:url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(../fonts/glyphicons-halflings-regular.woff) format('woff'),url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg')}*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}:before,:after{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}html{font-size:10px;-webkit-tap-highlight-color:rgba(0,0,0,0)}body{font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:14px;line-height:1.42857143;color:#333;background-color:#fff}a{color:#337ab7;text-decoration:none}a:hover,a:focus{color:#23527c;text-decoration:underline}a:focus{outline:thin dotted;outline:5px auto -webkit-focus-ring-color;outline-offset:-2px}img{vertical-align:middle}h3{font-family:inherit;font-weight:500;line-height:1.1;color:inherit}h3{margin-top:20px;margin-bottom:10px}h3{font-size:24px}.container{padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}@media (min-width:768px){.container{width:750px}}@media (min-width:992px){.container{width:970px}}@media (min-width:1200px){.container{width:1170px}}.row{margin-right:-15px;margin-left:-15px}.col-xs-4,.col-xs-6,.col-xs-12,.col-md-12{position:relative;min-height:1px;padding-right:15px;padding-left:15px}.col-xs-4,.col-xs-6,.col-xs-12{float:left}.col-xs-12{width:100%}.col-xs-6{width:50%}.col-xs-4{width:33.33333333%}@media (min-width:992px){.col-md-12{float:left}.col-md-12{width:100%}}table{background-color:transparent}.table{width:100%;max-width:100%;margin-bottom:20px}.table>tbody>tr>td{padding:8px;line-height:1.42857143;vertical-align:top;border-top:1px solid #ddd}table td[class*=col-]{position:static;display:table-cell;float:none}.panel{margin-bottom:20px;background-color:#fff;border:1px solid transparent;border-radius:4px;-webkit-box-shadow:0 1px 1px rgba(0,0,0,.05);box-shadow:0 1px 1px rgba(0,0,0,.05)}.panel-body{padding:15px}.panel-heading{padding:10px 15px;border-bottom:1px solid transparent;border-top-left-radius:3px;border-top-right-radius:3px}.panel-title{margin-top:0;margin-bottom:0;font-size:16px;color:inherit}.panel-default{border-color:#ddd}.panel-default>.panel-heading{color:#333;background-color:#f5f5f5;border-color:#ddd}.container:before,.container:after,.row:before,.row:after,.panel-body:before,.panel-body:after{display:table;content:" "}.container:after,.row:after,.panel-body:after{clear:both}@-ms-viewport{width:device-width}
-        /*** uncss> filename: http://webapp/css/bootstrap-theme.min.css ***/
-        /*!
-         * Bootstrap v3.3.1 (http://getbootstrap.com)
-         * Copyright 2011-2014 Twitter, Inc.
-         * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
-         */.panel{-webkit-box-shadow:0 1px 2px rgba(0,0,0,.05);box-shadow:0 1px 2px rgba(0,0,0,.05)}.panel-default>.panel-heading{background-image:-webkit-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);background-image:-o-linear-gradient(top,#f5f5f5 0,#e8e8e8 100%);background-image:-webkit-gradient(linear,left top,left bottom,from(#f5f5f5),to(#e8e8e8));background-image:linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%);filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0);background-repeat:repeat-x}
-        /*** uncss> filename: http://webapp/css/card.css ***/
-        /*http://bootsnipp.com/snippets/featured/credit-card-payment-with-stripe */
-        /* Padding - just for asthetics on Bootsnipp.com */
-        body { margin-top:20px; }
 
-        /* CSS for Credit Card Payment form */
-        .credit-card-box .panel-title {
-            display: inline;
-            font-weight: bold;
-        }
-        /* The old "center div vertically" hack */
-        .credit-card-box .display-table {
-            display: table;
-            width: 100%;
-        }
-        .credit-card-box .display-tr {
-            display: table-row;
-        }
-        .credit-card-box .display-td {
-            display: table-cell;
-            vertical-align: middle;
-            width: 50%;
-        }
-        /* Just looks nicer */
-        header#header {
-            z-index:1000;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background-color: #0083c9;
-            box-shadow: 0 0 2px rgba(46,49,65,.8);
-        }
-        header#header div.logo img {
-            margin: 0 .75em;
-            padding: 0 .75em;
-            max-width: 300px;
-            height: auto;
-        }
-        body {
-            padding-top: 50px;
-            padding-bottom: 20px;
-            background-color: rgb(78, 161, 206);
-        }
-        .alert {
-            margin-bottom: 10px;
-            margin-top: 10px;
-        }
-    </style>
 
 </head>
-<body>
+<body style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 1.42857143; padding-top: 50px; padding-bottom: 20px; margin: 20px 0 0;" bgcolor="transparent !important">
+<style type="text/css">
+    a:active { outline: 0 !important; }
+    a:hover { outline: 0 !important; }
+    :before { color: #000 !important; text-shadow: none !important; background: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; }
+    :after { color: #000 !important; text-shadow: none !important; background: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; }
+    a:visited { text-decoration: underline !important; }
+    a[href]:after { content: " (" attr(href) ")" !important; }
+    @font-face { font-family: 'Glyphicons Halflings' !important; src: url(../fonts/glyphicons-halflings-regular.eot?#iefix) format('embedded-opentype'),url(../fonts/glyphicons-halflings-regular.woff) format('woff'),url(../fonts/glyphicons-halflings-regular.ttf) format('truetype'),url(../fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular) format('svg') !important; }
+    :before { -webkit-box-sizing: border-box !important; -moz-box-sizing: border-box !important; box-sizing: border-box !important; }
+    :after { -webkit-box-sizing: border-box !important; -moz-box-sizing: border-box !important; box-sizing: border-box !important; }
+    a:hover { color: #23527c !important; text-decoration: underline !important; }
+    a:focus { color: #23527c !important; text-decoration: underline !important; }
+    a:focus { outline: 5px auto -webkit-focus-ring-color !important; outline-offset: -2px !important; }
+    .container:before { display: table !important; content: " " !important; }
+    .container:after { display: table !important; content: " " !important; }
+    .row:before { display: table !important; content: " " !important; }
+    .row:after { display: table !important; content: " " !important; }
+    .panel-body:before { display: table !important; content: " " !important; }
+    .panel-body:after { display: table !important; content: " " !important; }
+    .container:after { clear: both !important; }
+    .row:after { clear: both !important; }
+    .panel-body:after { clear: both !important; }
+    @-ms-viewport { width: device-width !important; }
+    ></style>
 
-<header id="header">
-    <div class="logo"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire"></div>
+<header style="display: block; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; z-index: 1000; position: fixed; top: 0; left: 0; width: 100%;">
+    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire" style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; max-width: 100% !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; vertical-align: middle; height: auto; margin: 0 .75em; padding: 0 .75em; border: 0;"></div>
 </header>
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <?php include __DIR__ . '/../tickets/ticket/complete.phtml';?>
+<div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; width: 1170px;">
+    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px;">
+        <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 100%;">
+            <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px;">
+                <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 100%;">
+                    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ddd;">
+                        <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border-bottom-width: 1px; border-bottom-style: solid; border-top-left-radius: 3px; border-top-right-radius: 3px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0); display: table; width: 100%; background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%); background-repeat: repeat-x; padding: 10px 15px; border: #ddd;">
+                            <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px; display: table-row;">
+                                <h3 style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; orphans: 3; widows: 3; page-break-after: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: inherit; font-weight: bold; line-height: 1.1; margin-top: 0; margin-bottom: 0; font-size: 16px; display: table-cell; vertical-align: middle; width: 50%;">Your order</h3>
+                                <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; display: table-cell; vertical-align: middle; width: 50%;"></div>
+                            </div>
+                        </div>
+                        <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 15px;">
+                            <table style="border-spacing: 0; border-collapse: collapse !important; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px;" bgcolor="transparent !important">
+                                <?php foreach($this->purchase->getTicketSummary() as $ticketRecord):?>
+                                    <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
+                                        <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                            =$ticketRecord['ticketType']->getDisplayName()?>
+                                        </td>
+                                        <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
+                                £=$ticketRecord['ticketType']->getPrice()->getAmount()?>
+                                </span>
+                                            <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
+                                    =$ticketRecord['quantity']?>
+                                </span>
+                                            <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
+                                £=$ticketRecord['lineTotal']->getAmount()?>
+                                </span>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                                <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
+                                    <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+
+                                    </td>
+                                    <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></span>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
+                                <strong style="font-weight: 700; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Discount Code</strong>
+                            </span>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">None</span>
+                                    </td>
+                                </tr>
+                                <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
+                                    <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+
+                                    </td>
+                                    <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"></span>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
+                                <strong style="font-weight: 700; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Total</strong>
+                            </span>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
+                                £=$this->purchase->getTotalCost()->getAmount()?>
+                            </span>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px;">
+                <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 100%;">
+                    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-bottom: 20px; border-radius: 4px; border: 1px solid #ddd;">
+                        <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; border-bottom-width: 1px; border-bottom-style: solid; border-top-left-radius: 3px; border-top-right-radius: 3px; filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fff5f5f5', endColorstr='#ffe8e8e8', GradientType=0); display: table; width: 100%; background-image: linear-gradient(to bottom,#f5f5f5 0,#e8e8e8 100%); background-repeat: repeat-x; padding: 10px 15px; border: #ddd;">
+                            <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px; display: table-row;">
+                                <h3 style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; orphans: 3; widows: 3; page-break-after: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: inherit; font-weight: bold; line-height: 1.1; margin-top: 0; margin-bottom: 0; font-size: 16px; display: table-cell; vertical-align: middle; width: 50%;">Your tickets</h3>
+                                <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; display: table-cell; vertical-align: middle; width: 50%;"></div>
+                            </div>
+                        </div>
+                        <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding: 15px;">
+                            <table style="border-spacing: 0; border-collapse: collapse !important; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px;" bgcolor="transparent !important">
+                                <?php foreach($this->purchase->getTickets() as $ticket):?>
+                                    <?php $url = $this->url(
+                                    'root/manage',
+                                    ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()]
+                                    )?>
+                                    <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
+                                        <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                            =$ticket->getTicketType()->getDisplayName()?>
+                                        </td>
+                                        <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                            <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Manage</a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach;?>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -92,7 +143,7 @@
     'root/complete',
     ['purchaseId' => $this->purchase->getPurchaseId()]
 )?>
-Email broken? <a href="<?= $this->serverUrl() . $url?>">Click here to view in a browser</a>
+Email broken? <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Click here to view in a browser</a>
 
 </body>
 </html>

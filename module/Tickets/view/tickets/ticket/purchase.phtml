@@ -4,7 +4,7 @@ $this->inlineScript()
      ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.13.1/jquery.validate.min.js')
      ->appendFile('https://cdnjs.cloudflare.com/ajax/libs/jquery.payment/1.2.3/jquery.payment.min.js')
      ->appendFile('https://js.stripe.com/v2/')
-     ->appendScript('Stripe.setPublishableKey(\'pk_test_7Up68KxainTwEsy826jsZ8BK\');')
+     ->appendScript($this->stripeKey())
      ->appendFile('/js/card.js');
 
 $this->headLink()->appendStylesheet('/css/card.css');
@@ -68,7 +68,7 @@ $this->headLink()->appendStylesheet('/css/card.css');
                                             name="cardNumber"
                                             placeholder="Valid Card Number"
                                             autocomplete="cc-number"
-                                            required autofocus
+                                            required
                                     />
                                     <span class="input-group-addon"><i class="fa fa-credit-card"></i></span>
                                 </div>
@@ -173,7 +173,7 @@ $this->headLink()->appendStylesheet('/css/card.css');
     </div>
 </div>
 <div class="row">
-    <div class="form-group col-xs-offset-10 col-xs-2">
+    <div class="form-group col-md-offset-10 col-md-2 col-xs-offset-6 col-xs-2">
         <button id="submit-payment" type="submit" class="btn btn-default">Complete Purchase</button>
     </div>
 </div>
