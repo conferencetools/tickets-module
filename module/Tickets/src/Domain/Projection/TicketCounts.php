@@ -14,10 +14,15 @@ use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 class TicketCounts extends AbstractMethodNameMessageHandler implements ResettableInterface
 {
     private $em;
+    /**
+     * @var array
+     */
+    private $ticketConfig;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, array $ticketConfig)
     {
         $this->em = $em;
+        $this->ticketConfig = $ticketConfig;
     }
 
     public function reset()
@@ -26,14 +31,17 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
 
         $q = $em->createQuery(sprintf('delete from %s', TicketCounter::class));
         $q->execute();
-        //** @TODO move this to config */
-        $x = new TicketCounter(new TicketType('sup_early', new Money(70*1.2, 'GBP'), 'Super Early Bird'), 25);
-        $y = new TicketCounter(new TicketType('early', new Money(85*1.2, 'GBP'), 'Early Bird'), 75);
-        $z = new TicketCounter(new TicketType('std', new Money(100*1.2, 'GBP'), 'Standard'), 150);
 
-        $em->persist($x);
-        $em->persist($y);
-        $em->persist($z);
+        foreach ($this->ticketConfig as $handle => $ticket) {
+            $cost = new Money($ticket['price'], 'GBP');
+            $ticketType = new TicketType($handle, $cost, $ticket['name']);
+            $entity = new TicketCounter(
+                $ticketType,
+                $ticket['available']
+            );
+            $em->persist($entity);
+        }
+
         $em->flush();
     }
 

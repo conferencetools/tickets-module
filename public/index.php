@@ -1,5 +1,4 @@
 <?php
-ini_set('display_errors', true);
 
 /**
  * This makes our life easier when dealing with paths. Everything is relative

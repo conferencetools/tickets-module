@@ -12,7 +12,8 @@
 
 
 </head>
-<body style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 1.42857143; padding-top: 50px; padding-bottom: 20px; margin: 20px 0 0;" bgcolor="transparent !important">
+<body>
+<div style="color: #000 !important; text-shadow: none !important; background-color: rgb(78, 161, 206) !important; !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; font-size: 14px; line-height: 1.42857143; padding-top: 50px; padding-bottom: 20px; margin: 20px 0 0;">
 <style type="text/css">
     a:active { outline: 0 !important; }
     a:hover { outline: 0 !important; }
@@ -38,10 +39,10 @@
     @-ms-viewport { width: device-width !important; }
     ></style>
 
-<header style="display: block; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; z-index: 1000; position: fixed; top: 0; left: 0; width: 100%;">
-    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire" style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; max-width: 100% !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; vertical-align: middle; height: auto; margin: 0 .75em; padding: 0 .75em; border: 0;"></div>
+<header style="display: block; color: #000 !important; text-shadow: none !important; background-color: #0083c9 !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; z-index: 1000; position: fixed; top: 0; left: 0; width: 100%;">
+    <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;"><img src="https://www.phpyorkshire.co.uk/user/themes/phpyorkshire/assets/images/phpyorkshire-logo-inline.png" alt="PHP Yorkshire" style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; max-width: 300px !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; vertical-align: middle; height: auto; margin: 0 .75em; padding: 0 .75em; border: 0;"></div>
 </header>
-
+<br />
 <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; padding-right: 15px; padding-left: 15px; margin-right: auto; margin-left: auto; width: 1170px;">
     <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; margin-right: -15px; margin-left: -15px;">
         <div style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 100%;">
@@ -59,17 +60,17 @@
                                 <?php foreach($this->purchase->getTicketSummary() as $ticketRecord):?>
                                     <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
                                         <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
-                                            =$ticketRecord['ticketType']->getDisplayName()?>
+                                            <?=$ticketRecord['ticketType']->getDisplayName()?>
                                         </td>
                                         <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
                                 <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                £=$ticketRecord['ticketType']->getPrice()->getAmount()?>
+                                £<?=$ticketRecord['ticketType']->getPrice()->getAmount()?>
                                 </span>
                                             <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                    =$ticketRecord['quantity']?>
+                                    <?=$ticketRecord['quantity']?>
                                 </span>
                                             <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                £=$ticketRecord['lineTotal']->getAmount()?>
+                                £<?=$ticketRecord['lineTotal']->getAmount()?>
                                 </span>
                                         </td>
                                     </tr>
@@ -83,7 +84,7 @@
                                         <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                                 <strong style="font-weight: 700; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Discount Code</strong>
                             </span>
-                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">None</span>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: right; width: 33.33333333%;">None</span>
                                     </td>
                                 </tr>
                                 <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
@@ -95,8 +96,8 @@
                                         <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">
                                 <strong style="font-weight: 700; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Total</strong>
                             </span>
-                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                £=$this->purchase->getTotalCost()->getAmount()?>
+                                        <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: right; width: 33.33333333%;">
+                                £<?=$this->purchase->getTotalCost()->getAmount()?>
                             </span>
                                     </td>
                                 </tr>
@@ -124,10 +125,10 @@
                                     )?>
                                     <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
                                         <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
-                                            =$ticket->getTicketType()->getDisplayName()?>
+                                            <?=$ticket->getTicketType()->getDisplayName()?>
                                         </td>
-                                        <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
-                                            <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Manage</a>
+                                        <td style="color: #337ab7 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
+                                            <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #337ab7 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Manage</a>
                                         </td>
                                     </tr>
                                 <?php endforeach;?>
@@ -143,7 +144,8 @@
     'root/complete',
     ['purchaseId' => $this->purchase->getPurchaseId()]
 )?>
-Email broken? <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #000 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Click here to view in a browser</a>
+Email broken? <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #337ab7 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Click here to view in a browser</a>
 
+</div>
 </body>
 </html>

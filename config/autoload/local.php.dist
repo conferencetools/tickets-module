@@ -27,5 +27,11 @@ return [
     'view_manager' => [
         'display_not_found_reason' => false,
         'display_exceptions'       => false,
+    ],
+    'opentickets' => [
+        'tickets' => [
+            'type1' => ['name' => 'Standard Ticket', 'price' => 50, 'available' => 100],
+            'type2' => ['name' => 'VIP Ticket', 'price' => 100, 'available' => 10]
+        ]
     ]
 ];
