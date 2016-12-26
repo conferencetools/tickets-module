@@ -98,7 +98,7 @@ class TicketController extends AbstractController
             if ($form->isValid()) {
                 try {
                     $this->getStripeClient()->createCharge([
-                        "amount" => $purchase->getTotalCost()->getAmount() * 100,
+                        "amount" => $purchase->getTotalCost()->getAmount(),
                         "currency" => $purchase->getTotalCost()->getCurrency(),
                         'source' => $data['stripe_token'],
                         'email' => $data['purchase_email']

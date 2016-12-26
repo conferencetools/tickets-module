@@ -1,6 +1,6 @@
 MYSQL_PASS = "h7yKl90fc6AA5*j"
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
-#.SILENT:
+.SILENT:
 
 run:
 	MYSQL_PASS="$(MYSQL_PASS)" docker-compose up -d
