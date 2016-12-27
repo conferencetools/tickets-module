@@ -52,10 +52,16 @@ class TicketPurchase extends AbstractAggregate
         $event = new TicketPurchaseCreated($id);
         $instance->apply($event);
 
-        $total = new Money(0, 'GBP');
+        if (count($tickets) === 0) {
+            throw new \DomainException('Must add at least 1 ticket reservation to create a purchase');
+        }
 
         foreach ($tickets as $ticket) {
-            $total = $total->add($ticket->getTicketType()->getPrice());
+            if (!isset($total)) {
+                $total = $ticket->getTicketType()->getPrice();
+            } else {
+                $total = $total->add($ticket->getTicketType()->getPrice());
+            }
             $event = new TicketReserved($ticket->getReservationId(), $ticket->getTicketType(), $id);
             $instance->apply($event);
         }

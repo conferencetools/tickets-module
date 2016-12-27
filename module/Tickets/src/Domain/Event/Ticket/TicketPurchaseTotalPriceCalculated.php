@@ -11,6 +11,7 @@ namespace OpenTickets\Tickets\Domain\Event\Ticket;
 use JMS\Serializer\Annotation as Jms;
 use Carnage\Cqrs\Event\EventInterface;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
+use OpenTickets\Tickets\Domain\ValueObject\Price;
 
 class TicketPurchaseTotalPriceCalculated implements EventInterface
 {
@@ -21,8 +22,8 @@ class TicketPurchaseTotalPriceCalculated implements EventInterface
     private $id;
 
     /**
-     * @var Money
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Money")
+     * @var Price
+     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Price")
      */
     private $total;
 
@@ -31,7 +32,7 @@ class TicketPurchaseTotalPriceCalculated implements EventInterface
      * @param string $id
      * @param Money $total
      */
-    public function __construct(string $id, Money $total)
+    public function __construct(string $id, Price $total)
     {
         $this->id = $id;
         $this->total = $total;
@@ -40,15 +41,15 @@ class TicketPurchaseTotalPriceCalculated implements EventInterface
     /**
      * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * @return Money
+     * @return Price
      */
-    public function getTotal()
+    public function getTotal(): Price
     {
         return $this->total;
     }

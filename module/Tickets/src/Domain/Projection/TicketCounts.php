@@ -9,6 +9,8 @@ use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
 use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
+use OpenTickets\Tickets\Domain\ValueObject\Price;
+use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 
 class TicketCounts extends AbstractMethodNameMessageHandler implements ResettableInterface
@@ -33,8 +35,10 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
         $q->execute();
 
         foreach ($this->ticketConfig as $handle => $ticket) {
-            $cost = new Money($ticket['price'], 'GBP');
-            $ticketType = new TicketType($handle, $cost, $ticket['name']);
+            $cost = new Money($ticket['cost'], $ticket['currency']);
+            $tax = new TaxRate($ticket['tax']);
+            $price = Price::fromNetCost($cost, $tax);
+            $ticketType = new TicketType($handle, $price, $ticket['name']);
             $entity = new TicketCounter(
                 $ticketType,
                 $ticket['available']
