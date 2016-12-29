@@ -64,13 +64,13 @@
                                         </td>
                                         <td style="color: #000 !important; text-shadow: none !important; background-color: #fff !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: static; min-height: 1px; float: none; width: 50%; display: table-cell; padding: 0 15px;" bgcolor="#fff !important">
                                 <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                £<?=$ticketRecord['ticketType']->getPrice()->getAmount()?>
+                                <?=$this->moneyFormat($ticketRecord['ticketType']->getPrice())?>
                                 </span>
                                             <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
                                     <?=$ticketRecord['quantity']?>
                                 </span>
                                             <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: left; width: 33.33333333%;">
-                                £<?=$ticketRecord['lineTotal']->getAmount()?>
+                                <?=$this->moneyFormat($ticketRecord['lineTotal'])?>
                                 </span>
                                         </td>
                                     </tr>
@@ -97,7 +97,7 @@
                                 <strong style="font-weight: 700; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Total</strong>
                             </span>
                                         <span style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; position: relative; min-height: 1px; padding-right: 15px; padding-left: 15px; float: right; width: 33.33333333%;">
-                                £<?=$this->purchase->getTotalCost()->getAmount()?>
+                                <?=$this->moneyFormat($this->purchase->getTotalCost())?>
                             </span>
                                     </td>
                                 </tr>

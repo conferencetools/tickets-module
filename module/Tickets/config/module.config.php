@@ -12,7 +12,8 @@ return [
     'service_manager' => [
         'factories' => [
             'opentickets.cli' => \OpenTickets\Tickets\Cli\CliFactory::class,
-            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class
+            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
+            \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class
@@ -38,7 +39,7 @@ return [
     ],
     'projections' => [
         'factories' => [
-            \OpenTickets\Tickets\Domain\Projection\TicketCounts::class => \OpenTickets\Tickets\Service\Factory\Projection\TableProjectionFactory::class,
+            \OpenTickets\Tickets\Domain\Projection\TicketCounts::class => \OpenTickets\Tickets\Service\Factory\Projection\TicketCountsFactory::class,
             \OpenTickets\Tickets\Domain\Projection\TicketRecord::class => \OpenTickets\Tickets\Service\Factory\Projection\TableProjectionFactory::class,
         ]
     ],
@@ -68,10 +69,12 @@ return [
     ],
     'view_helpers' => [
         'invokables' => [
-            'flashMessenger' => \OpenTickets\Tickets\View\Helper\FlashMessenger::class
+            'flashMessenger' => \OpenTickets\Tickets\View\Helper\FlashMessenger::class,
+            'moneyFormat' => \OpenTickets\Tickets\View\Helper\MoneyFormat::class,
         ],
         'factories' => [
-            'stripeKey' => \OpenTickets\Tickets\View\Helper\StripeKeyFactory::class
+            'stripeKey' => \OpenTickets\Tickets\View\Helper\StripeKeyFactory::class,
+            'openTicketsConfig' => \OpenTickets\Tickets\View\Helper\ConfigurationFactory::class
         ]
     ],
     'view_manager' => [

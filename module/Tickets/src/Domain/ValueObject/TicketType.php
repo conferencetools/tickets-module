@@ -21,8 +21,8 @@ final class TicketType
 
     /**
      * @var Money
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Money")
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Money")
+     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Price")
+     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Price")
      */
     private $price;
 
@@ -35,11 +35,12 @@ final class TicketType
 
     /**
      * TicketType constructor.
-     * @param $identifier
-     * @param $price
-     * @param $displayName
+     * @param string $identifier
+     * @param Price $price
+     * @param string $displayName
+     * @param TaxRate $taxRate
      */
-    public function __construct(string $identifier, Money $price, string $displayName)
+    public function __construct(string $identifier, Price $price, string $displayName)
     {
         $this->identifier = $identifier;
         $this->price = $price;
@@ -55,9 +56,9 @@ final class TicketType
     }
 
     /**
-     * @return Money
+     * @return Price
      */
-    public function getPrice(): Money
+    public function getPrice(): Price
     {
         return $this->price;
     }

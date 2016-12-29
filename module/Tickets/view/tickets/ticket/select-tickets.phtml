@@ -26,7 +26,7 @@
                                 </td>
                                 <td class="col-md-3 col-xs-6">
                                     <span class="col-xs-6">
-                                    £<?=$ticket->getTicketType()->getPrice()->getAmount()?>
+                                    <?=$this->moneyFormat($ticket->getTicketType()->getPrice())?>
                                     </span>
                                     <span class="col-xs-6">
                                     <input class="form-control" min="0" max="<?=$ticket->getRemaining()?>" value="0" title="quantity" type="number" name="quantity[<?=$ticket->getId()?>]" />

@@ -6,6 +6,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
+use OpenTickets\Tickets\Domain\ValueObject\Price;
+use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 
 /**
@@ -34,8 +36,8 @@ class PurchaseRecord
     private $purchaserEmail = '';
 
     /**
-     * @var Money
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Money")
+     * @var Price
+     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Price")
      */
     private $totalCost;
 
@@ -71,7 +73,7 @@ class PurchaseRecord
     public function __construct(string $purchaseId)
     {
         $this->purchaseId = $purchaseId;
-        $this->totalCost = new Money(0, 'GBP');
+        $this->totalCost = Price::fromNetCost(new Money(0, 'GBP'), new TaxRate(0));
         $this->createdAt = new \DateTime();
         $this->tickets = new ArrayCollection();
     }
@@ -93,9 +95,9 @@ class PurchaseRecord
     }
 
     /**
-     * @return Money
+     * @return Price
      */
-    public function getTotalCost(): Money
+    public function getTotalCost(): Price
     {
         return $this->totalCost;
     }
@@ -149,14 +151,14 @@ class PurchaseRecord
             $ticketTypeIdentifier = $ticket->getTicketType()->getIdentifier();
 
             if (!isset($tickets[$ticketTypeIdentifier])) {
-                $tickets[$ticketTypeIdentifier]['quantity'] = 0;
-                $tickets[$ticketTypeIdentifier]['lineTotal'] = new Money(0, 'GBP');
+                $tickets[$ticketTypeIdentifier]['quantity'] = 1;
+                $tickets[$ticketTypeIdentifier]['lineTotal'] = $ticket->getTicketType()->getPrice();
+                $tickets[$ticketTypeIdentifier]['ticketType'] = $ticket->getTicketType();
+            } else {
+                $tickets[$ticketTypeIdentifier]['quantity']++;
+                $tickets[$ticketTypeIdentifier]['lineTotal'] =
+                    $tickets[$ticketTypeIdentifier]['lineTotal']->add($ticket->getTicketType()->getPrice());
             }
-
-            $tickets[$ticketTypeIdentifier]['ticketType'] = $ticket->getTicketType();
-            $tickets[$ticketTypeIdentifier]['quantity']++;
-            $tickets[$ticketTypeIdentifier]['lineTotal'] =
-                $tickets[$ticketTypeIdentifier]['lineTotal']->add($ticket->getTicketType()->getPrice());
         }
 
         return $tickets;
@@ -176,9 +178,9 @@ class PurchaseRecord
     }
 
     /**
-     * @param Money $totalCost
+     * @param Price $totalCost
      */
-    public function setTotalCost(Money $totalCost)
+    public function setTotalCost(Price $totalCost)
     {
         $this->totalCost = $totalCost;
     }

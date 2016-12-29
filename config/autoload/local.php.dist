@@ -30,8 +30,13 @@ return [
     ],
     'opentickets' => [
         'tickets' => [
-            'type1' => ['name' => 'Standard Ticket', 'price' => 50, 'available' => 100],
-            'type2' => ['name' => 'VIP Ticket', 'price' => 100, 'available' => 10]
+            'type1' => ['name' => 'Standard Ticket', 'cost' => 5000, 'available' => 100],
+            'type2' => ['name' => 'VIP Ticket', 'cost' => 10000, 'available' => 10]
+        ],
+        'financial' => [
+            'taxRate' => 0,
+            'currency' => 'GBP',
+            'displayTax' => false
         ]
     ]
 ];

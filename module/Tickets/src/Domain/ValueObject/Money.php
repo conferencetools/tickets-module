@@ -126,4 +126,9 @@ final class Money
 
         return new self($this->amount - $subtrahend->amount, $this->currency);
     }
+
+    public function multiply($multiple): self
+    {
+        return new self(ceil($this->amount * $multiple), $this->currency);
+    }
 }
