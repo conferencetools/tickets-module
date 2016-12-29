@@ -8,6 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
 use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
@@ -16,12 +17,13 @@ use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 class TicketCounts extends AbstractMethodNameMessageHandler implements ResettableInterface
 {
     private $em;
+
     /**
-     * @var array
+     * @var Configuration
      */
     private $ticketConfig;
 
-    public function __construct(EntityManagerInterface $em, array $ticketConfig)
+    public function __construct(EntityManagerInterface $em, Configuration $ticketConfig)
     {
         $this->em = $em;
         $this->ticketConfig = $ticketConfig;
@@ -34,14 +36,10 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
         $q = $em->createQuery(sprintf('delete from %s', TicketCounter::class));
         $q->execute();
 
-        foreach ($this->ticketConfig as $handle => $ticket) {
-            $cost = new Money($ticket['cost'], $ticket['currency']);
-            $tax = new TaxRate($ticket['tax']);
-            $price = Price::fromNetCost($cost, $tax);
-            $ticketType = new TicketType($handle, $price, $ticket['name']);
+        foreach ($this->ticketConfig->getTicketTypes() as $handle => $ticketType) {
             $entity = new TicketCounter(
                 $ticketType,
-                $ticket['available']
+                $this->ticketConfig->getAvaliableTickets($handle)
             );
             $em->persist($entity);
         }
