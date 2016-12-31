@@ -132,7 +132,9 @@ class TicketController extends AbstractController
                     $this->getCommandBus()->dispatch($command);
                     $this->flashMessenger()
                         ->addSuccessMessage(
-                            'Your ticket purchase is completed. You will recieve an email shortly with your ticket information'
+                            'Your ticket purchase is completed. ' .
+                            'You will receive an email shortly with your receipt. ' .
+                            'Tickets will be sent to the delegates shortly before the event'
                         );
                     return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
                 } catch (CardErrorException $e) {

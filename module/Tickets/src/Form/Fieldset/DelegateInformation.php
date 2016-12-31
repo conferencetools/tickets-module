@@ -32,7 +32,8 @@ class DelegateInformation extends Fieldset implements InputFilterProviderInterfa
             'type' => Text::class,
             'name' => 'email',
             'options' => [
-                'label' => 'Email'
+                'label' => 'Email',
+                'help-block' => 'We\'ll add this email to our attendees mailing list to keep you up to date'
             ],
         ]);
         $this->add([

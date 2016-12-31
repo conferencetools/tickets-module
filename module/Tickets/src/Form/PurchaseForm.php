@@ -24,7 +24,7 @@ class PurchaseForm extends Form
             'name' => 'purchase_email',
             'options' => [
                 'label' => 'Email',
-                'help-block' => 'Your receipt and tickets will be emailed to this address'
+                'help-block' => 'Your receipt will be emailed to this address'
             ]
         ]);
 
