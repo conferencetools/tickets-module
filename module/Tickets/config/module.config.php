@@ -13,6 +13,7 @@ return [
         'factories' => [
             'opentickets.cli' => \OpenTickets\Tickets\Cli\CliFactory::class,
             \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
+            \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
             \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class
         ],
         'abstract_factories' => [
@@ -74,7 +75,8 @@ return [
         ],
         'factories' => [
             'stripeKey' => \OpenTickets\Tickets\View\Helper\StripeKeyFactory::class,
-            'openTicketsConfig' => \OpenTickets\Tickets\View\Helper\ConfigurationFactory::class
+            'openTicketsConfig' => \OpenTickets\Tickets\View\Helper\ConfigurationFactory::class,
+            'serverUrl' => \OpenTickets\Tickets\View\Helper\ServerUrlFactory::class,
         ]
     ],
     'view_manager' => [

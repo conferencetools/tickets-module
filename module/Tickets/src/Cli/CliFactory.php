@@ -2,6 +2,7 @@
 
 namespace OpenTickets\Tickets\Cli;
 
+use OpenTickets\Tickets\Cli\Command\IssueFreeTicket;
 use OpenTickets\Tickets\Cli\Command\TimeoutPurchases;
 use Symfony\Component\Console\Application;
 use Symfony\Component\Console\Helper\HelperSet;
@@ -20,6 +21,7 @@ class CliFactory implements FactoryInterface
         $cli->setAutoExit(false);
 
         $cli->add($serviceLocator->get(TimeoutPurchases::class));
+        $cli->add($serviceLocator->get(IssueFreeTicket::class));
 
         return $cli;
     }

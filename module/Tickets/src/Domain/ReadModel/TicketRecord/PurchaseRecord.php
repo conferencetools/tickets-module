@@ -167,7 +167,7 @@ class PurchaseRecord
     public function addTicketRecord(TicketType $ticketType, string $ticketId)
     {
         $ticketRecord = new TicketRecord($ticketType, $this, $ticketId);
-        $this->tickets->add($ticketRecord);
+        $this->tickets->set($ticketId, $ticketRecord);
         $this->ticketCount++;
     }
 
