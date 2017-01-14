@@ -4,13 +4,9 @@ namespace OpenTickets\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Carnage\Cqrs\Service\EventCatcher;
-use Doctrine\ORM\EntityManagerInterface;
 use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
 use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
-use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
@@ -63,7 +59,7 @@ class IssueFreeTicket extends Command
         $email = $input->getArgument('email');
         $numberOfTickets = $input->getOption('number');
         $ticketType = $this->getTicketType($input->getArgument('ticketType'));
-        
+
         $purchaseId = $this->reserveTickets($ticketType, $numberOfTickets);
         $delegateInfo = $this->createDelegates($numberOfTickets);
 
