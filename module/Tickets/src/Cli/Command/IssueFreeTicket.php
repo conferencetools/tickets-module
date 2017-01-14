@@ -61,7 +61,53 @@ class IssueFreeTicket extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $email = $input->getArgument('email');
-        $issueTicketType = $input->getArgument('ticketType');
+        $numberOfTickets = $input->getOption('number');
+        $ticketType = $this->getTicketType($input->getArgument('ticketType'));
+        
+        $purchaseId = $this->reserveTickets($ticketType, $numberOfTickets);
+        $delegateInfo = $this->createDelegates($numberOfTickets);
+
+        $this->commandBus->dispatch(new CompletePurchase($purchaseId, $email, ...$delegateInfo));
+
+        $output->writeln(sprintf('Tickets created. PurchaseId: %s', $purchaseId));
+    }
+
+    /**
+     * @param $numberOfTickets
+     * @return Delegate[]
+     */
+    private function createDelegates($numberOfTickets): array
+    {
+        $delegateInfo = [];
+
+        for ($i = 0; $i < $numberOfTickets; $i++) {
+            $delegateInfo[] = Delegate::emptyObject();
+        }
+        return $delegateInfo;
+    }
+
+    /**
+     * @param $ticketType
+     * @param $numberOfTickets
+     * @return string
+     */
+    private function reserveTickets($ticketType, $numberOfTickets): string
+    {
+        $this->commandBus->dispatch(
+            new ReserveTickets(new TicketReservationRequest($ticketType, $numberOfTickets))
+        );
+        /** @var TicketPurchaseCreated $event */
+        $event = $this->eventCatcher->getEventsByType(TicketPurchaseCreated::class)[0];
+        return $event->getId();
+    }
+
+    /**
+     * @param $issueTicketType
+     * @return \OpenTickets\Tickets\Domain\ValueObject\TicketType
+     * @throws \Exception
+     */
+    private function getTicketType($issueTicketType): \OpenTickets\Tickets\Domain\ValueObject\TicketType
+    {
         $ticketTypes = $this->config->getTicketTypes();
 
         if (!isset($ticketTypes[$issueTicketType])) {
@@ -69,20 +115,6 @@ class IssueFreeTicket extends Command
         }
 
         $ticketType = $ticketTypes[$issueTicketType];
-        $numberOfTickets = $input->getOption('number');
-        $this->commandBus->dispatch(
-            new ReserveTickets(new TicketReservationRequest($ticketType, $numberOfTickets))
-        );
-        /** @var TicketPurchaseCreated $event */
-        $event = $this->eventCatcher->getEventsByType(TicketPurchaseCreated::class)[0];
-        $delegateInfo = [];
-
-        for ($i = 0; $i < $numberOfTickets; $i++) {
-            $delegateInfo[] = Delegate::emptyObject();
-        }
-
-        $this->commandBus->dispatch(new CompletePurchase($event->getId(), $email, ...$delegateInfo));
-
-        $output->writeln(sprintf('Tickets created. PurchaseId: %s', $event->getId()));
+        return $ticketType;
     }
 }
