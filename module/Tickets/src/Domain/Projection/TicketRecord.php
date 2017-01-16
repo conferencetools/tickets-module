@@ -47,9 +47,12 @@ class TicketRecord extends AbstractMethodNameMessageHandler
 
     protected function handleTicketPurchaseTimedout(TicketPurchaseTimedout $event)
     {
-        $purchase = $this->fetchPurchaseRecord($event->getId());
-        $this->em->remove($purchase);
-        $this->em->flush();
+        try {
+            $purchase = $this->fetchPurchaseRecord($event->getId());
+            $this->em->remove($purchase);
+            $this->em->flush();
+        } catch (\InvalidArgumentException $e) {
+        }
     }
 
     protected function handleTicketReserved(TicketReserved $event)
@@ -62,11 +65,13 @@ class TicketRecord extends AbstractMethodNameMessageHandler
 
     protected function handleTicketReleased(TicketReleased $event)
     {
-        //not bothering to reduce ticket count as this will (should) be followed by a kill purchase event anyway
-        $ticket = $this->fetchTicketRecord($event->getPurchaseId(), $event->getId());
-
-        $this->em->remove($ticket);
-        $this->em->flush();
+        try {
+            //not bothering to reduce ticket count as this will (should) be followed by a kill purchase event anyway
+            $ticket = $this->fetchTicketRecord($event->getPurchaseId(), $event->getId());
+            $this->em->remove($ticket);
+            $this->em->flush();
+        } catch (\InvalidArgumentException $e) {
+        }
     }
 
     protected function handleTicketAssigned(TicketAssigned $event)
@@ -86,6 +91,11 @@ class TicketRecord extends AbstractMethodNameMessageHandler
         $purchase = $this->em->getRepository(PurchaseRecord::class)->findOneBy([
             'purchaseId' => $purchaseId
         ]);
+
+        if ($purchase === null) {
+            throw new \InvalidArgumentException('Purchase Id does not exist');
+        }
+
         return $purchase;
     }
 
