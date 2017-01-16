@@ -10,6 +10,7 @@ use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
+use OpenTickets\Tickets\Domain\ValueObject\Basket;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
@@ -46,27 +47,18 @@ class TicketPurchase extends AbstractAggregate
         return $this->id;
     }
 
-    public static function create(string $id, TicketReservation ...$tickets)
+    public static function create(string $id, Basket $basket)
     {
         $instance = new static();
         $event = new TicketPurchaseCreated($id);
         $instance->apply($event);
 
-        if (count($tickets) === 0) {
-            throw new \DomainException('Must add at least 1 ticket reservation to create a purchase');
-        }
-
-        foreach ($tickets as $ticket) {
-            if (!isset($total)) {
-                $total = $ticket->getTicketType()->getPrice();
-            } else {
-                $total = $total->add($ticket->getTicketType()->getPrice());
-            }
+        foreach ($basket->getTickets() as $ticket) {
             $event = new TicketReserved($ticket->getReservationId(), $ticket->getTicketType(), $id);
             $instance->apply($event);
         }
 
-        $event = new TicketPurchaseTotalPriceCalculated($id, $total);
+        $event = new TicketPurchaseTotalPriceCalculated($id, $basket->getTotal());
         $instance->apply($event);
 
         return $instance;
