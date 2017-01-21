@@ -21,6 +21,21 @@ use ZfrStripe\Exception\CardErrorException;
 
 class TicketController extends AbstractController
 {
+    private static $cardErrorMessages = [
+        'invalid_number' => 'The card number is not a valid credit card number.',
+        'invalid_expiry_month' => 'The card\'s expiration month is invalid.',
+        'invalid_expiry_year' => 'The card\'s expiration year is invalid.',
+        'invalid_cvc' => 'The card\'s security code/CVC is invalid.',
+        'invalid_swipe_data' => 'The card\'s swipe data is invalid.',
+        'incorrect_number' => 'The card number is incorrect.',
+        'expired_card' => 'The card has expired.',
+        'incorrect_cvc' => 'The card\'s security code/CVC is incorrect.',
+        'incorrect_zip' => 'The address for your card did not match the card\'s billing address.',
+        'card_declined' => 'The card was declined.',
+        'missing' => 'There is no card on a customer that is being charged.',
+        'processing_error' => 'An error occurred while processing the card.',
+    ];
+
     public function indexAction()
     {
         return $this->redirect()->toRoute('root/select-tickets');
@@ -101,7 +116,10 @@ class TicketController extends AbstractController
                         "amount" => $purchase->getTotalCost()->getGross()->getAmount(),
                         "currency" => $purchase->getTotalCost()->getGross()->getCurrency(),
                         'source' => $data['stripe_token'],
-                        'email' => $data['purchase_email']
+                        'metadata' => [
+                            'email' => $data['purchase_email'],
+                            'purchaseId' => $purchaseId
+                        ]
                     ]);
 
                     $delegateInfo = [];
@@ -118,7 +136,12 @@ class TicketController extends AbstractController
                         );
                     return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
                 } catch (CardErrorException $e) {
-                    $this->flashMessenger()->addErrorMessage('There was an issue with taking your payment, please try again');
+                    $this->flashMessenger()->addErrorMessage(
+                        sprintf(
+                            'There was an issue with taking your payment: %s Please try again.',
+                            $this->getDetailedErrorMessage($e)
+                        )
+                    );
                     $noPayment = false;
                 }
             }
@@ -189,5 +212,15 @@ class TicketController extends AbstractController
             'purchaseId' => $purchaseId
         ]);
         return $purchase;
+    }
+
+    private function getDetailedErrorMessage(CardErrorException $e)
+    {
+        $response = $e->getResponse();
+        $errors = json_decode($response->getBody(true), true);
+        $code = isset($errors['error']['code']) ? $errors['error']['code'] : 'processing_error';
+        $code = isset(static::$cardErrorMessages[$code]) ? $code : 'processing_error';
+
+        return static::$cardErrorMessages[$code];
     }
 }
