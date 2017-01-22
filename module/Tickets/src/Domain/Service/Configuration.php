@@ -157,6 +157,14 @@ class Configuration
     }
 
     /**
+     * @return TicketType
+     */
+    public function getTicketType(string $identifier): TicketType
+    {
+        return $this->ticketTypes[$identifier];
+    }
+
+    /**
      * @param string $identifier
      * @return int
      */

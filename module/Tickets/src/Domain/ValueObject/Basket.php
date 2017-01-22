@@ -7,24 +7,62 @@ use OpenTickets\Tickets\Domain\Service\Configuration;
 class Basket
 {
     private $tickets;
+    /**
+     * @var Price
+     */
+    private $preDiscountTotal;
+
+    /**
+     * @var Price
+     */
     private $total;
 
-    private function __construct(Price $zero, TicketReservation ...$tickets)
+    /**
+     * @var DiscountCode
+     */
+    private $discountCode;
+
+    private function __construct(TicketReservation ...$tickets)
     {
         if (count($tickets) === 0) {
             throw new \InvalidArgumentException('Must put at least one Ticket reservation into a basket');
         }
 
         $this->tickets = $tickets;
-        $this->total = $this->calculateTotal($zero);
+
     }
 
     public static function fromReservations(Configuration $config, TicketReservation ...$tickets)
     {
-        return new static(
-            Price::fromNetCost(new Money(0, $config->getCurrency()), $config->getTaxRate()),
+        $instance = new self(
             ...$tickets
         );
+
+        $zero = Price::fromNetCost(new Money(0, $config->getCurrency()), $config->getTaxRate());
+        $total = $instance->calculateTotal($zero);
+
+        $instance->preDiscountTotal = $total;
+        $instance->total = $total;
+        return $instance;
+    }
+
+    public static function fromReservationsWithDiscount(
+        Configuration $config,
+        DiscountCode $discountCode,
+        TicketReservation ...$tickets)
+    {
+        $instance = new self(
+            ...$tickets
+        );
+
+        $zero = Price::fromNetCost(new Money(0, $config->getCurrency()), $config->getTaxRate());
+        $total = $instance->calculateTotal($zero);
+
+        $instance->preDiscountTotal = $total;
+        $instance->total = $total->subtract($discountCode->apply($instance));
+        $instance->discountCode = $discountCode;
+
+        return $instance;
     }
 
     /**
@@ -43,6 +81,23 @@ class Basket
         return $this->total;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasDiscountCode(): bool
+    {
+        return !($this->discountCode === null);
+    }
+
+    /**
+     * @TODO make nullable (PHP 7.1)
+     * @return DiscountCode
+     */
+    public function getDiscountCode(): DiscountCode
+    {
+        return $this->discountCode;
+    }
+
     private function calculateTotal(Price $total): Price
     {
         foreach ($this->tickets as $ticket) {
@@ -50,5 +105,10 @@ class Basket
         }
 
         return $total;
+    }
+
+    public function getPreDiscountTotal(): Price
+    {
+        return $this->preDiscountTotal;
     }
 }
