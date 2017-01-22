@@ -2,6 +2,7 @@
 
 namespace OpenTickets\Tickets\Domain\Service;
 
+use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
@@ -13,6 +14,7 @@ class Configuration
     //@TODO change to private const
     private static $defaults = [
         'tickets' => [],
+        'discountCodes' => [],
         'financial' => [
             'currency' => 'GBP',
             'taxRate' => 0,
@@ -94,6 +96,20 @@ class Configuration
      */
     private $avaliableTickets;
 
+    /**
+     * An array of discount codes. The app uses this for validating and applying different codes.
+     *
+     * configkey: discountCodes
+     * structure: identifier => [
+     *      'type' => The class name of the discount type eg Percentage::class,
+     *      'name' => User friendly name for the code
+     *      'options' => An array of options for the type you are using
+     * ]
+     *
+     * @var DiscountCode[]
+     */
+    private $discountCodes;
+
     private function __construct() {}
 
     public static function fromArray(array $settings)
@@ -119,6 +135,15 @@ class Configuration
             );
 
             $instance->avaliableTickets[$identifier] = $ticket['available'];
+        }
+
+        foreach ($settings['discountCodes'] as $identifier => $code) {
+            $discountType = call_user_func([$code['type'], 'fromArray'], $code['options']);
+            $instance->discountCodes[$identifier] = new DiscountCode(
+                $identifier,
+                $code['name'],
+                $discountType
+            );
         }
 
         return $instance;
@@ -171,5 +196,10 @@ class Configuration
     public function getAvaliableTickets(string $identifier): int
     {
         return $this->avaliableTickets[$identifier];
+    }
+
+    public function getDiscountCodes(): array
+    {
+        return $this->discountCodes;
     }
 }
