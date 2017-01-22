@@ -54,6 +54,10 @@ class Ticket extends AbstractMethodNameMessageHandler
         $this->configuration = $configuration;
     }
 
+    /**
+     * @TODO can we refactor the command to pass a basket directly?
+     * @param ReserveTickets $command
+     */
     protected function handleReserveTickets(ReserveTickets $command)
     {
         $tickets = [];
@@ -67,7 +71,15 @@ class Ticket extends AbstractMethodNameMessageHandler
             throw new \RuntimeException('Must specify at least 1 ticket for purchase');
         }
 
-        $basket = Basket::fromReservations($this->configuration, ...$tickets);
+        if ($command->hasDiscountCode()) {
+            $basket = Basket::fromReservationsWithDiscount(
+                $this->configuration,
+                $command->getDiscountCode(),
+                ...$tickets
+            );
+        } else {
+            $basket = Basket::fromReservations($this->configuration, ...$tickets);
+        }
         $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), $basket);
 
         $this->repository->save($purchase);

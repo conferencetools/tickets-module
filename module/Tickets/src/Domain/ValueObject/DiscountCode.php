@@ -3,20 +3,25 @@
 namespace OpenTickets\Tickets\Domain\ValueObject;
 
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\DiscountTypeInterface;
+use JMS\Serializer\Annotation as Jms;
 
 class DiscountCode
 {
     /**
+     * @JMS\Type("string")
      * @var string
      */
     private $code;
 
     /**
+     * @JMS\Type("string")
      * @var string
      */
     private $displayName;
 
     /**
+     * @TODO when more than one type figure out how to handle this with jms
+     * @JMS\Type("OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage")
      * @var DiscountTypeInterface
      */
     private $discountType;

@@ -3,6 +3,7 @@
 namespace OpenTickets\Tickets\Domain\Model\Ticket;
 
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
+use OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
@@ -55,6 +56,14 @@ class TicketPurchase extends AbstractAggregate
 
         foreach ($basket->getTickets() as $ticket) {
             $event = new TicketReserved($ticket->getReservationId(), $ticket->getTicketType(), $id);
+            $instance->apply($event);
+        }
+
+        if ($basket->hasDiscountCode()) {
+            $event = new TicketPurchaseTotalPriceCalculated($id, $basket->getPreDiscountTotal());
+            $instance->apply($event);
+
+            $event = new DiscountCodeApplied($id, $basket->getDiscountCode());
             $instance->apply($event);
         }
 
