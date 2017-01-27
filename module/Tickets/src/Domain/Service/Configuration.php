@@ -99,6 +99,8 @@ class Configuration
     /**
      * An array of discount codes. The app uses this for validating and applying different codes.
      *
+     * If you change this config, you will need to rebuild the discount codes projection
+     *
      * configkey: discountCodes
      * structure: identifier => [
      *      'type' => The class name of the discount type eg Percentage::class,

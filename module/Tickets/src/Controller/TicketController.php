@@ -49,39 +49,30 @@ class TicketController extends AbstractController
 
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
-            $total = 0;
-            $purchases = [];
-            $errors = [];
-            foreach($data['quantity'] as $id => $quantity) {
-                if ($quantity > $tickets[$id]->getRemaining()) {
-                    $errors[] = sprintf('Not enough %s remaining', $tickets[$id]->getTicketType()->getDisplayName());
-                    $total++;
-                } elseif (!is_numeric($quantity) || $quantity < 0) {
-                    $errors[] = 'Quantity needs to be a number :)';
-                } elseif ($quantity > 0) {
-                    $total += $quantity;
-                    $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
+            $failed = false;
+            try {
+                $purchases = $this->validateSelectedTickets($data, $tickets);
+            } catch (\InvalidArgumentException $e) {
+                $failed = true;
+            }
+
+            try {
+                $discountCode = $this->validateDiscountCode($data);
+            } catch (\InvalidArgumentException $e) {
+                $failed = true;
+            }
+
+            if (!$failed) {
+                if ($discountCode !== null) {
+                    $command = ReserveTickets::withDiscountCode($discountCode, ...$purchases);
+                } else {
+                    $command = new ReserveTickets(...$purchases);
                 }
-            }
 
-            if ($total < 1) {
-                $errors[] = 'You must specify at least 1 ticket to purchase';
-            }
-
-            if ($data['discount_code'] !== '') {
-                $errors[] = 'Invalid discount code';
-            }
-
-            if (empty($errors)) {
-                $command = new ReserveTickets(...$purchases);
                 $this->getCommandBus()->dispatch($command);
                 /** @var TicketPurchaseCreated $event */
                 $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
                 return $this->redirect()->toRoute('root/purchase', ['purchaseId' => $event->getId()]);
-            }
-
-            foreach ($errors as $error) {
-                $this->flashMessenger()->addErrorMessage($error);
             }
         }
 
@@ -224,5 +215,66 @@ class TicketController extends AbstractController
         $code = isset(static::$cardErrorMessages[$code]) ? $code : 'processing_error';
 
         return static::$cardErrorMessages[$code];
+    }
+
+    /**
+     * @param $data
+     * @param TicketCounter[] $tickets
+     * @return array
+     */
+    private function validateSelectedTickets($data, $tickets): array
+    {
+        $total = 0;
+        $purchases = [];
+        $errors = false;
+        foreach ($data['quantity'] as $id => $quantity) {
+            if ($quantity > $tickets[$id]->getRemaining()) {
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf('Not enough %s remaining', $tickets[$id]->getTicketType()->getDisplayName())
+                );
+                $total++;
+                $errors = true;
+            } elseif (!is_numeric($quantity) || $quantity < 0) {
+                $this->flashMessenger()->addErrorMessage('Quantity needs to be a number :)');
+                $errors = true;
+            } elseif ($quantity > 0) {
+                $total += $quantity;
+                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int)$quantity);
+            }
+        }
+
+        if ($total < 1) {
+            $this->flashMessenger()->addErrorMessage('You must specify at least 1 ticket to purchase');
+            $errors = true;
+        }
+
+        if ($errors) {
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        return $purchases;
+    }
+
+    /**
+     * @param $data
+     * @return ?DiscountCode
+     */
+    private function validateDiscountCode($data)
+    {
+        $errors = false;
+
+        $validCodes = $this->getConfiguration()->getDiscountCodes();
+        $validCodes[''] = null;
+
+        if (!array_key_exists($data['discount_code'], $validCodes)) {
+            $this->flashMessenger()->addErrorMessage('Invalid discount code');
+            $errors = true;
+        }
+
+        if ($errors) {
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        return $validCodes[$data['discount_code']];
     }
 }

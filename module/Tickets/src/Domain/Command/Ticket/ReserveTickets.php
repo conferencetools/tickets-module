@@ -32,12 +32,12 @@ class ReserveTickets implements CommandInterface
 
     public static function withoutDiscountCode(TicketReservationRequest ...$reservationRequests)
     {
-        return new static($reservationRequests);
+        return new static(...$reservationRequests);
     }
 
     public static function withDiscountCode(DiscountCode $discountCode, TicketReservationRequest ...$reservationRequests)
     {
-        $instance = new static($reservationRequests);
+        $instance = new static(...$reservationRequests);
         $instance->discountCode = $discountCode;
 
         return $instance;

@@ -35,4 +35,9 @@ class Percentage implements DiscountTypeInterface
     {
         return $this->percentage;
     }
+
+    public static function fromArray(array $data): Percentage
+    {
+        return new static($data['percentage']);
+    }
 }

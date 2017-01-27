@@ -36,7 +36,11 @@
                             <span class="col-xs-8 col-md-4">
                                 <strong>Discount Code</strong>
                             </span>
-                            <span class="col-xs-4">None</span>
+                            <?php if ($this->purchase->hasDiscountCode()):?>
+                                <span class="col-xs-4"><?=$this->purchase->getDiscountCode()->getDisplayName()?></span>
+                            <?php else:?>
+                                <span class="col-xs-4">None</span>
+                            <?php endif?>
                         </td>
                     </tr>
                     <?php if ($this->openTicketsConfig()->displayTax()):?>

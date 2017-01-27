@@ -4,17 +4,25 @@ namespace OpenTickets\Tickets\Domain\ValueObject;
 
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\DiscountTypeInterface;
 use JMS\Serializer\Annotation as Jms;
+use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Class DiscountCode
+ * @package OpenTickets\Tickets\Domain\ValueObject
+ * @ORM\Embeddable()
+ */
 class DiscountCode
 {
     /**
      * @JMS\Type("string")
+     * @ORM\Column(type="string")
      * @var string
      */
     private $code;
 
     /**
      * @JMS\Type("string")
+     * @ORM\Column(type="string")
      * @var string
      */
     private $displayName;
@@ -22,6 +30,7 @@ class DiscountCode
     /**
      * @TODO when more than one type figure out how to handle this with jms
      * @JMS\Type("OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage")
+     * @ORM\Column(type="json_object")
      * @var DiscountTypeInterface
      */
     private $discountType;
