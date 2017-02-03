@@ -14,7 +14,6 @@ use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
 use OpenTickets\Tickets\Domain\ValueObject\Basket;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
 
 class TicketPurchase extends AbstractAggregate
 {

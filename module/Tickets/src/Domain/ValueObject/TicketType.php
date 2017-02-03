@@ -38,7 +38,6 @@ final class TicketType
      * @param string $identifier
      * @param Price $price
      * @param string $displayName
-     * @param TaxRate $taxRate
      */
     public function __construct(string $identifier, Price $price, string $displayName)
     {

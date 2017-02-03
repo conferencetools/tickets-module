@@ -3,7 +3,7 @@
 namespace OpenTickets\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
-use JMS\Serializer\Annotation as Jms;
+use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class Delegate

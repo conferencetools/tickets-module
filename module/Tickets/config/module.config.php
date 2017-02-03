@@ -110,7 +110,7 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-           'opentickets_tickets_read_orm_driver' => [
+            'opentickets_tickets_read_orm_driver' => [
                 'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => [__DIR__ . '/../src/Domain/ReadModel']

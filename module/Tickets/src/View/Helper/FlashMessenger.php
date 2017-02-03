@@ -71,7 +71,7 @@ class FlashMessenger extends ZendFlashMessenger
         $translatorTextDomain = $this->getTranslatorTextDomain();
         array_walk_recursive(
             $messages,
-            function ($item) use (& $messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
+            function($item) use (& $messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
                 if ($translator !== null) {
                     $item = $translator->translate(
                         $item,
