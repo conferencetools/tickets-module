@@ -5,6 +5,7 @@ namespace OpenTickets\Tickets\Domain\ReadModel\TicketRecord;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
@@ -64,6 +65,12 @@ class PurchaseRecord
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /**
+     * @ORM\Column(type="json_object", nullable=true)
+     * @var DiscountCode
+     */
+    private $discountCode;
 
     /**
      * PurchaseRecord constructor.
@@ -134,6 +141,19 @@ class PurchaseRecord
         return $this->createdAt;
     }
 
+    public function hasDiscountCode(): bool
+    {
+        return !($this->discountCode === null);
+    }
+
+    /**
+     * @return DiscountCode
+     */
+    public function getDiscountCode(): DiscountCode
+    {
+        return $this->discountCode;
+    }
+
     public function getTicketRecord($ticketId): TicketRecord
     {
         if (!isset($this->tickets[$ticketId])) {
@@ -188,5 +208,10 @@ class PurchaseRecord
     public function hasTimedout()
     {
         return ($this->createdAt < new \DateTime('-30 minutes'));
+    }
+
+    public function applyDiscountCode(DiscountCode $discountCode)
+    {
+        $this->discountCode = $discountCode;
     }
 }

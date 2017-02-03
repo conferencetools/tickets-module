@@ -142,4 +142,9 @@ class Price
 
         return new self($this->net->subtract($subtrahend->net), $this->taxRate);
     }
+
+    public function multiply($multiple): self
+    {
+        return new self($this->net->multiply($multiple), $this->taxRate);
+    }
 }

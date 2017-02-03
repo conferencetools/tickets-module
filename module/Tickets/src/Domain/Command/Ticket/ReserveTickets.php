@@ -10,6 +10,7 @@
 namespace OpenTickets\Tickets\Domain\Command\Ticket;
 
 use Carnage\Cqrs\Command\CommandInterface;
+use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
 
 class ReserveTickets implements CommandInterface
@@ -19,9 +20,27 @@ class ReserveTickets implements CommandInterface
      */
     private $reservationRequests;
 
+    /**
+     * @var DiscountCode
+     */
+    private $discountCode;
+
     public function __construct(TicketReservationRequest ...$reservationRequests)
     {
         $this->reservationRequests = $reservationRequests;
+    }
+
+    public static function withoutDiscountCode(TicketReservationRequest ...$reservationRequests)
+    {
+        return new static(...$reservationRequests);
+    }
+
+    public static function withDiscountCode(DiscountCode $discountCode, TicketReservationRequest ...$reservationRequests)
+    {
+        $instance = new static(...$reservationRequests);
+        $instance->discountCode = $discountCode;
+
+        return $instance;
     }
 
     /**
@@ -30,5 +49,18 @@ class ReserveTickets implements CommandInterface
     public function getReservationRequests(): array
     {
         return $this->reservationRequests;
+    }
+
+    public function hasDiscountCode(): bool
+    {
+        return !($this->discountCode === null);
+    }
+
+    /**
+     * @return DiscountCode
+     */
+    public function getDiscountCode(): DiscountCode
+    {
+        return $this->discountCode;
     }
 }

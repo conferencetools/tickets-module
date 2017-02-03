@@ -5,6 +5,7 @@ namespace OpenTickets\Tickets\Controller;
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
+use OpenTickets\Tickets\Domain\Service\Configuration;
 use Zend\Form\FormElementManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use ZfrStripe\Client\StripeClient;
@@ -33,6 +34,11 @@ abstract class AbstractController extends AbstractActionController
     private $stripeClient;
 
     /**
+     * @var Configuration
+     */
+    private $configuration;
+
+    /**
      * AbstractController constructor.
      * @param MessageBusInterface $commandBus
      * @param EntityManager $entityManager
@@ -41,11 +47,13 @@ abstract class AbstractController extends AbstractActionController
     public function __construct(
         MessageBusInterface $commandBus,
         EntityManager $entityManager,
-        StripeClient $stripeClient
+        StripeClient $stripeClient,
+        Configuration $configuration
     ) {
         $this->commandBus = $commandBus;
         $this->entityManager = $entityManager;
         $this->stripeClient = $stripeClient;
+        $this->configuration = $configuration;
     }
 
     /**
@@ -70,5 +78,13 @@ abstract class AbstractController extends AbstractActionController
     public function getStripeClient(): StripeClient
     {
         return $this->stripeClient;
+    }
+
+    /**
+     * @return Configuration
+     */
+    public function getConfiguration(): Configuration
+    {
+        return $this->configuration;
     }
 }

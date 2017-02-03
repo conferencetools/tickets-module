@@ -17,6 +17,8 @@ use OpenTickets\Tickets\Domain\Command\Ticket\MakePayment;
 use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
 use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use OpenTickets\Tickets\Domain\Model\Ticket\TicketPurchase;
+use OpenTickets\Tickets\Domain\Service\Configuration;
+use OpenTickets\Tickets\Domain\ValueObject\Basket;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
 
 class Ticket extends AbstractMethodNameMessageHandler
@@ -34,18 +36,28 @@ class Ticket extends AbstractMethodNameMessageHandler
      * @var RepositoryInterface
      */
     private $repository;
+    /**
+     * @var Configuration
+     */
+    private $configuration;
 
     public function __construct(
         GeneratorInterface $identityGenerator,
         GeneratorInterface $ticketIdGenerator,
-        RepositoryInterface $repository
+        RepositoryInterface $repository,
+        Configuration $configuration
     ) {
 
         $this->identityGenerator = $identityGenerator;
         $this->ticketIdGenerator = $ticketIdGenerator;
         $this->repository = $repository;
+        $this->configuration = $configuration;
     }
 
+    /**
+     * @TODO can we refactor the command to pass a basket directly?
+     * @param ReserveTickets $command
+     */
     protected function handleReserveTickets(ReserveTickets $command)
     {
         $tickets = [];
@@ -59,7 +71,16 @@ class Ticket extends AbstractMethodNameMessageHandler
             throw new \RuntimeException('Must specify at least 1 ticket for purchase');
         }
 
-        $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), ...$tickets);
+        if ($command->hasDiscountCode()) {
+            $basket = Basket::fromReservationsWithDiscount(
+                $this->configuration,
+                $command->getDiscountCode(),
+                ...$tickets
+            );
+        } else {
+            $basket = Basket::fromReservations($this->configuration, ...$tickets);
+        }
+        $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), $basket);
 
         $this->repository->save($purchase);
     }

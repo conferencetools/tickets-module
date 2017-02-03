@@ -4,6 +4,7 @@ namespace OpenTickets\Tickets\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Doctrine\ORM\EntityManagerInterface;
+use OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
@@ -79,6 +80,14 @@ class TicketRecord extends AbstractMethodNameMessageHandler
         $ticket = $this->fetchTicketRecord($event->getPurchaseId(), $event->getTicketId());
 
         $ticket->updateDelegate($event->getDelegate());
+        $this->em->flush();
+    }
+
+    protected function handleDiscountCodeApplied(DiscountCodeApplied $event)
+    {
+        $purchase = $this->fetchPurchaseRecord($event->getId());
+
+        $purchase->applyDiscountCode($event->getDiscountCode());
         $this->em->flush();
     }
 
