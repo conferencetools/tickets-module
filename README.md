@@ -1,5 +1,6 @@
 # opentickets
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/carnage/opentickets/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/carnage/opentickets/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/carnage/opentickets/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/carnage/opentickets/?branch=master)
+
 Open source ticketing system
 
 This is a ticketing system MVP I built for PHP Yorkshire. It is unlikely you will be able to make use of it in it's 
