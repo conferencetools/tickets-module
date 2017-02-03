@@ -20,7 +20,7 @@ class ServerUrlFactory implements FactoryInterface
                 ->setHost($config['website']['host'])
                 ->setScheme($config['website']['scheme']);
 
-            if(isset($config['website']['port'])) {
+            if (isset($config['website']['port'])) {
                 $serverUrlHelper->setPort($config['website']['port']);
             }
 

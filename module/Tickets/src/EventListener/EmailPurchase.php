@@ -73,7 +73,7 @@ class EmailPurchase implements MessageHandlerInterface
     private function buildMessage($htmlMarkup)
     {
 
-     /*   $text = new MimePart($preMailer->getText());
+        /*   $text = new MimePart($preMailer->getText());
         $text->type = "text/plain";
 */
         $html = new MimePart($htmlMarkup);

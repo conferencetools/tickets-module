@@ -5,18 +5,15 @@ namespace OpenTickets\Tickets\Controller;
 use OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate;
 use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
 use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
-use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
 use OpenTickets\Tickets\Form\ManageTicket;
 use OpenTickets\Tickets\Form\PurchaseForm;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
-use ZfrStripe\Client\StripeClient;
 use ZfrStripe\Exception\CardErrorException;
 
 class TicketController extends AbstractController
@@ -239,7 +236,7 @@ class TicketController extends AbstractController
                 $errors = true;
             } elseif ($quantity > 0) {
                 $total += $quantity;
-                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int)$quantity);
+                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
             }
         }
 

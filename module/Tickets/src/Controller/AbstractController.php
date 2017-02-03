@@ -3,10 +3,8 @@
 namespace OpenTickets\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use Doctrine\ODM\MongoDB\DocumentManager;
 use Doctrine\ORM\EntityManager;
 use OpenTickets\Tickets\Domain\Service\Configuration;
-use Zend\Form\FormElementManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use ZfrStripe\Client\StripeClient;
 

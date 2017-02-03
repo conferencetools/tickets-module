@@ -47,9 +47,8 @@ class TicketRecord
     /**
      * TicketRecord constructor.
      * @param TicketType $ticketType
-     * @param string $purchaseId
+     * @param string $purchase
      * @param string $ticketId
-     * @param Delegate $delegate
      */
     public function __construct(TicketType $ticketType, PurchaseRecord $purchase, string $ticketId)
     {

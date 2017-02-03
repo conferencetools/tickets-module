@@ -13,7 +13,7 @@ class MoneyFormat extends AbstractHelper
      * @param bool $useNet
      * @return string
      */
-    public function __invoke($money, $useNet=false)
+    public function __invoke($money, $useNet = false)
     {
         if ($money instanceof Price) {
             if ($useNet) {

@@ -28,7 +28,7 @@ class PurchaseForm extends Form
             ]
         ]);
 
-        for ($i = 0; $i < $tickets; $i++ ) {
+        for ($i = 0; $i < $tickets; $i++) {
             $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
         }
 

@@ -75,7 +75,6 @@ class PurchaseRecord
     /**
      * PurchaseRecord constructor.
      * @param string $purchaseId
-     * @param Money $totalCost
      */
     public function __construct(string $purchaseId)
     {
@@ -191,6 +190,9 @@ class PurchaseRecord
         $this->ticketCount++;
     }
 
+    /**
+     * @param string $email
+     */
     public function pay($email)
     {
         $this->purchaserEmail = $email;
