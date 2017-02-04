@@ -11,13 +11,16 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            'opentickets.cli' => \OpenTickets\Tickets\Cli\CliFactory::class,
-            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
-            \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
             \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class
+        ]
+    ],
+    'cli_commands' => [
+        'factories' => [
+            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
+            \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
         ]
     ],
     'command_handlers' => [

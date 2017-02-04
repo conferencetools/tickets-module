@@ -13,6 +13,7 @@ class TimeoutPurchasesFactory implements FactoryInterface
      */
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $serviceLocator = $serviceLocator->getServiceLocator();
         return TimeoutPurchases::build(
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
             $serviceLocator->get(CommandBusInterface::class)
