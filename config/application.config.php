@@ -5,6 +5,7 @@ return array(
         'TwbBundle',
         'DoctrineModule',
         'DoctrineORMModule',
+        'Carnage\ZendfonyCli',
         'Carnage\Cqrs',
         'Carnage\Cqorms',
         //'ZfcRbac',
