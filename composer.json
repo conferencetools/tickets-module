@@ -13,6 +13,10 @@
     },
     {
       "type": "vcs",
+      "url": "https://github.com/carnage/ZendfonyCli"
+    },
+    {
+      "type": "vcs",
       "url": "https://github.com/carnage/zend-form.git"
     },
     {
@@ -77,7 +81,8 @@
     "zendframework/zend-view": "^2.5",
     "zendframework/zendxml": "^1.0.1",
     "zfr/zfr-stripe-module": "~4.0",
-    "crossjoin/pre-mailer": "^1.0"
+    "crossjoin/pre-mailer": "^1.0",
+    "carnage/zendfonycli": "dev-master"
   },
   "autoload": {
     "psr-4": {

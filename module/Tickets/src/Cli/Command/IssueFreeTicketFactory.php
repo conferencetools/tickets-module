@@ -13,6 +13,7 @@ class IssueFreeTicketFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
+        $serviceLocator = $serviceLocator->getServiceLocator();
         return IssueFreeTicket::build(
             $serviceLocator->get(CommandBusInterface::class),
             $serviceLocator->get(Configuration::class),
