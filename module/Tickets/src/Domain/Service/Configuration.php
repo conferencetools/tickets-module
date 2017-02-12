@@ -140,7 +140,9 @@ class Configuration
         }
 
         foreach ($settings['discountCodes'] as $identifier => $code) {
-            $discountType = call_user_func([$code['type'], 'fromArray'], $code['options']);
+            // Be careful here; configuration object is still under constrcution at the time it is passed in
+            // Might need to rethink this at some point
+            $discountType = call_user_func([$code['type'], 'fromArray'], $code['options'], $instance);
             $instance->discountCodes[$identifier] = new DiscountCode(
                 $identifier,
                 $code['name'],

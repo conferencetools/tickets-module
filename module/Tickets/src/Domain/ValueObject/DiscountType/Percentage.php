@@ -2,6 +2,7 @@
 
 namespace OpenTickets\Tickets\Domain\ValueObject\DiscountType;
 
+use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\Basket;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use JMS\Serializer\Annotation as Jms;
@@ -36,7 +37,7 @@ class Percentage implements DiscountTypeInterface
         return $this->percentage;
     }
 
-    public static function fromArray(array $data): Percentage
+    public static function fromArray(array $data, Configuration $configuration): DiscountTypeInterface
     {
         return new static($data['percentage']);
     }

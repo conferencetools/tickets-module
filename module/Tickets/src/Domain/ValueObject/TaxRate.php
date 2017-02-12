@@ -76,7 +76,7 @@ class TaxRate
      * @param TaxRate $other
      * @return bool
      */
-    public function equals(self $other): bool
+    public function equals(TaxRate $other): bool
     {
         return ($other->percentage === $this->percentage);
     }
@@ -85,7 +85,7 @@ class TaxRate
      * @param TaxRate $other
      * @return int
      */
-    public function compare(self $other): int
+    public function compare(TaxRate $other): int
     {
         if ($this->percentage < $other->percentage) {
             return -1;
@@ -100,7 +100,7 @@ class TaxRate
      * @param TaxRate $other
      * @return bool
      */
-    public function greaterThan(self $other): bool
+    public function greaterThan(TaxRate $other): bool
     {
         return 1 === $this->compare($other);
     }
@@ -109,7 +109,7 @@ class TaxRate
      * @param TaxRate $other
      * @return bool
      */
-    public function lessThan(self $other): bool
+    public function lessThan(TaxRate $other): bool
     {
         return -1 === $this->compare($other);
     }

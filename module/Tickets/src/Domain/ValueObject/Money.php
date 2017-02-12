@@ -50,7 +50,7 @@ final class Money
         return $this->currency;
     }
 
-    public static function __callStatic(string $method, array $arguments): self
+    public static function __callStatic(string $method, array $arguments): Money
     {
         return new self($arguments[0], $method);
     }
@@ -59,7 +59,7 @@ final class Money
      * @param Money $other
      * @return bool
      */
-    public function isSameCurrency(self $other): bool
+    public function isSameCurrency(Money $other): bool
     {
         return $this->currency === $other->currency;
     }
@@ -67,14 +67,14 @@ final class Money
     /**
      * @throws \InvalidArgumentException
      */
-    private function assertSameCurrency(self $other)
+    private function assertSameCurrency(Money $other)
     {
         if (!$this->isSameCurrency($other)) {
             throw new \InvalidArgumentException('Different currencies');
         }
     }
 
-    public function equals(self $other): bool
+    public function equals(Money $other): bool
     {
         return ($this->isSameCurrency($other) && $other->amount === $this->amount);
     }
@@ -83,7 +83,7 @@ final class Money
      * @param Money $other
      * @return int
      */
-    public function compare(self $other): int
+    public function compare(Money $other): int
     {
         $this->assertSameCurrency($other);
         if ($this->amount < $other->amount) {
@@ -99,7 +99,7 @@ final class Money
      * @param Money $other
      * @return bool
      */
-    public function greaterThan(self $other): bool
+    public function greaterThan(Money $other): bool
     {
         return 1 === $this->compare($other);
     }
@@ -108,26 +108,26 @@ final class Money
      * @param Money $other
      * @return bool
      */
-    public function lessThan(self $other): bool
+    public function lessThan(Money $other): bool
     {
         return -1 === $this->compare($other);
     }
 
-    public function add(self $addend): self
+    public function add(Money $addend): Money
     {
         $this->assertSameCurrency($addend);
 
         return new self($this->amount + $addend->amount, $this->currency);
     }
 
-    public function subtract(self $subtrahend): self
+    public function subtract(Money $subtrahend): Money
     {
         $this->assertSameCurrency($subtrahend);
 
         return new self($this->amount - $subtrahend->amount, $this->currency);
     }
 
-    public function multiply($multiple): self
+    public function multiply($multiple): Money
     {
         return new self(ceil($this->amount * $multiple), $this->currency);
     }
