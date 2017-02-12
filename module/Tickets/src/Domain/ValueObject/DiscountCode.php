@@ -28,8 +28,7 @@ class DiscountCode
     private $displayName;
 
     /**
-     * @TODO when more than one type figure out how to handle this with jms
-     * @JMS\Type("OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage")
+     * @JMS\Type("Object")
      * @ORM\Column(type="json_object")
      * @var DiscountTypeInterface
      */
