@@ -71,7 +71,7 @@ class Price
      * @param Price $other
      * @return bool
      */
-    public function isSameTaxRate(self $other): bool
+    public function isSameTaxRate(Price $other): bool
     {
         return $this->taxRate->equals($other->taxRate);
     }
@@ -79,7 +79,7 @@ class Price
     /**
      * @throws \InvalidArgumentException
      */
-    private function assertSameTaxRate(self $other)
+    private function assertSameTaxRate(Price $other)
     {
         if (!$this->isSameTaxRate($other)) {
             throw new \InvalidArgumentException('Different tax rates');
@@ -90,7 +90,7 @@ class Price
      * @param TaxRate $other
      * @return bool
      */
-    public function equals(self $other): bool
+    public function equals(Price $other): bool
     {
         return ($this->isSameTaxRate($other) && $other->net->equals($this->net));
     }
@@ -99,7 +99,7 @@ class Price
      * @param TaxRate $other
      * @return int
      */
-    public function compare(self $other): int
+    public function compare(Price $other): int
     {
         $this->assertSameTaxRate($other);
         if ($this->net->lessThan($other->net)) {
@@ -115,7 +115,7 @@ class Price
      * @param TaxRate $other
      * @return bool
      */
-    public function greaterThan(self $other): bool
+    public function greaterThan(Price $other): bool
     {
         return 1 === $this->compare($other);
     }
@@ -124,26 +124,26 @@ class Price
      * @param TaxRate $other
      * @return bool
      */
-    public function lessThan(self $other): bool
+    public function lessThan(Price $other): bool
     {
         return -1 === $this->compare($other);
     }
 
-    public function add(self $addend): self
+    public function add(Price $addend): Price
     {
         $this->assertSameTaxRate($addend);
 
         return new self($this->net->add($addend->net), $this->taxRate);
     }
 
-    public function subtract(self $subtrahend): self
+    public function subtract(Price $subtrahend): Price
     {
         $this->assertSameTaxRate($subtrahend);
 
         return new self($this->net->subtract($subtrahend->net), $this->taxRate);
     }
 
-    public function multiply($multiple): self
+    public function multiply($multiple): Price
     {
         return new self($this->net->multiply($multiple), $this->taxRate);
     }

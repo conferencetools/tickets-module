@@ -12,7 +12,7 @@ class Fixed implements DiscountTypeInterface
 {
     /**
      * @JMS\Type("Price")
-     * @var int
+     * @var Price
      */
     private $discount;
 
