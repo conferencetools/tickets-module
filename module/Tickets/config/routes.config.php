@@ -15,7 +15,7 @@ return [
             'select-tickets' => [
                 'type'    => 'Segment',
                 'options' => [
-                    'route'    => 'select-tickets',
+                    'route'    => 'select-tickets[/:discount-code]',
                     'defaults' => [
                         'controller'    => \OpenTickets\Tickets\Controller\TicketController::class,
                         'action'        => 'select-tickets',
