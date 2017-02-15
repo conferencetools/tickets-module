@@ -39,7 +39,7 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
         foreach ($this->ticketConfig->getTicketTypes() as $handle => $ticketType) {
             $entity = new TicketCounter(
                 $ticketType,
-                $this->ticketConfig->getAvaliableTickets($handle)
+                $this->ticketConfig->getAvailableTickets($handle)
             );
             $em->persist($entity);
         }
