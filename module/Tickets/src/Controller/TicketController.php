@@ -55,8 +55,10 @@ class TicketController extends AbstractController
 
             try {
                 $discountCode = $this->validateDiscountCode($data);
+                $discountCodeStr = $data['discount_code'];
             } catch (\InvalidArgumentException $e) {
                 $failed = true;
+                $discountCodeStr = '';
             }
 
             if (!$failed) {
@@ -71,9 +73,16 @@ class TicketController extends AbstractController
                 $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
                 return $this->redirect()->toRoute('root/purchase', ['purchaseId' => $event->getId()]);
             }
+        } else {
+            try {
+                $discountCodeStr = $this->params()->fromRoute('discount-code');
+                $this->validateDiscountCode(['discount_code' => $discountCodeStr]);
+            } catch (\InvalidArgumentException $e) {
+                $discountCodeStr = '';
+            }
         }
 
-        return new ViewModel(['tickets' => $tickets]);
+        return new ViewModel(['tickets' => $tickets, 'discountCode' => $discountCodeStr]);
     }
 
     public function purchaseAction()
@@ -263,7 +272,9 @@ class TicketController extends AbstractController
         $validCodes = $this->getConfiguration()->getDiscountCodes();
         $validCodes[''] = null;
 
-        if (!array_key_exists($data['discount_code'], $validCodes)) {
+        $discountCode = strtolower($data['discount_code']);
+
+        if (!array_key_exists($discountCode, $validCodes)) {
             $this->flashMessenger()->addErrorMessage('Invalid discount code');
             $errors = true;
         }
@@ -272,6 +283,6 @@ class TicketController extends AbstractController
             throw new \InvalidArgumentException('input contained errors');
         }
 
-        return $validCodes[$data['discount_code']];
+        return $validCodes[$discountCode];
     }
 }
