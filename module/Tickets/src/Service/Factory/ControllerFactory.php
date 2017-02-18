@@ -3,6 +3,7 @@ namespace OpenTickets\Tickets\Service\Factory;
 
 use Carnage\Cqrs\Command\CommandBusInterface;
 use OpenTickets\Tickets\Domain\Service\Configuration;
+use OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfrStripe\Client\StripeClient;
@@ -16,7 +17,8 @@ class ControllerFactory implements FactoryInterface
             $serviceLocator->get(CommandBusInterface::class),
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
             $serviceLocator->get(StripeClient::class),
-            $serviceLocator->get(Configuration::class)
+            $serviceLocator->get(Configuration::class),
+            $serviceLocator->get(TicketAvailability::class)
         );
     }
 }
