@@ -16,6 +16,7 @@ use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
 use OpenTickets\Tickets\Form\ManageTicket;
 use OpenTickets\Tickets\Form\PurchaseForm;
+use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 use ZfrStripe\Client\StripeClient;
@@ -114,14 +115,14 @@ class TicketController extends AbstractController
         $purchases = [];
         $errors = false;
         foreach ($data['quantity'] as $id => $quantity) {
-            if ($quantity > $tickets[$id]->getRemaining()) {
+            if (!is_numeric($quantity) || $quantity < 0) {
+                $this->flashMessenger()->addErrorMessage('Quantity needs to be a number :)');
+                $errors = true;
+            } elseif (!$this->ticketAvailability->isAvailable($tickets[$id]->getTicketType(), $quantity)) {
                 $this->flashMessenger()->addErrorMessage(
                     sprintf('Not enough %s remaining', $tickets[$id]->getTicketType()->getDisplayName())
                 );
                 $total++;
-                $errors = true;
-            } elseif (!is_numeric($quantity) || $quantity < 0) {
-                $this->flashMessenger()->addErrorMessage('Quantity needs to be a number :)');
                 $errors = true;
             } elseif ($quantity > 0) {
                 $total += $quantity;

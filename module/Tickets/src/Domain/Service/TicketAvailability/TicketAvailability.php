@@ -3,6 +3,7 @@
 namespace OpenTickets\Tickets\Domain\Service\TicketAvailability;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenTickets\Tickets\Domain\Finder\TicketCounterInterface;
@@ -21,19 +22,17 @@ class TicketAvailability
     /**
      * TicketAvailability constructor.
      *
-     * @TODO remove dependency on doctrine
-     *
      * @param Configuration $configuration
      * @param EntityManagerInterface $em
      */
-    public function __construct(Configuration $configuration,TicketCounterInterface $finder)
+    public function __construct(Configuration $configuration, TicketCounterInterface $finder)
     {
         $this->configuration = $configuration;
         $this->finder = $finder;
     }
 
     /**
-     * @return TicketCounter[]
+     * @return TicketCounter[]|Collection
      */
     public function fetchAllAvailableTickets()
     {
@@ -57,9 +56,7 @@ class TicketAvailability
 
     public function isAvailable(TicketType $ticketType, int $quantity)
     {
-        //refactor form to use ticket type identifier; then this method can be implemented
-        //probably wants to take either the the ticket type and then use that
-        //inside it's own business logic to determine availability
-        //if controller uses tt.ident then it can pull ticket type from configuration object
+        $tickets = $this->fetchAllAvailableTickets();
+        return $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
     }
 }

@@ -28,7 +28,7 @@ class TicketCounter implements TicketCounterInterface
      */
     public function byTicketTypeIdentifiers(string ...$identifiers): Collection
     {
-        $qb = $this->em->getRepository(TicketCounterReadModel::class)->createQueryBuilder('t', 't.id');
+        $qb = $this->em->getRepository(TicketCounterReadModel::class)->createQueryBuilder('t', 't.ticketType.identifier');
         /** @var TicketCounter[] $tickets */
         return new ArrayCollection($qb->where($qb->expr()->in('t.ticketType.identifier', $identifiers))
             ->getQuery()->getResult());
