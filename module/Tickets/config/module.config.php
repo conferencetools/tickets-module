@@ -77,8 +77,13 @@ return [
         ],
     ],
     'reports' => [
+        'aliases' => [
+            'delegate_information' => \OpenTickets\Tickets\Report\DelegateInformation::class,
+            'delegate_requirements' => \OpenTickets\Tickets\Report\DelegateRequirements::class
+        ],
         'factories' => [
-            \OpenTickets\Tickets\Report\DelegateInformation::class => \OpenTickets\Tickets\Report\DelegateInformationFactory::class
+            \OpenTickets\Tickets\Report\DelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\DelegateRequirements::class => \OpenTickets\Tickets\Report\ReportFactory::class,
         ]
     ],
     'view_helpers' => [
