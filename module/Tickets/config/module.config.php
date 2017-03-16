@@ -11,7 +11,8 @@ return [
     ],
     'service_manager' => [
         'factories' => [
-            \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class
+            \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class,
+            \OpenTickets\Tickets\Report\ReportManager::class => \OpenTickets\Tickets\Report\ReportManagerFactory::class,
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class
@@ -21,6 +22,7 @@ return [
         'factories' => [
             \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
             \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
+            \OpenTickets\Tickets\Cli\Command\ReportToCsv::class => \OpenTickets\Tickets\Cli\Command\ReportToCsvFactory::class
         ]
     ],
     'command_handlers' => [
@@ -73,6 +75,23 @@ return [
         'factories' => [
             \OpenTickets\Tickets\Controller\TicketController::class => \OpenTickets\Tickets\Service\Factory\ControllerFactory::class
         ],
+    ],
+    'reports' => [
+        'aliases' => [
+            'delegate_information' => \OpenTickets\Tickets\Report\DelegateInformation::class,
+            'delegate_requirements' => \OpenTickets\Tickets\Report\DelegateRequirements::class,
+            'missing_delegate_information' => \OpenTickets\Tickets\Report\MissingDelegateInformation::class,
+            'ticket_mailout' => \OpenTickets\Tickets\Report\TicketMailout::class,
+            'ticket_sales' => \OpenTickets\Tickets\Report\TicketSales::class,
+        ],
+        'factories' => [
+            \OpenTickets\Tickets\Report\DelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\DelegateRequirements::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\MissingDelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\TicketMailout::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\TicketSales::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+
+        ]
     ],
     'view_helpers' => [
         'invokables' => [

@@ -125,6 +125,14 @@ class PurchaseRecord
     }
 
     /**
+     * @return string
+     */
+    public function getPurchaserEmail(): string
+    {
+        return $this->purchaserEmail;
+    }
+
+    /**
      * @return boolean
      */
     public function isPaid(): bool
