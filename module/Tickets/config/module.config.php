@@ -79,11 +79,18 @@ return [
     'reports' => [
         'aliases' => [
             'delegate_information' => \OpenTickets\Tickets\Report\DelegateInformation::class,
-            'delegate_requirements' => \OpenTickets\Tickets\Report\DelegateRequirements::class
+            'delegate_requirements' => \OpenTickets\Tickets\Report\DelegateRequirements::class,
+            'missing_delegate_information' => \OpenTickets\Tickets\Report\MissingDelegateInformation::class,
+            'ticket_mailout' => \OpenTickets\Tickets\Report\TicketMailout::class,
+            'ticket_sales' => \OpenTickets\Tickets\Report\TicketSales::class,
         ],
         'factories' => [
             \OpenTickets\Tickets\Report\DelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
             \OpenTickets\Tickets\Report\DelegateRequirements::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\MissingDelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\TicketMailout::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \OpenTickets\Tickets\Report\TicketSales::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+
         ]
     ],
     'view_helpers' => [
