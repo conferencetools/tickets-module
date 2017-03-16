@@ -4138,12 +4138,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/carnage/zend-form.git",
-                "reference": "63ccab9b4173db59874b957175cd5ea382443e29"
+                "reference": "e48b95eb2683fc41c45a15e21a6e5692cead9142"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/zend-form/zipball/63ccab9b4173db59874b957175cd5ea382443e29",
-                "reference": "b203033221d9f07501e44b4e6abf35065534238b",
+                "url": "https://api.github.com/repos/carnage/zend-form/zipball/e48b95eb2683fc41c45a15e21a6e5692cead9142",
+                "reference": "e48b95eb2683fc41c45a15e21a6e5692cead9142",
                 "shasum": ""
             },
             "require": {
@@ -4154,11 +4154,11 @@
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
+                "fabpot/php-cs-fixer": "1.7.*",
                 "phpunit/phpunit": "^4.8",
                 "zendframework/zend-cache": "^2.6.1",
-                "zendframework/zend-captcha": "^2.7.1",
+                "zendframework/zend-captcha": "^2.5.4",
                 "zendframework/zend-code": "^2.6 || ^3.0",
-                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-escaper": "^2.5",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
                 "zendframework/zend-filter": "^2.6",
@@ -4168,10 +4168,10 @@
                 "zendframework/zend-text": "^2.6",
                 "zendframework/zend-validator": "^2.6",
                 "zendframework/zend-view": "^2.6.2",
-                "zendframework/zendservice-recaptcha": "^3.0.0"
+                "zendframework/zendservice-recaptcha": "*"
             },
             "suggest": {
-                "zendframework/zend-captcha": "^2.7.1, required for using CAPTCHA form elements",
+                "zendframework/zend-captcha": "^2.5.4, required for using CAPTCHA form elements",
                 "zendframework/zend-code": "^2.6 || ^3.0, required to use zend-form annotations support",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0, reuired for zend-form annotations support",
                 "zendframework/zend-i18n": "^2.6, required when using zend-form view helpers",
@@ -4182,8 +4182,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.10-dev",
-                    "dev-develop": "2.11-dev"
+                    "dev-master": "2.9-dev",
+                    "dev-develop": "2.10-dev"
                 },
                 "zf": {
                     "component": "Zend\\Form",
@@ -4198,16 +4198,45 @@
                     "autoload/formElementManagerPolyfill.php"
                 ]
             },
-            "notification-url": "https://packagist.org/downloads/",
+            "autoload-dev": {
+                "psr-4": {
+                    "ZendTest\\Form\\": "test/"
+                }
+            },
+            "scripts": {
+                "check": [
+                    "@cs-check",
+                    "@test"
+                ],
+                "upload-coverage": [
+                    "coveralls -v"
+                ],
+                "cs-check": [
+                    "php-cs-fixer --version && php-cs-fixer fix -v --diff --dry-run"
+                ],
+                "cs-fix": [
+                    "php-cs-fixer fix -v"
+                ],
+                "test": [
+                    "phpunit"
+                ],
+                "test-coverage": [
+                    "phpunit --coverage-clover clover.xml"
+                ]
+            },
             "license": [
                 "BSD-3-Clause"
             ],
+            "description": " ",
             "homepage": "https://github.com/zendframework/zend-form",
             "keywords": [
                 "form",
                 "zf2"
             ],
-            "time": "2016-04-07 16:12:51"
+            "support": {
+                "source": "https://github.com/carnage/zend-form/tree/master"
+            },
+            "time": "2017-03-16 20:22:11"
         },
         {
             "name": "zendframework/zend-http",
