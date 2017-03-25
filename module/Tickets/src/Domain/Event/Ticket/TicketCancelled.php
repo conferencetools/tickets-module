@@ -1,18 +1,19 @@
 <?php
 
-
 namespace OpenTickets\Tickets\Domain\Event\Ticket;
 
-
 use Carnage\Cqrs\Event\EventInterface;
+use JMS\Serializer\Annotation as Jms;
 
 class TicketCancelled implements EventInterface
 {
     /**
+     * @Jms\Type("string")
      * @var string
      */
     private $id;
     /**
+     * @Jms\Type("string")
      * @var string
      */
     private $ticketId;

@@ -102,4 +102,9 @@ class TicketRecord
     {
         $this->delegate = $delegate;
     }
+
+    public function cancel()
+    {
+        $this->purchase = null;
+    }
 }

@@ -155,6 +155,11 @@ class TicketController extends AbstractController
         $purchaseId = $this->params()->fromRoute('purchaseId');
         $purchase = $this->fetchPurchaseRecord($purchaseId);
 
+        if ($purchase === null) {
+            $this->flashMessenger()->addErrorMessage('Purchase Id invalid');
+            return $this->redirect()->toRoute('root/select-tickets');
+        }
+
         return new ViewModel(['purchase' => $purchase]);
     }
 

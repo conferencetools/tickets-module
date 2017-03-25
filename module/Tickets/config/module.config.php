@@ -22,7 +22,9 @@ return [
         'factories' => [
             \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
             \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
-            \OpenTickets\Tickets\Cli\Command\ReportToCsv::class => \OpenTickets\Tickets\Cli\Command\ReportToCsvFactory::class
+            \OpenTickets\Tickets\Cli\Command\ReportToCsv::class => \OpenTickets\Tickets\Cli\Command\ReportToCsvFactory::class,
+            \OpenTickets\Tickets\Cli\Command\CancelTicket::class => \OpenTickets\Tickets\Cli\Command\CancelTicketFactory::class
+
         ]
     ],
     'command_handlers' => [
@@ -71,7 +73,7 @@ return [
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
         \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-
+        \OpenTickets\Tickets\Domain\Event\Ticket\TicketCancelled::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
     ],
     'controllers' => [
         'factories' => [
