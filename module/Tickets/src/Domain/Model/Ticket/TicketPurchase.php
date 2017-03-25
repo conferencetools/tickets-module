@@ -5,6 +5,7 @@ namespace OpenTickets\Tickets\Domain\Model\Ticket;
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
 use OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
+use OpenTickets\Tickets\Domain\Event\Ticket\TicketCancelled;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
@@ -87,6 +88,20 @@ class TicketPurchase extends AbstractAggregate
         }
 
         $this->markAsPaid($email);
+    }
+
+    public function cancelTicket(string $ticketId)
+    {
+        if (!$this->isPaid) {
+            throw new \DomainException('Cannot cancel a ticket which hasn\'t been paid for');
+        }
+
+        $this->apply(new TicketCancelled($this->id, $ticketId));
+    }
+
+    protected function applyTicketCancelled(TicketCancelled $event)
+    {
+        unset($this->tickets[$event->getTicketId()]);
     }
 
     protected function applyTicketReserved(TicketReserved $event)

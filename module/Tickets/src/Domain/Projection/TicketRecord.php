@@ -6,6 +6,7 @@ use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
+use OpenTickets\Tickets\Domain\Event\Ticket\TicketCancelled;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
@@ -88,6 +89,17 @@ class TicketRecord extends AbstractMethodNameMessageHandler
         $purchase = $this->fetchPurchaseRecord($event->getId());
 
         $purchase->applyDiscountCode($event->getDiscountCode());
+        $this->em->flush();
+    }
+
+    protected function handleTicketCancelled(TicketCancelled $event)
+    {
+        $purchase = $this->fetchPurchaseRecord($event->getId());
+        $purchase->cancelTicket($event->getTicketId());
+        if ($purchase->shouldBeCancelled()) {
+            $this->em->remove($purchase);
+        }
+
         $this->em->flush();
     }
 

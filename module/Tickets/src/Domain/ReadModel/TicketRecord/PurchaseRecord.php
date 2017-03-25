@@ -44,7 +44,13 @@ class PurchaseRecord
 
     /**
      * @var Collection
-     * @ORM\OneToMany(targetEntity="OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord", mappedBy="purchase", indexBy="ticketId", cascade={"persist", "remove"})
+     * @ORM\OneToMany(
+     *     targetEntity="OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord",
+     *     mappedBy="purchase",
+     *     indexBy="ticketId",
+     *     cascade={"persist", "remove"},
+     *     orphanRemoval=true
+     *     )
      */
     private $tickets;
 
@@ -223,5 +229,17 @@ class PurchaseRecord
     public function applyDiscountCode(DiscountCode $discountCode)
     {
         $this->discountCode = $discountCode;
+    }
+
+    public function cancelTicket(string $ticketId)
+    {
+        $ticket = $this->tickets->get($ticketId);
+        $ticket->cancel();
+        $this->tickets->remove($ticketId);
+    }
+
+    public function shouldBeCancelled(): bool
+    {
+        return $this->tickets->count() <= 0;
     }
 }
