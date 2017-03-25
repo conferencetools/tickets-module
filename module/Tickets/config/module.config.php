@@ -37,6 +37,8 @@ return [
         \OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
         \OpenTickets\Tickets\Domain\Command\Ticket\MakePayment::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
         \OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
+        \OpenTickets\Tickets\Domain\Command\Ticket\CancelTicket::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
+
     ],
     'event_listeners' => [
         'factories' => [

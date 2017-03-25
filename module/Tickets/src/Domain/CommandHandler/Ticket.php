@@ -12,6 +12,7 @@ use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\Repository\RepositoryInterface;
 use OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate;
+use OpenTickets\Tickets\Domain\Command\Ticket\CancelTicket;
 use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
 use OpenTickets\Tickets\Domain\Command\Ticket\MakePayment;
 use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
@@ -110,6 +111,13 @@ class Ticket extends AbstractMethodNameMessageHandler
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
         $purchase->completePurchase($command->getPurchaseEmail(), ...$command->getDelegateInformation());
+        $this->repository->save($purchase);
+    }
+
+    protected function handleCancelTicket(CancelTicket $command)
+    {
+        $purchase = $this->loadPurchase($command->getPurchaseId());
+        $purchase->cancelTicket($command->getTicketId());
         $this->repository->save($purchase);
     }
     
