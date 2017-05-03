@@ -12,17 +12,7 @@
  */
 
 return [
-    'mail' => [
-        'name'              => '',
-        'host'              => '',
-        'port'              => 465,
-        'connection_class'  => 'plain',
-        'connection_config' => array(
-            'username' => '',
-            'password' => '',
-            'ssl'      => '',
-        ),
-    ],
+
     /** Change for dev to true **/
     'view_manager' => [
         'display_not_found_reason' => false,

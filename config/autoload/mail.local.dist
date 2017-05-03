@@ -1,0 +1,19 @@
+<?php
+return [
+    'mail' => [
+        'name'              => '',
+        'host'              => '',
+        'port'              => 465,
+        'connection_class'  => 'plain',
+        'connection_config' => array(
+            'username' => '',
+            'password' => '',
+            'ssl'      => '',
+        ),
+    ],
+    'website' => [
+        'host' => '',
+        'scheme' => 'http',
+        'port' => 80
+    ]
+];
