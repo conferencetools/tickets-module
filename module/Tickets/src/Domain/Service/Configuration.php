@@ -6,6 +6,7 @@ use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
 use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
+use OpenTickets\Tickets\Domain\ValueObject\TicketMetadata;
 use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 use Zend\Stdlib\ArrayUtils;
 
@@ -112,6 +113,19 @@ class Configuration
      */
     private $discountCodes;
 
+    /**
+     * Contains metadata about tickets eg when they are available for sale
+     *
+     * configkey: tickets->metadata
+     * structure: [
+     *      'availableFrom' => DateTime ticket is to go on sale from,
+     *      'availableTo' => DateTime after which ticket is no longer on sale
+     * ]
+     *
+     * @var TicketMetadata[]
+     */
+    private $ticketMetadata;
+
     private function __construct() {}
 
     public static function fromArray(array $settings)
@@ -125,18 +139,7 @@ class Configuration
         $instance->taxRate = new TaxRate($settings['financial']['taxRate']);
 
         foreach ($settings['tickets'] as $identifier => $ticket) {
-            $price = Price::fromNetCost(
-                new Money($ticket['cost'], $instance->currency),
-                $instance->taxRate
-            );
-
-            $instance->ticketTypes[$identifier] = new TicketType(
-                $identifier,
-                $price,
-                $ticket['name']
-            );
-
-            $instance->avaliableTickets[$identifier] = $ticket['available'];
+            $instance->addTicketInformation($ticket, $identifier);
         }
 
         foreach ($settings['discountCodes'] as $identifier => $code) {
@@ -151,6 +154,38 @@ class Configuration
         }
 
         return $instance;
+    }
+
+    /**
+     * @param $ticket
+     * @param $identifier
+     */
+    private function addTicketInformation(array $ticket, string $identifier)
+    {
+        $price = Price::fromNetCost(
+            new Money($ticket['cost'], $this->currency),
+            $this->taxRate
+        );
+
+        $this->ticketTypes[$identifier] = new TicketType(
+            $identifier,
+            $price,
+            $ticket['name']
+        );
+
+        $this->avaliableTickets[$identifier] = $ticket['available'];
+
+        if (isset($ticket['metadata'])) {
+            $this->ticketMetadata[$identifier] = new TicketMetadata(
+                $this->ticketTypes[$identifier],
+                $ticket['metadata']['availableFrom'],
+                $ticket['metadata']['availableTo']
+            );
+        } else {
+            $this->ticketMetadata[$identifier] = TicketMetadata::createWithoutDates(
+                $this->ticketTypes[$identifier]
+            );
+        }
     }
 
     /**
@@ -197,7 +232,7 @@ class Configuration
      * @param string $identifier
      * @return int
      */
-    public function getAvaliableTickets(string $identifier): int
+    public function getAvailableTickets(string $identifier): int
     {
         return $this->avaliableTickets[$identifier];
     }
@@ -205,5 +240,10 @@ class Configuration
     public function getDiscountCodes(): array
     {
         return $this->discountCodes;
+    }
+
+    public function getTicketMetadata(string $identifier): TicketMetadata
+    {
+        return $this->ticketMetadata[$identifier];
     }
 }

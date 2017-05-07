@@ -12,6 +12,7 @@ return [
     'service_manager' => [
         'factories' => [
             \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class,
+            \OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability::class => \OpenTickets\Tickets\Service\Factory\Service\TicketAvailability::class,
             \OpenTickets\Tickets\Report\ReportManager::class => \OpenTickets\Tickets\Report\ReportManagerFactory::class,
         ],
         'abstract_factories' => [

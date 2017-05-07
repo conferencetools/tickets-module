@@ -1,0 +1,32 @@
+<?php
+
+return [
+    'opentickets' => [
+        'financial' => [
+            'taxRate' => 0,
+            'currency' => 'GBP',
+            'displayTax' => false
+        ],
+        'tickets' => [
+            'type1' => ['name' => 'Standard Ticket', 'cost' => 5000, 'available' => 100],
+            'type2' => ['name' => 'VIP Ticket', 'cost' => 10000, 'available' => 10]
+        ],
+        'discountCodes' => [
+            '50off' => [
+                'type' => \OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage::class,
+                'options' => ['percentage' => 50],
+                'name' => '50% Off'
+            ],
+            '5offone' => [
+                'type' => \OpenTickets\Tickets\Domain\ValueObject\DiscountType\Fixed::class,
+                'options' => ['net' => 500],
+                'name' => '$5 Off'
+            ],
+            '5offall' => [
+                'type' => \OpenTickets\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket::class,
+                'options' => ['gross' => 500],
+                'name' => '$5 Off'
+            ]
+        ]
+    ]
+];
