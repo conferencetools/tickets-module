@@ -2,9 +2,7 @@
 
 namespace OpenTickets\Tickets\Domain\Service\TicketAvailability;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityManagerInterface;
 use OpenTickets\Tickets\Domain\Finder\TicketCounterInterface;
 use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
@@ -23,7 +21,6 @@ class TicketAvailability
      * TicketAvailability constructor.
      *
      * @param Configuration $configuration
-     * @param EntityManagerInterface $em
      */
     public function __construct(Configuration $configuration, TicketCounterInterface $finder)
     {
@@ -48,7 +45,7 @@ class TicketAvailability
 
         $ticketCounters = $this->finder->byTicketTypeIdentifiers(...$ticketTypes);
 
-        return $ticketCounters->filter(function (TicketCounter $ticketCounter) {
+        return $ticketCounters->filter(function(TicketCounter $ticketCounter) {
             return $ticketCounter->getRemaining() > 0;
         });
 

@@ -16,7 +16,6 @@ use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
 use OpenTickets\Tickets\Form\ManageTicket;
 use OpenTickets\Tickets\Form\PurchaseForm;
-use Zend\InputFilter\InputFilterInterface;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 use ZfrStripe\Client\StripeClient;
@@ -126,7 +125,7 @@ class TicketController extends AbstractController
                 $errors = true;
             } elseif ($quantity > 0) {
                 $total += $quantity;
-                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int)$quantity);
+                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
             }
         }
 
