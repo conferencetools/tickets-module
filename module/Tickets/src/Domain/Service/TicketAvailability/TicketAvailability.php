@@ -38,7 +38,7 @@ class TicketAvailability
 
         foreach ($this->configuration->getTicketTypes() as $ticketType) {
             $metadata = $this->configuration->getTicketMetadata($ticketType->getIdentifier());
-            if ($metadata->isAvailableOn($currentDate)) {
+            if ($metadata->isAvailableOn($currentDate) && !$metadata->isPrivateTicket()) {
                 $ticketTypes[] = $ticketType->getIdentifier();
             }
         }
