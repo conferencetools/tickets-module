@@ -8,6 +8,7 @@ use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Fixed;
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket;
+use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
 
 final class TicketSales implements ReportInterface
 {
@@ -57,6 +58,13 @@ final class TicketSales implements ReportInterface
                         $discountUsed = true;
                         break;
                     case ($purchase->getDiscountCode()->getDiscountType() instanceof FixedPerTicket):
+                        $report = $this->recordTicketPurchase(
+                            $report,
+                            $ticket->getTicketType()->getIdentifier(),
+                            $purchase->getDiscountCode()->getCode()
+                        );
+                        break;
+                    case ($purchase->getDiscountCode()->getDiscountType() instanceof Percentage):
                         $report = $this->recordTicketPurchase(
                             $report,
                             $ticket->getTicketType()->getIdentifier(),

@@ -38,6 +38,7 @@ class ReportToCsv extends Command
             ->setDescription('Creates a csv export of a report')
             ->setDefinition([
                 new InputArgument('report', InputArgument::REQUIRED, 'Report to run'),
+                new InputArgument('outputFile', InputArgument::OPTIONAL, 'File to output report to', '/tmp/report.csv')
              ]);
     }
 
@@ -48,12 +49,24 @@ class ReportToCsv extends Command
             throw new \Exception('Invalid report name');
         }
 
+        $outputFile = $input->getArgument('outputFile');
+
+        if (file_exists($outputFile)) {
+            if (!is_writable($outputFile)) {
+                throw new \Exception(sprintf('Cannot write to output file: %s', $outputFile));
+            }
+        } else {
+            if (!is_writable(dirname($outputFile))) {
+                throw new \Exception(sprintf('Cannot write to output directory: %s', dirname($outputFile)));
+            }
+        }
+
         /** @var ReportInterface $report */
         $report = $this->reportManager->get($reportName);
 
         $reportData = $report->produceReport();
 
-        $h = fopen('/tmp/report.csv', 'w+');
+        $h = fopen($outputFile, 'w+');
         $header = array_keys(current($reportData) ?: []);
         fputcsv($h, $header);
 
