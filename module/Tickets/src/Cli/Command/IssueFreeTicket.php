@@ -9,7 +9,9 @@ use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
 use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\Delegate;
+use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
+use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -50,8 +52,9 @@ class IssueFreeTicket extends Command
             ->setDefinition([
                 new InputArgument('ticketType', InputArgument::REQUIRED, 'Ticket type to issue'),
                 new InputArgument('email', InputArgument::REQUIRED, 'Email address to send ticket to'),
-                new InputOption('number', '', InputOption::VALUE_OPTIONAL, 'Number of tickets to add to purchase', 1)
-        ]);
+                new InputOption('number', '', InputOption::VALUE_OPTIONAL, 'Number of tickets to add to purchase', 1),
+                new InputOption('discountCode', '', InputOption::VALUE_OPTIONAL, 'Discount code to apply to the purchase', 1)
+            ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -59,8 +62,9 @@ class IssueFreeTicket extends Command
         $email = $input->getArgument('email');
         $numberOfTickets = $input->getOption('number');
         $ticketType = $this->getTicketType($input->getArgument('ticketType'));
+        $discountCode = $this->getDiscountcode($input->getOption('discountCode'));
 
-        $purchaseId = $this->reserveTickets($ticketType, $numberOfTickets);
+        $purchaseId = $this->reserveTickets($ticketType, $numberOfTickets, $discountCode);
         $delegateInfo = $this->createDelegates($numberOfTickets);
 
         $this->commandBus->dispatch(new CompletePurchase($purchaseId, $email, ...$delegateInfo));
@@ -87,11 +91,21 @@ class IssueFreeTicket extends Command
      * @param $numberOfTickets
      * @return string
      */
-    private function reserveTickets($ticketType, $numberOfTickets): string
+    private function reserveTickets($ticketType, $numberOfTickets, $discountCode): string
     {
-        $this->commandBus->dispatch(
-            new ReserveTickets(new TicketReservationRequest($ticketType, $numberOfTickets))
-        );
+        if ($discountCode === null) {
+            $command = ReserveTickets::withoutDiscountCode(
+                new TicketReservationRequest($ticketType, $numberOfTickets)
+            );
+        } else {
+            $command = ReserveTickets::withDiscountCode(
+                $discountCode,
+                new TicketReservationRequest($ticketType, $numberOfTickets)
+            );
+        }
+
+        $this->commandBus->dispatch($command);
+
         /** @var TicketPurchaseCreated $event */
         $event = $this->eventCatcher->getEventsByType(TicketPurchaseCreated::class)[0];
         return $event->getId();
@@ -99,10 +113,10 @@ class IssueFreeTicket extends Command
 
     /**
      * @param $issueTicketType
-     * @return \OpenTickets\Tickets\Domain\ValueObject\TicketType
+     * @return TicketType
      * @throws \Exception
      */
-    private function getTicketType($issueTicketType): \OpenTickets\Tickets\Domain\ValueObject\TicketType
+    private function getTicketType($issueTicketType): TicketType
     {
         $ticketTypes = $this->config->getTicketTypes();
 
@@ -111,6 +125,19 @@ class IssueFreeTicket extends Command
         }
 
         $ticketType = $ticketTypes[$issueTicketType];
+        return $ticketType;
+    }
+
+    private function getDiscountCode($type) /* : ?DiscountCode*/
+    {
+        $discountCodes = $this->config->getDiscountCodes();
+        $discountCodes[''] = null;
+
+        if (!isset($discountCodes[$type])) {
+            throw new \Exception('Invalid discount code');
+        }
+
+        $ticketType = $discountCodes[$type];
         return $ticketType;
     }
 }
