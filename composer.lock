@@ -4,65 +4,25 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "69507b664e2d508a418d3766c9514269",
-    "content-hash": "0ab3dba5f18b7487f01d368723b09cac",
+    "hash": "8a47cfcb0d586700ac00a3d88995b2aa",
+    "content-hash": "9426f691682304869b600168ac3d5d70",
     "packages": [
         {
-            "name": "carnage/ZendfonyCli",
-            "version": "dev-master",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/carnage/ZendfonyCli.git",
-                "reference": "36e89eaaf3ae8d622363b9032cd782a7f04a561e"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/carnage/ZendfonyCli/zipball/36e89eaaf3ae8d622363b9032cd782a7f04a561e",
-                "reference": "36e89eaaf3ae8d622363b9032cd782a7f04a561e",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=7.0",
-                "symfony/console": "^3.2",
-                "zendframework/zend-mvc": "^2.5",
-                "zendframework/zend-servicemanager": "^2.5"
-            },
-            "bin": [
-                "bin/cli",
-                "bin/cli.php"
-            ],
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Carnage\\ZendfonyCli\\": "src"
-                }
-            },
-            "license": [
-                "MIT"
-            ],
-            "description": "Zend module for symfony CLI",
-            "support": {
-                "source": "https://github.com/carnage/ZendfonyCli/tree/master",
-                "issues": "https://github.com/carnage/ZendfonyCli/issues"
-            },
-            "time": "2017-03-07 20:59:01"
-        },
-        {
             "name": "carnage/cqorms",
-            "version": "dev-master",
+            "version": "0.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carnage/cqorms.git",
-                "reference": "3499df803bfb29ce8605f51f007720fea76d1604"
+                "reference": "79f16520b7a930563a28fc5c35d93d2859d2a32a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqorms/zipball/3499df803bfb29ce8605f51f007720fea76d1604",
-                "reference": "3499df803bfb29ce8605f51f007720fea76d1604",
+                "url": "https://api.github.com/repos/carnage/cqorms/zipball/79f16520b7a930563a28fc5c35d93d2859d2a32a",
+                "reference": "79f16520b7a930563a28fc5c35d93d2859d2a32a",
                 "shasum": ""
             },
             "require": {
-                "carnage/cqrs": "dev-master",
+                "carnage/cqrs": "~0.1.0",
                 "doctrine/doctrine-orm-module": "^1.0.0",
                 "ircmaxell/random-lib": "^1.0.0",
                 "jms/serializer": "^1.1.0",
@@ -126,32 +86,29 @@
                     "Carnage\\Cqorms\\": "/src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "AGPL"
+                "MIT"
             ],
             "description": "Doctrine ORM implementation of persistence for cqrs module",
-            "support": {
-                "source": "https://github.com/carnage/cqorms/tree/master",
-                "issues": "https://github.com/carnage/cqorms/issues"
-            },
-            "time": "2017-03-14 08:47:03"
+            "time": "2017-05-13 13:26:45"
         },
         {
             "name": "carnage/cqrs",
-            "version": "dev-master",
+            "version": "0.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/carnage/cqrs.git",
-                "reference": "e7fe53ec0948891931b1b9739eb6a03e3e408e60"
+                "reference": "c64845fee0226c4fba8d6779617394829fcb38da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/cqrs/zipball/e7fe53ec0948891931b1b9739eb6a03e3e408e60",
-                "reference": "e7fe53ec0948891931b1b9739eb6a03e3e408e60",
+                "url": "https://api.github.com/repos/carnage/cqrs/zipball/c64845fee0226c4fba8d6779617394829fcb38da",
+                "reference": "c64845fee0226c4fba8d6779617394829fcb38da",
                 "shasum": ""
             },
             "require": {
-                "carnage/zendfonycli": "dev-master",
+                "carnage/zendfony-cli": "~0.1.0",
                 "doctrine/dbal": "^2.5.1",
                 "ircmaxell/random-lib": "^1.0.0",
                 "php": ">=5.6",
@@ -215,15 +172,49 @@
                     "Carnage\\Cqrs\\": "/src"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "AGPL"
+                "MIT"
             ],
             "description": "Cqrs/Es module for zf2",
-            "support": {
-                "source": "https://github.com/carnage/cqrs/tree/master",
-                "issues": "https://github.com/carnage/cqrs/issues"
+            "time": "2017-05-13 13:38:19"
+        },
+        {
+            "name": "carnage/zendfony-cli",
+            "version": "0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/carnage/ZendfonyCli.git",
+                "reference": "3648a3ba0a3c25176b9a5e0c6ec0350ce24f1c1c"
             },
-            "time": "2017-02-04 15:20:20"
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/carnage/ZendfonyCli/zipball/3648a3ba0a3c25176b9a5e0c6ec0350ce24f1c1c",
+                "reference": "3648a3ba0a3c25176b9a5e0c6ec0350ce24f1c1c",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0",
+                "symfony/console": "^3.2",
+                "zendframework/zend-mvc": "^2.5",
+                "zendframework/zend-servicemanager": "^2.5"
+            },
+            "bin": [
+                "bin/cli",
+                "bin/cli.php"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Carnage\\ZendfonyCli\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Zend module for symfony CLI",
+            "time": "2017-05-13 13:32:30"
         },
         {
             "name": "container-interop/container-interop",
@@ -4328,31 +4319,31 @@
         },
         {
             "name": "zendframework/zend-form",
-            "version": "dev-master",
+            "version": "2.10.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/carnage/zend-form.git",
-                "reference": "e48b95eb2683fc41c45a15e21a6e5692cead9142"
+                "url": "https://github.com/zendframework/zend-form.git",
+                "reference": "1ca3ab771abd533d440646ec1cc082fccad976a1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/carnage/zend-form/zipball/e48b95eb2683fc41c45a15e21a6e5692cead9142",
-                "reference": "e48b95eb2683fc41c45a15e21a6e5692cead9142",
+                "url": "https://api.github.com/repos/zendframework/zend-form/zipball/1ca3ab771abd533d440646ec1cc082fccad976a1",
+                "reference": "1ca3ab771abd533d440646ec1cc082fccad976a1",
                 "shasum": ""
             },
             "require": {
-                "php": "^5.5 || ^7.0",
+                "php": "^7.0 || ^5.6",
                 "zendframework/zend-hydrator": "^1.1 || ^2.1",
                 "zendframework/zend-inputfilter": "^2.6",
                 "zendframework/zend-stdlib": "^2.7 || ^3.0"
             },
             "require-dev": {
                 "doctrine/annotations": "~1.0",
-                "fabpot/php-cs-fixer": "1.7.*",
-                "phpunit/phpunit": "^4.8",
+                "phpunit/phpunit": "^6.0.8 || ^5.7.15",
                 "zendframework/zend-cache": "^2.6.1",
-                "zendframework/zend-captcha": "^2.5.4",
+                "zendframework/zend-captcha": "^2.7.1",
                 "zendframework/zend-code": "^2.6 || ^3.0",
+                "zendframework/zend-coding-standard": "~1.0.0",
                 "zendframework/zend-escaper": "^2.5",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0",
                 "zendframework/zend-filter": "^2.6",
@@ -4362,10 +4353,10 @@
                 "zendframework/zend-text": "^2.6",
                 "zendframework/zend-validator": "^2.6",
                 "zendframework/zend-view": "^2.6.2",
-                "zendframework/zendservice-recaptcha": "*"
+                "zendframework/zendservice-recaptcha": "^3.0.0"
             },
             "suggest": {
-                "zendframework/zend-captcha": "^2.5.4, required for using CAPTCHA form elements",
+                "zendframework/zend-captcha": "^2.7.1, required for using CAPTCHA form elements",
                 "zendframework/zend-code": "^2.6 || ^3.0, required to use zend-form annotations support",
                 "zendframework/zend-eventmanager": "^2.6.2 || ^3.0, reuired for zend-form annotations support",
                 "zendframework/zend-i18n": "^2.6, required when using zend-form view helpers",
@@ -4376,8 +4367,8 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "2.9-dev",
-                    "dev-develop": "2.10-dev"
+                    "dev-master": "2.10-dev",
+                    "dev-develop": "2.11-dev"
                 },
                 "zf": {
                     "component": "Zend\\Form",
@@ -4392,45 +4383,16 @@
                     "autoload/formElementManagerPolyfill.php"
                 ]
             },
-            "autoload-dev": {
-                "psr-4": {
-                    "ZendTest\\Form\\": "test/"
-                }
-            },
-            "scripts": {
-                "check": [
-                    "@cs-check",
-                    "@test"
-                ],
-                "upload-coverage": [
-                    "coveralls -v"
-                ],
-                "cs-check": [
-                    "php-cs-fixer --version && php-cs-fixer fix -v --diff --dry-run"
-                ],
-                "cs-fix": [
-                    "php-cs-fixer fix -v"
-                ],
-                "test": [
-                    "phpunit"
-                ],
-                "test-coverage": [
-                    "phpunit --coverage-clover clover.xml"
-                ]
-            },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "BSD-3-Clause"
             ],
-            "description": " ",
             "homepage": "https://github.com/zendframework/zend-form",
             "keywords": [
                 "form",
                 "zf2"
             ],
-            "support": {
-                "source": "https://github.com/carnage/zend-form/tree/master"
-            },
-            "time": "2017-03-16 20:22:11"
+            "time": "2017-04-26 21:27:43"
         },
         {
             "name": "zendframework/zend-http",
@@ -6592,16 +6554,12 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "carnage/cqrs": 20,
-        "carnage/cqorms": 20,
-        "neilime/zf2-twb-bundle": 0,
-        "zendframework/zend-form": 20,
-        "carnage/zendfonycli": 20
+        "neilime/zf2-twb-bundle": 0
     },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=7.0"
+        "php": ">=7.0.5"
     },
     "platform-dev": []
 }
