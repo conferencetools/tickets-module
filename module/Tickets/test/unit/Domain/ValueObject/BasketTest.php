@@ -5,7 +5,7 @@ namespace OpenTickets\Tickets\Domain\ValueObject;
 use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
 
-class BasketTest extends \PHPUnit_Framework_TestCase
+class BasketTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Configuration

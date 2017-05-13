@@ -11,7 +11,11 @@ use OpenTickets\Tickets\Domain\ValueObject\TicketType;
 
 class TicketAvailability
 {
-    private $configuration;
+    /**
+     * @var TicketTypeFilter
+     */
+    private $filter;
+
     /**
      * @var TicketCounterInterface
      */
@@ -20,12 +24,13 @@ class TicketAvailability
     /**
      * TicketAvailability constructor.
      *
-     * @param Configuration $configuration
+     * @param TicketTypeFilter $filter
+     * @param TicketCounterInterface $finder
      */
-    public function __construct(Configuration $configuration, TicketCounterInterface $finder)
+    public function __construct(TicketTypeFilter $filter, TicketCounterInterface $finder)
     {
-        $this->configuration = $configuration;
         $this->finder = $finder;
+        $this->filter = $filter;
     }
 
     /**
@@ -33,27 +38,19 @@ class TicketAvailability
      */
     public function fetchAllAvailableTickets()
     {
-        $currentDate = new \DateTime();
-        $ticketTypes = [];
-
-        foreach ($this->configuration->getTicketTypes() as $ticketType) {
-            $metadata = $this->configuration->getTicketMetadata($ticketType->getIdentifier());
-            if ($metadata->isAvailableOn($currentDate) && !$metadata->isPrivateTicket()) {
-                $ticketTypes[] = $ticketType->getIdentifier();
-            }
-        }
+        $ticketTypes = $this->filter->getPubliclyAvailableTicketTypeIdentifiers();
 
         $ticketCounters = $this->finder->byTicketTypeIdentifiers(...$ticketTypes);
 
         return $ticketCounters->filter(function(TicketCounter $ticketCounter) {
             return $ticketCounter->getRemaining() > 0;
         });
-
     }
 
     public function isAvailable(TicketType $ticketType, int $quantity)
     {
         $tickets = $this->fetchAllAvailableTickets();
-        return $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
+        return isset($tickets[$ticketType->getIdentifier()]) &&
+            $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
     }
 }

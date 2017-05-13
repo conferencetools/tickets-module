@@ -7,6 +7,14 @@
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
             <directory suffix=".php">module/Tickets/src/Domain</directory>
+            <exclude>
+                <directory suffix=".php">module/Tickets/src/Domain/Command</directory>
+                <directory suffix=".php">module/Tickets/src/Domain/Event</directory>
+            </exclude>
         </whitelist>
+
     </filter>
+    <logging>
+        <log type="coverage-text" target="php://stdout" showUncoveredFiles="true"/>
+    </logging>
 </phpunit>

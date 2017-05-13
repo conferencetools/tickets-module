@@ -4,7 +4,7 @@
 namespace OpenTickets\Tickets\Domain\ValueObject;
 
 
-class TaxRateTest extends \PHPUnit_Framework_TestCase
+class TaxRateTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideCompare
