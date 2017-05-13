@@ -21,6 +21,12 @@ then run `make run` from the root directory.
 - Ticket purchases automatically time out after 30 mins
 - Delegate information can be added at purchase time and modified later
 
+## Discount codes
+- Define multiple different discount codes 
+- Percentage off discount type
+- Fixed discount type
+- Fixed discount per ticket type
+
 ## General
 - Stripe integration for payment handling
 - Email reciept to each customer
