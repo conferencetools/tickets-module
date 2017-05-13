@@ -1,10 +1,10 @@
-MYSQL_PASS = "h7yKl90fc6AA5*j"
+MYSQL_PASS := $(shell pwgen 32 1)
 THIS_FILE := $(lastword $(MAKEFILE_LIST))
 .SILENT:
 
 run:
+	echo "Mysql Pass:" $(MYSQL_PASS)
 	MYSQL_PASS="$(MYSQL_PASS)" docker-compose up -d
-	docker exec -t -i opentickets_db_1 mysql -u super -p$(MYSQL_PASS) -e 'create database opentickets'
 	docker exec -t -i opentickets_webapp_1 sh -c 'php /data/vendor/bin/doctrine-module orm:schema-tool:create'
 	docker exec -t -i opentickets_webapp_1 sh -c 'php /data/vendor/bin/cli cqrs:rebuild-projection -a'
 	$(MAKE) -f $(THIS_FILE) port

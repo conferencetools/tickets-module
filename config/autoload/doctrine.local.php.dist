@@ -11,9 +11,9 @@ return array(
                 'params' => array(
                     'host'     => 'db',
                     'port'     => '3306',
-                    'user'     => $data->DB_ENV_MYSQL_USER,
-                    'password' => $data->DB_ENV_MYSQL_PASS,
-                    'dbname'   => $data->DB_ENV_DB_NAME,
+                    'user'     => $data->MYSQL_USER,
+                    'password' => $data->MYSQL_PASSWORD,
+                    'dbname'   => $data->MYSQL_DATABASE,
                 )
             )
         )
