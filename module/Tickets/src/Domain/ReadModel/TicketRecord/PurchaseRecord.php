@@ -91,14 +91,6 @@ class PurchaseRecord
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return string
      */
     public function getPurchaseId(): string
@@ -233,13 +225,14 @@ class PurchaseRecord
 
     public function cancelTicket(string $ticketId)
     {
-        $ticket = $this->tickets->get($ticketId);
+        $ticket = $this->getTicketRecord($ticketId);
         $ticket->cancel();
         $this->tickets->remove($ticketId);
+        $this->ticketCount--;
     }
 
     public function shouldBeCancelled(): bool
     {
-        return $this->tickets->count() <= 0;
+        return $this->ticketCount <= 0;
     }
 }

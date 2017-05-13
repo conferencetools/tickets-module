@@ -57,14 +57,6 @@ class TicketCounter
         return $this->ticketType;
     }
 
-    /**
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
     public function ticketsReserved(int $number)
     {
         $this->remaining -= $number;
