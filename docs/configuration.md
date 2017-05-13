@@ -103,7 +103,7 @@ new options will be added over time. Currently the supported options are.
 
 ##### Available From
 
-This key can be set to a PHP DateTime object representing the data from which a ticket 
+The `availableFrom` key can be set to a PHP DateTime object representing the data from which a ticket 
 becomes available. Leaving it blank will not restrict the date a ticket can be purchased from.
 
 Currently, if you set this field you also need to set the Available To field 
@@ -113,7 +113,7 @@ To make it available indefinitely while using the available to field you can use
 
 ##### Available To
 
-This key can be set to a PHP DateTime object representing the data from which a ticket 
+The `availableTo` key can be set to a PHP DateTime object representing the data from which a ticket 
 ceases to be available. Leaving it blank will not restrict the date a ticket can be purchased
 on.
 
@@ -121,6 +121,12 @@ Currently, if you set this field you also need to set the Available From field
 
 To make it available indefinitely while using the available from field you can use the value 
 `(new \DateTime())->add(new \DateInterval('P1D'))`
+
+##### Private
+
+The `private` key can be set to hide a ticket type from the user purchase page. The web UI will
+disallow purchases of this ticket type. This is intended to be used for Free ticket types which
+you might need eg Sponsor tickets, Speaker tickets or Prize give aways.
 
 ### Discount codes
 

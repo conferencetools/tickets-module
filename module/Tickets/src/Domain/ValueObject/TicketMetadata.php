@@ -7,30 +7,34 @@ class TicketMetadata
     private $ticketType;
     private $availableFrom;
     private $availableTo;
+    private $privateTicket;
 
     /**
      * TicketMetadata constructor.
-     * @param $ticketType
-     * @param $availableFrom
-     * @param $availableTo
-     * @param $adminOnly
+     * @param TicketType $ticketType
+     * @param \DateTime $availableFrom
+     * @param \DateTime $availableTo
+     * @param bool $privateTicket
      */
     public function __construct(
         TicketType $ticketType,
         \DateTime $availableFrom,
-        \DateTime $availableTo
+        \DateTime $availableTo,
+        bool $privateTicket
     ) {
         $this->ticketType = $ticketType;
         $this->availableFrom = $availableFrom;
         $this->availableTo = $availableTo;
+        $this->privateTicket = $privateTicket;
     }
 
-    public static function createWithoutDates(TicketType $ticketType): TicketMetadata
+    public static function createWithoutDates(TicketType $ticketType, $privateTicket): TicketMetadata
     {
         return new self(
             $ticketType,
             (new \DateTime())->sub(new \DateInterval('P1D')),
-            (new \DateTime())->add(new \DateInterval('P1D'))
+            (new \DateTime())->add(new \DateInterval('P1D')),
+            $privateTicket
         );
     }
 
@@ -61,5 +65,13 @@ class TicketMetadata
     public function isAvailableOn(\DateTime $date)
     {
         return ($this->availableFrom < $date && $date < $this->availableTo);
+    }
+
+    /**
+     * @return boolean
+     */
+    public function isPrivateTicket(): bool
+    {
+        return $this->privateTicket;
     }
 }
