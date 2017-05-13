@@ -59,14 +59,6 @@ class TicketRecord
     }
 
     /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
      * @return TicketType
      */
     public function getTicketType(): TicketType

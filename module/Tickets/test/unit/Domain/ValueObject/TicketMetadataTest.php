@@ -5,7 +5,7 @@ namespace OpenTickets\Tickets\Domain\ValueObject;
 use OpenTickets\Tickets\Domain\Service\Configuration;
 use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
 
-class TicketMetadataTest extends \PHPUnit_Framework_TestCase
+class TicketMetadataTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideAvailableOn

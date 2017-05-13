@@ -6,8 +6,8 @@ run:
 	MYSQL_PASS="$(MYSQL_PASS)" docker-compose up -d
 	sleep 5
 	docker exec -t -i opentickets_db_1 mysql -u super -p$(MYSQL_PASS) -e 'create database opentickets'
-	docker exec -t -i opentickets_webapp_1 php /data/vendor/bin/doctrine-module orm:schema-tool:create
-	docker exec -t -i opentickets_webapp_1 php /data/vendor/bin/cli cqrs:rebuild-projection -a
+	docker exec -t -i opentickets_webapp_1 sh -c 'php /data/vendor/bin/doctrine-module orm:schema-tool:create'
+	docker exec -t -i opentickets_webapp_1 sh -c 'php /data/vendor/bin/cli cqrs:rebuild-projection -a'
 	$(MAKE) -f $(THIS_FILE) port
 
 stop:

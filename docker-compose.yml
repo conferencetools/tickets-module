@@ -8,7 +8,7 @@ db:
     - 3306
 
 webapp:
-  image: imhotek/webapp:0.5.0
+  image: imhotek/webapp:0.7.0
   ports:
     - 80
   links:

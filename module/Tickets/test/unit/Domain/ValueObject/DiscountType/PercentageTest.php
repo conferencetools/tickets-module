@@ -8,7 +8,7 @@ use OpenTickets\Tickets\Domain\ValueObject\Money;
 use OpenTickets\Tickets\Domain\ValueObject\Price;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
 
-class PercentageTest extends \PHPUnit_Framework_TestCase
+class PercentageTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @var Configuration
