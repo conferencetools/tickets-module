@@ -1,17 +1,33 @@
-db:
-  image: imhotek/mariadb:0.2.0
-  environment:
-    - MYSQL_USER=super
-    - MYSQL_PASS=${MYSQL_PASS}
-    - DB_NAME=opentickets
-  expose:
-    - 3306
+version: "2.1"
 
-webapp:
-  image: imhotek/webapp:0.7.0
-  ports:
-    - 80
-  links:
-    - db:db
-  volumes:
-    - ./:/data
+services:
+  db:
+    image: mariadb:5.5
+    environment:
+      - MYSQL_USER=super
+      - MYSQL_PASSWORD=${MYSQL_PASS}
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=opentickets
+    volumes:
+      - ./docker:/scripts
+    expose:
+      - 3306
+    healthcheck:
+      test: ["CMD", "/scripts/docker-healthcheck.sh"]
+      interval: 2s
+      retries: 10
+      timeout: 1s
+
+  webapp:
+    image: imhotek/webapp:0.7.0
+    ports:
+      - 80
+    volumes:
+      - ./:/data
+    environment:
+      - MYSQL_USER=super
+      - MYSQL_PASSWORD=${MYSQL_PASS}
+      - MYSQL_DATABASE=opentickets
+    depends_on:
+      db:
+        condition: service_healthy
