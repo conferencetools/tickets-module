@@ -87,7 +87,7 @@ class Price
     }
 
     /**
-     * @param TaxRate $other
+     * @param Price $other
      * @return bool
      */
     public function equals(Price $other): bool
@@ -96,7 +96,7 @@ class Price
     }
 
     /**
-     * @param TaxRate $other
+     * @param Price $other
      * @return int
      */
     public function compare(Price $other): int
@@ -112,7 +112,7 @@ class Price
     }
 
     /**
-     * @param TaxRate $other
+     * @param Price $other
      * @return bool
      */
     public function greaterThan(Price $other): bool
@@ -121,7 +121,7 @@ class Price
     }
 
     /**
-     * @param TaxRate $other
+     * @param Price $other
      * @return bool
      */
     public function lessThan(Price $other): bool

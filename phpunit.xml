@@ -1,7 +1,12 @@
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="Open tickets">
-            <directory>module/Tickets/test/unit</directory>
+        <testsuite name="Open tickets domain unit tests">
+            <directory>module/Tickets/test/unit/Domain</directory>
         </testsuite>
     </testsuites>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">module/Tickets/src/Domain</directory>
+        </whitelist>
+    </filter>
 </phpunit>
