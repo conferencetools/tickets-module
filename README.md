@@ -9,7 +9,7 @@ The entire application is event sourced, so even if you don't run a conference, 
 
 copy the .dist files in config to files without the .dist in the name; edit the config to your liking 
 (Doctrine shouldn't need changing if you use the docker env), do a composer install (requires php 7) 
-then run `make run` from the root directory. 
+then run `make run` (requires pwgen installed) from the root directory. 
 
 # Features
 
