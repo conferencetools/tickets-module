@@ -2,10 +2,10 @@
 
 use ZfrStripe\Client\StripeClient;
 
-return array(
-    'zfr_stripe' => array(
+return [
+    'zfr_stripe' => [
         'secret_key' => '',
         'publishable_key' => '',
-        'version' => StripeClient::LATEST_API_VERSION
-    )
-);
+        'version' => StripeClient::LATEST_API_VERSION,
+    ],
+];
