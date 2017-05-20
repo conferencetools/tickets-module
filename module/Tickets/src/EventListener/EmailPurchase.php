@@ -28,16 +28,24 @@ class EmailPurchase implements MessageHandlerInterface
      * @var TransportInterface
      */
     private $mail;
+    /**
+     * @var array
+     */
+    private $config;
 
     /**
      * EmailPurchase constructor.
-     * @param $em
+     * @param EntityManagerInterface $em
+     * @param View $view
+     * @param TransportInterface $mail
+     * @param array $config
      */
-    public function __construct(EntityManagerInterface $em, View $view, TransportInterface $mail)
+    public function __construct(EntityManagerInterface $em, View $view, TransportInterface $mail, array $config = [])
     {
         $this->em = $em;
         $this->view = $view;
         $this->mail = $mail;
+        $this->config = $config;
     }
 
 
@@ -84,8 +92,10 @@ class EmailPurchase implements MessageHandlerInterface
 
         $message = new Message();
         $message->setBody($body);
-        $message->setSubject('Your PHP Yorkshire Ticket Receipt');
-        $message->setFrom('info@phpyorkshire.co.uk');
+        $message->setSubject(isset($this->config['purchase']['subject']) ? $this->config['purchase']['subject'] : 'Your ticket receipt');
+        if (isset($this->config['purchase']['from'])) {
+            $message->setFrom($this->config['purchase']['from']);
+        }
 
         return $message;
     }
