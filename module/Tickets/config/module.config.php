@@ -117,15 +117,16 @@ return [
         'exception_template'       => 'error/index',
         'template_map' => [
             'layout/layout'           => __DIR__ . '/../view/layout/layout.phtml',
-            'application/index/index' => __DIR__ . '/../view/application/index/index.phtml',
             'error/404'               => __DIR__ . '/../view/error/404.phtml',
             'error/index'             => __DIR__ . '/../view/error/index.phtml',
+            'email/receipt'           => __DIR__ . '/../view/email/receipt.phtml',
+            'tickets/ticket/complete' => __DIR__ . '/../view/tickets/ticket/complete.phtml',
+            'tickets/ticket/manage' => __DIR__ . '/../view/tickets/ticket/manage.phtml',
+            'tickets/ticket/purchase' => __DIR__ . '/../view/tickets/ticket/purchase.phtml',
+            'tickets/ticket/select-tickets' => __DIR__ . '/../view/tickets/ticket/select-tickets.phtml',
         ],
         'controller_map' => [
             'OpenTickets\Tickets\Controller' => 'tickets',
-        ],
-        'template_path_stack' => [
-            __DIR__ . '/../view',
         ],
     ],
     'zfc_rbac' => [
