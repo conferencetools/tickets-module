@@ -1,21 +1,24 @@
 <?php
+
+use Doctrine\DBAL\Driver\PDOMySql\Driver as PDOMySqlDriver;
+
 $data = file_get_contents("/etc/container_environment.json");
 $data = json_decode($data);
 
-return array(
-    'doctrine' => array(
-        'connection' => array(
+return [
+    'doctrine' => [
+        'connection' => [
             // default connection name
-            'orm_default' => array(
-                'driverClass' => 'Doctrine\DBAL\Driver\PDOMySql\Driver',
-                'params' => array(
+            'orm_default' => [
+                'driverClass' => PDOMySqlDriver::class,
+                'params' => [
                     'host'     => 'db',
                     'port'     => '3306',
                     'user'     => $data->MYSQL_USER,
                     'password' => $data->MYSQL_PASSWORD,
                     'dbname'   => $data->MYSQL_DATABASE,
-                )
-            )
-        )
-    ),
-);
+                ],
+            ],
+        ],
+    ],
+];
