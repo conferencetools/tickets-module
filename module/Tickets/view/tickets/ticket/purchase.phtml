@@ -10,7 +10,7 @@ $this->inlineScript()
 $this->headLink()->appendStylesheet('/css/card.css');
 ?>
 
-<?php include __DIR__ . '/_orderInformation.phtml';?>
+<?= $this->render('tickets/ticket/_orderInformation', ['purchase' => $this->purchase]) ?>
 <div class="row">
     <div class="col-md-6 col-xs-12">
         <?php $this->form->prepare();?>
