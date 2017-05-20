@@ -92,7 +92,7 @@ class EmailPurchase implements MessageHandlerInterface
 
         $message = new Message();
         $message->setBody($body);
-        $message->setSubject(isset($this->config['subject']) ? $this->config['subject'] : 'Your ticket receipt');
+        $message->setSubject($this->config['subject'] ?? 'Your ticket receipt');
         if (isset($this->config['from'])) {
             $message->setFrom($this->config['from']);
         }

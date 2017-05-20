@@ -20,7 +20,7 @@ class EmailPurchaseFactory implements FactoryInterface
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
             $serviceLocator->get('Zend\View\View'),
             $transport,
-            isset($config['mailconf']['purchase']) ? $config['mailconf']['purchase'] : []
+            $config['mailconf']['purchase'] ?? []
         );
     }
 }
