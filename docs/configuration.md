@@ -1,20 +1,26 @@
+# Configuration
+
+Example configuration files for all the following can be found in the `module\Tickets\example-config`
+directory. You should copy them to the `config\autoload` directory of the main Zend application and 
+configure as below.
+
 ## Database
 
-To configure the database make a copy of `config/autoload/doctrine.local.php.dist` as 
-`config/autoload/doctrine.local.php` If you are using the provided docker environment, you 
+To configure the database make a copy of `doctrine.local.php.dist` as 
+`doctrine.local.php` If you are using the provided docker environment, you 
 don't need to modify this file, the settings will be populated automatically for you. For a 
 production setup, you will need to provide the appropriate settings.
  
 ## Stripe
 
 To collect payments you will need to enter stripe details. For development ensure you use the 
-test credentials provided by stripe. Make a copy of `config/autoload/zfr_stripe.local.php.dist`
-as `config/autoload/zfr_stripe.local.php` and enter your secret and publishable keys.
+test credentials provided by stripe. Make a copy of `zfr_stripe.local.php.dist`
+as `zfr_stripe.local.php` and enter your secret and publishable keys.
 
 ## Email
 
-To configure the database make a copy of `config/autoload/mail.local.php.dist` as 
-`config/autoload/mail.local.php` Configure your SMTP settings under the mail array key, the
+To configure the database make a copy of `mail.local.php.dist` as 
+`mail.local.php` Configure your SMTP settings under the mail array key, the
 details under the website key are used to ensure that the correct urls are put in emails 
 sent out by the app. 
 
@@ -50,8 +56,8 @@ When overriding the `layout.phtml` view with your own do no forget to call the v
 
 ## Open tickets
 
-The final config file to look at is `config/autoload/opentickets.local.php.dist` copy this 
-as `config/autoload/opentickets.local.php` This file contains all the settings for open 
+The final config file to look at is `opentickets.local.php.dist` copy this 
+as `opentickets.local.php` This file contains all the settings for open 
 tickets itself. It is divided into three keys
 
 ### Financial
@@ -237,5 +243,14 @@ You can change the base uri for the app with the following piece of config.
 `'router' => ['routes' => ['root' => ['options' => ['route' => '/tickets/' ] ] ] ]`
 
 This example would prefix all application urls with `/tickets/`
+
+### Overriding assets
+
+! Warning: This area is under development and some of the required configutation may change
+in subsequent releases!
+
+To override individual assets, add a `map` key to the asset manager eg
+
+`'asset_manager' => ['resolver_configs' => ['map' => ['css/card.css' => 'my.new.css'] ] ]`
 
 
