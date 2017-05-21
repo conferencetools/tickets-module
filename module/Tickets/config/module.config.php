@@ -77,6 +77,19 @@ return [
             \OpenTickets\Tickets\Controller\TicketController::class => \OpenTickets\Tickets\Service\Factory\ControllerFactory::class,
         ],
     ],
+    'form_elements' => [
+        'factories' => [
+            \OpenTickets\Tickets\Form\ManageTicket::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+        ],
+    ],
+    'input_filters' => [
+        'abstract_factories' => [
+            \Zend\InputFilter\InputFilterAbstractServiceFactory::class,
+        ],
+    ],
+    'input_filter_specs' => [
+        \OpenTickets\Tickets\Form\ManageTicket::class => include __DIR__ . '/input-filters/manage-ticket.config.php',
+    ],
     'reports' => [
         'aliases' => [
             'delegate_information' => \OpenTickets\Tickets\Report\DelegateInformation::class,
