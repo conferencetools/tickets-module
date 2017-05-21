@@ -85,6 +85,7 @@ class EmailPurchase implements MessageHandlerInterface
         $text->type = "text/plain";
 */
         $html = new MimePart($htmlMarkup);
+        $html->setCharset('UTF-8');
         $html->type = "text/html";
 
         $body = new MimeMessage();
@@ -96,6 +97,7 @@ class EmailPurchase implements MessageHandlerInterface
         if (isset($this->config['from'])) {
             $message->setFrom($this->config['from']);
         }
+        $message->setEncoding('UTF-8');
 
         return $message;
     }
