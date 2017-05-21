@@ -1,19 +1,30 @@
 <?php
 
+declare(strict_types=1);
+
 namespace OpenTickets\Tickets\Form;
 
 use OpenTickets\Tickets\Form\Fieldset\DelegateInformation;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Form;
 
-class ManageTicket extends Form
+final class ManageTicket extends Form
 {
     public function __construct()
     {
         parent::__construct('manage-ticket-form');
+    }
 
-        $this->add(['type' => DelegateInformation::class, 'name' => 'delegate']);
+    public function init()
+    {
+        $this->add([
+            'type' => DelegateInformation::class,
+            'name' => 'delegate',
+        ]);
 
-        $this->add(new Csrf('security'));
+        $this->add([
+            'type' => Csrf::class,
+            'name' => 'security',
+        ]);
     }
 }
