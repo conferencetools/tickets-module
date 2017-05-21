@@ -19,7 +19,8 @@ class EmailPurchaseFactory implements FactoryInterface
         return new EmailPurchase(
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
             $serviceLocator->get('Zend\View\View'),
-            $transport
+            $transport,
+            $config['mailconf']['purchase'] ?? []
         );
     }
 }
