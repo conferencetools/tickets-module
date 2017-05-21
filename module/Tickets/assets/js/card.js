@@ -45,8 +45,7 @@ function payWithStripe(e) {
             $form.find('.payment-errors').closest('.row').hide();
             $form.find('.payment-errors').text("");
             // response contains id and card, which contains additional card details
-            console.log(response.id);
-            console.log(response.card);
+
             var token = response.id;
             stripeTokenElement.val(token);
             delegateForm.submit();

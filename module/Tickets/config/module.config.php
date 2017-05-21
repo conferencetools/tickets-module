@@ -7,6 +7,7 @@ return [
     'navigation' => [
         'default' => require __DIR__ . '/navigation.config.php',
     ],
+    'asset_manager' => require __DIR__ . '/asset.config.php',
     'service_manager' => [
         'factories' => [
             \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class,
