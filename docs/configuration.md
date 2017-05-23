@@ -38,6 +38,16 @@ which is used if this key is missed.
 Set the `from` key to set the email address emails are sent from. It is highly recommended that you set
 this key to help the email be recognised by spam filters as legitimate email.
 
+## Google Analytics
+
+To configure Google Analytics make a copy of `module/GoogleAnalytics/config/google-analytics.local.php` as 
+`config/autoload/google-analytics.local.php` and set your own Google Analytics tracking ID.
+
+By default, the tracking ID is an empty key, which disables the Google Analytics integration.
+
+When overriding the `layout.phtml` view with your own do no forget to call the view helper
+(`<?= $this->googleAnalytics() ?>`) in the `<head>` section.
+
 ## Open tickets
 
 The final config file to look at is `config/autoload/opentickets.local.php.dist` copy this 

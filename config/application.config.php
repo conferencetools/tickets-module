@@ -11,6 +11,7 @@ return [
         //'ZfcRbac',
         'ZfrStripeModule',
         'OpenTickets\Tickets',
+        'OpenTickets\GoogleAnalytics',
     ],
 
     /*'service_manager' => [
