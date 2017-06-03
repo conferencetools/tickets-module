@@ -11,7 +11,7 @@ return [
         'Carnage\Cqorms',
         //'ZfcRbac',
         'ZfrStripeModule',
-        'OpenTickets\Tickets',
+        'ConferenceTools\Tickets',
         'OpenTickets\GoogleAnalytics',
     ],
 

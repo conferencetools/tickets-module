@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ReadModel\TicketRecord;
+namespace ConferenceTools\Tickets\Domain\ReadModel\TicketRecord;
 
 use Doctrine\Common\Collections\Collection;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
-use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use PHPUnit\Framework\TestCase;
 
 class PurchaseRecordTest extends TestCase

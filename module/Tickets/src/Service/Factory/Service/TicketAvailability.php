@@ -1,14 +1,14 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Service\Factory\Service;
+namespace ConferenceTools\Tickets\Service\Factory\Service;
 
 
 use Doctrine\ORM\EntityManager;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability as TicketAvailabilityService;
-use OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketTypeFilter;
-use OpenTickets\Tickets\Finder\TicketCounter;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability as TicketAvailabilityService;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketTypeFilter;
+use ConferenceTools\Tickets\Finder\TicketCounter;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

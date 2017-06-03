@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ReadModel\TicketRecord;
+namespace ConferenceTools\Tickets\Domain\ReadModel\TicketRecord;
 
 use Doctrine\ORM\Mapping as ORM;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 
 /**
  * Class TicketCounter
- * @package OpenTickets\Tickets\Domain\ReadModel\TicketCounts
+ * @package ConferenceTools\Tickets\Domain\ReadModel\TicketCounts
  * @ORM\Entity()
  */
 class TicketRecord
@@ -21,13 +21,13 @@ class TicketRecord
 
     /**
      * @var TicketType
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\TicketType")
+     * @ORM\Embedded(class="ConferenceTools\Tickets\Domain\ValueObject\TicketType")
      */
     private $ticketType;
 
     /**
      * @var PurchaseRecord
-     * @ORM\ManyToOne(targetEntity="OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord", inversedBy="tickets")
+     * @ORM\ManyToOne(targetEntity="ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord", inversedBy="tickets")
      * @ORM\JoinColumn(name="purchase_id", referencedColumnName="id")
      */
     private $purchase;
@@ -40,7 +40,7 @@ class TicketRecord
 
     /**
      * @var Delegate
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Delegate")
+     * @ORM\Embedded(class="ConferenceTools\Tickets\Domain\ValueObject\Delegate")
      */
     private $delegate;
 

@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenTickets\Tickets\Report;
+namespace ConferenceTools\Tickets\Report;
 
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 
 final class TicketMailout implements ReportInterface
 {

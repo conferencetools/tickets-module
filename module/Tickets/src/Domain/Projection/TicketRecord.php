@@ -1,20 +1,20 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Projection;
+namespace ConferenceTools\Tickets\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketCancelled;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord as TicketRecordReadModel;
+use ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord as TicketRecordReadModel;
 
 class TicketRecord extends AbstractMethodNameMessageHandler
 {

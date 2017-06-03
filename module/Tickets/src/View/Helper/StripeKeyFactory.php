@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\View\Helper;
+namespace ConferenceTools\Tickets\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;

@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 use Carnage\Cqrs\Command\CommandInterface;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 
 /**
  * Class AssignToDelegate
- * @package OpenTickets\Tickets\Domain\Command\Ticket
+ * @package ConferenceTools\Tickets\Domain\Command\Ticket
  *
  * This command is intended for updating tickets at a later date after they have been purchased
  */

@@ -1,14 +1,14 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Finder;
+namespace ConferenceTools\Tickets\Finder;
 
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManager;
-use OpenTickets\Tickets\Domain\Finder\TicketCounterInterface;
-use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter as TicketCounterReadModel;
+use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter as TicketCounterReadModel;
 
 class TicketCounter implements TicketCounterInterface
 {

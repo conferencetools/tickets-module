@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ReadModel\TicketCounts;
+namespace ConferenceTools\Tickets\Domain\ReadModel\TicketCounts;
 
 use Doctrine\ORM\Mapping as ORM;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 
 /**
  * Class TicketCounter
- * @package OpenTickets\Tickets\Domain\ReadModel\TicketCounts
+ * @package ConferenceTools\Tickets\Domain\ReadModel\TicketCounts
  * @ORM\Entity()
  */
 class TicketCounter
@@ -20,7 +20,7 @@ class TicketCounter
 
     /**
      * @var TicketType
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\TicketType")
+     * @ORM\Embedded(class="ConferenceTools\Tickets\Domain\ValueObject\TicketType")
      */
     private $ticketType;
 

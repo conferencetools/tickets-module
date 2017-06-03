@@ -1,17 +1,17 @@
 <?php
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Carnage\Cqrs\Service\EventCatcher;
-use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
-use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
-use OpenTickets\Tickets\Report\ReportInterface;
-use OpenTickets\Tickets\Report\ReportManager;
+use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
+use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
+use ConferenceTools\Tickets\Report\ReportInterface;
+use ConferenceTools\Tickets\Report\ReportManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

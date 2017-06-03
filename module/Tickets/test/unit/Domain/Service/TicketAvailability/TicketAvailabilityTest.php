@@ -1,12 +1,12 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use OpenTickets\Tickets\Domain\Finder\TicketCounterInterface;
-use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Mockery as m;
 
 class TicketAvailabilityTest extends MockeryTestCase

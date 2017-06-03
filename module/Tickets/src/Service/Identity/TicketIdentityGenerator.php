@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Service\Identity;
+namespace ConferenceTools\Tickets\Service\Identity;
 
 use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use RandomLib\Factory;

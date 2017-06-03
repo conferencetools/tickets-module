@@ -10,9 +10,9 @@ return [
     'asset_manager' => require __DIR__ . '/asset.config.php',
     'service_manager' => [
         'factories' => [
-            \OpenTickets\Tickets\Domain\Service\Configuration::class => \OpenTickets\Tickets\Service\Factory\ConfigurationFactory::class,
-            \OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability::class => \OpenTickets\Tickets\Service\Factory\Service\TicketAvailability::class,
-            \OpenTickets\Tickets\Report\ReportManager::class => \OpenTickets\Tickets\Report\ReportManagerFactory::class,
+            \ConferenceTools\Tickets\Domain\Service\Configuration::class => \ConferenceTools\Tickets\Service\Factory\ConfigurationFactory::class,
+            \ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability::class => \ConferenceTools\Tickets\Service\Factory\Service\TicketAvailability::class,
+            \ConferenceTools\Tickets\Report\ReportManager::class => \ConferenceTools\Tickets\Report\ReportManagerFactory::class,
         ],
         'abstract_factories' => [
             \Zend\Log\LoggerAbstractServiceFactory::class,
@@ -20,67 +20,67 @@ return [
     ],
     'cli_commands' => [
         'factories' => [
-            \OpenTickets\Tickets\Cli\Command\TimeoutPurchases::class => \OpenTickets\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
-            \OpenTickets\Tickets\Cli\Command\IssueFreeTicket::class => \OpenTickets\Tickets\Cli\Command\IssueFreeTicketFactory::class,
-            \OpenTickets\Tickets\Cli\Command\ReportToCsv::class => \OpenTickets\Tickets\Cli\Command\ReportToCsvFactory::class,
-            \OpenTickets\Tickets\Cli\Command\CancelTicket::class => \OpenTickets\Tickets\Cli\Command\CancelTicketFactory::class,
+            \ConferenceTools\Tickets\Cli\Command\TimeoutPurchases::class => \ConferenceTools\Tickets\Cli\Command\TimeoutPurchasesFactory::class,
+            \ConferenceTools\Tickets\Cli\Command\IssueFreeTicket::class => \ConferenceTools\Tickets\Cli\Command\IssueFreeTicketFactory::class,
+            \ConferenceTools\Tickets\Cli\Command\ReportToCsv::class => \ConferenceTools\Tickets\Cli\Command\ReportToCsvFactory::class,
+            \ConferenceTools\Tickets\Cli\Command\CancelTicket::class => \ConferenceTools\Tickets\Cli\Command\CancelTicketFactory::class,
         ],
     ],
     'command_handlers' => [
         'factories' => [
-            \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class => \OpenTickets\Tickets\Service\Factory\CommandHandler\Ticket::class,
+            \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class => \ConferenceTools\Tickets\Service\Factory\CommandHandler\Ticket::class,
         ],
     ],
     'process_managers' => [],
     'command_subscriptions' => [
-        \OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
-        \OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
-        \OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
-        \OpenTickets\Tickets\Domain\Command\Ticket\MakePayment::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
-        \OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
-        \OpenTickets\Tickets\Domain\Command\Ticket\CancelTicket::class => \OpenTickets\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\AssignToDelegate::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\MakePayment::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
+        \ConferenceTools\Tickets\Domain\Command\Ticket\CancelTicket::class => \ConferenceTools\Tickets\Domain\CommandHandler\Ticket::class,
     ],
     'event_listeners' => [
         'factories' => [
-            \OpenTickets\Tickets\EventListener\EmailPurchase::class => \OpenTickets\Tickets\EventListener\EmailPurchaseFactory::class,
+            \ConferenceTools\Tickets\EventListener\EmailPurchase::class => \ConferenceTools\Tickets\EventListener\EmailPurchaseFactory::class,
         ],
     ],
     'projections' => [
         'factories' => [
-            \OpenTickets\Tickets\Domain\Projection\TicketCounts::class => \OpenTickets\Tickets\Service\Factory\Projection\TicketCountsFactory::class,
-            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class => \OpenTickets\Tickets\Service\Factory\Projection\TableProjectionFactory::class,
+            \ConferenceTools\Tickets\Domain\Projection\TicketCounts::class => \ConferenceTools\Tickets\Service\Factory\Projection\TicketCountsFactory::class,
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class => \ConferenceTools\Tickets\Service\Factory\Projection\TableProjectionFactory::class,
         ],
     ],
     'domain_event_subscriptions' => [
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved::class => [
-            \OpenTickets\Tickets\Domain\Projection\TicketCounts::class,
-            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketCounts::class,
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
         ],
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased::class => [
-            \OpenTickets\Tickets\Domain\Projection\TicketCounts::class,
-            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketCounts::class,
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
         ],
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => [
-            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-            \OpenTickets\Tickets\EventListener\EmailPurchase::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+            \ConferenceTools\Tickets\EventListener\EmailPurchase::class,
         ],
-        \OpenTickets\Tickets\Domain\Event\Ticket\DiscountCodeApplied::class => [
-            \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
         ],
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
-        \OpenTickets\Tickets\Domain\Event\Ticket\TicketCancelled::class => \OpenTickets\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
     ],
     'controllers' => [
         'factories' => [
-            \OpenTickets\Tickets\Controller\TicketController::class => \OpenTickets\Tickets\Service\Factory\ControllerFactory::class,
+            \ConferenceTools\Tickets\Controller\TicketController::class => \ConferenceTools\Tickets\Service\Factory\ControllerFactory::class,
         ],
     ],
     'form_elements' => [
         'factories' => [
-            \OpenTickets\Tickets\Form\ManageTicket::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
+            \ConferenceTools\Tickets\Form\ManageTicket::class => \Zend\ServiceManager\Factory\InvokableFactory::class,
         ],
     ],
     'input_filters' => [
@@ -89,33 +89,33 @@ return [
         ],
     ],
     'input_filter_specs' => [
-        \OpenTickets\Tickets\Form\ManageTicket::class => include __DIR__ . '/input-filters/manage-ticket.config.php',
+        \ConferenceTools\Tickets\Form\ManageTicket::class => include __DIR__ . '/input-filters/manage-ticket.config.php',
     ],
     'reports' => [
         'aliases' => [
-            'delegate_information' => \OpenTickets\Tickets\Report\DelegateInformation::class,
-            'delegate_requirements' => \OpenTickets\Tickets\Report\DelegateRequirements::class,
-            'missing_delegate_information' => \OpenTickets\Tickets\Report\MissingDelegateInformation::class,
-            'ticket_mailout' => \OpenTickets\Tickets\Report\TicketMailout::class,
-            'ticket_sales' => \OpenTickets\Tickets\Report\TicketSales::class,
+            'delegate_information' => \ConferenceTools\Tickets\Report\DelegateInformation::class,
+            'delegate_requirements' => \ConferenceTools\Tickets\Report\DelegateRequirements::class,
+            'missing_delegate_information' => \ConferenceTools\Tickets\Report\MissingDelegateInformation::class,
+            'ticket_mailout' => \ConferenceTools\Tickets\Report\TicketMailout::class,
+            'ticket_sales' => \ConferenceTools\Tickets\Report\TicketSales::class,
         ],
         'factories' => [
-            \OpenTickets\Tickets\Report\DelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
-            \OpenTickets\Tickets\Report\DelegateRequirements::class => \OpenTickets\Tickets\Report\ReportFactory::class,
-            \OpenTickets\Tickets\Report\MissingDelegateInformation::class => \OpenTickets\Tickets\Report\ReportFactory::class,
-            \OpenTickets\Tickets\Report\TicketMailout::class => \OpenTickets\Tickets\Report\ReportFactory::class,
-            \OpenTickets\Tickets\Report\TicketSales::class => \OpenTickets\Tickets\Report\ReportFactory::class,
+            \ConferenceTools\Tickets\Report\DelegateInformation::class => \ConferenceTools\Tickets\Report\ReportFactory::class,
+            \ConferenceTools\Tickets\Report\DelegateRequirements::class => \ConferenceTools\Tickets\Report\ReportFactory::class,
+            \ConferenceTools\Tickets\Report\MissingDelegateInformation::class => \ConferenceTools\Tickets\Report\ReportFactory::class,
+            \ConferenceTools\Tickets\Report\TicketMailout::class => \ConferenceTools\Tickets\Report\ReportFactory::class,
+            \ConferenceTools\Tickets\Report\TicketSales::class => \ConferenceTools\Tickets\Report\ReportFactory::class,
         ],
     ],
     'view_helpers' => [
         'invokables' => [
-            'flashMessenger' => \OpenTickets\Tickets\View\Helper\FlashMessenger::class,
-            'moneyFormat' => \OpenTickets\Tickets\View\Helper\MoneyFormat::class,
+            'flashMessenger' => \ConferenceTools\Tickets\View\Helper\FlashMessenger::class,
+            'moneyFormat' => \ConferenceTools\Tickets\View\Helper\MoneyFormat::class,
         ],
         'factories' => [
-            'stripeKey' => \OpenTickets\Tickets\View\Helper\StripeKeyFactory::class,
-            'openTicketsConfig' => \OpenTickets\Tickets\View\Helper\ConfigurationFactory::class,
-            'serverUrl' => \OpenTickets\Tickets\View\Helper\ServerUrlFactory::class,
+            'stripeKey' => \ConferenceTools\Tickets\View\Helper\StripeKeyFactory::class,
+            'openTicketsConfig' => \ConferenceTools\Tickets\View\Helper\ConfigurationFactory::class,
+            'serverUrl' => \ConferenceTools\Tickets\View\Helper\ServerUrlFactory::class,
         ],
     ],
     'view_manager' => [
@@ -136,7 +136,7 @@ return [
             'tickets/ticket/_orderInformation' => __DIR__ . '/../view/tickets/ticket/_orderInformation.phtml',
         ],
         'controller_map' => [
-            'OpenTickets\Tickets\Controller' => 'tickets',
+            'ConferenceTools\Tickets\Controller' => 'tickets',
         ],
     ],
     'zfc_rbac' => [
@@ -155,8 +155,8 @@ return [
             ],
             'orm_default' => [
                 'drivers' => [
-                    'OpenTickets\Tickets\Domain\ReadModel' => 'opentickets_tickets_read_orm_driver',
-                    'OpenTickets\Tickets\Domain\ValueObject' => 'opentickets_tickets_read_orm_driver',
+                    'ConferenceTools\Tickets\Domain\ReadModel' => 'opentickets_tickets_read_orm_driver',
+                    'ConferenceTools\Tickets\Domain\ValueObject' => 'opentickets_tickets_read_orm_driver',
                 ],
             ],
         ],

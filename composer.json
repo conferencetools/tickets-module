@@ -29,13 +29,13 @@
   },
   "autoload": {
     "psr-4": {
-      "OpenTickets\\Tickets\\": "module/Tickets/src",
+      "ConferenceTools\\Tickets\\": "module/Tickets/src",
       "OpenTickets\\GoogleAnalytics\\": "module/GoogleAnalytics/src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "OpenTickets\\Tickets\\": "module/Tickets/test/unit"
+      "ConferenceTools\\Tickets\\": "module/Tickets/test/unit"
     }
   },
   "require-dev": {

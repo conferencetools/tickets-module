@@ -6,21 +6,21 @@
  * Time: 21:37
  */
 
-namespace OpenTickets\Tickets\Domain\CommandHandler;
+namespace ConferenceTools\Tickets\Domain\CommandHandler;
 
 use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Carnage\Cqrs\Persistence\Repository\RepositoryInterface;
-use OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate;
-use OpenTickets\Tickets\Domain\Command\Ticket\CancelTicket;
-use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
-use OpenTickets\Tickets\Domain\Command\Ticket\MakePayment;
-use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
-use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
-use OpenTickets\Tickets\Domain\Model\Ticket\TicketPurchase;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\Basket;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
+use ConferenceTools\Tickets\Domain\Command\Ticket\AssignToDelegate;
+use ConferenceTools\Tickets\Domain\Command\Ticket\CancelTicket;
+use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
+use ConferenceTools\Tickets\Domain\Command\Ticket\MakePayment;
+use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
+use ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase;
+use ConferenceTools\Tickets\Domain\Model\Ticket\TicketPurchase;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\Basket;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
 
 class Ticket extends AbstractMethodNameMessageHandler
 {

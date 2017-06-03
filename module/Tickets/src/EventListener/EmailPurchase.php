@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenTickets\Tickets\EventListener;
+namespace ConferenceTools\Tickets\EventListener;
 
 use Carnage\Cqrs\Event\DomainMessage;
 use Carnage\Cqrs\MessageBus\MessageInterface;
 use Carnage\Cqrs\MessageHandler\MessageHandlerInterface;
 use Crossjoin\PreMailer\HtmlString;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use Zend\Http\Response;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;

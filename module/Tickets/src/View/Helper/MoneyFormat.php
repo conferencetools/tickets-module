@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenTickets\Tickets\View\Helper;
+namespace ConferenceTools\Tickets\View\Helper;
 
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
 use Zend\View\Helper\AbstractHelper;
 
 class MoneyFormat extends AbstractHelper

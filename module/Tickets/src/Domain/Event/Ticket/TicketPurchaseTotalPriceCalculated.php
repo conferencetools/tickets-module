@@ -6,12 +6,12 @@
  * Time: 18:21
  */
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use JMS\Serializer\Annotation as Jms;
 use Carnage\Cqrs\Event\EventInterface;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
 
 class TicketPurchaseTotalPriceCalculated implements EventInterface
 {
@@ -23,7 +23,7 @@ class TicketPurchaseTotalPriceCalculated implements EventInterface
 
     /**
      * @var Price
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Price")
+     * @Jms\Type("ConferenceTools\Tickets\Domain\ValueObject\Price")
      */
     private $total;
 

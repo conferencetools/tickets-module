@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\Command\CommandBusInterface;
 use Zend\ServiceManager\FactoryInterface;

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Report;
+namespace ConferenceTools\Tickets\Report;
 
 use Zend\ServiceManager\AbstractPluginManager;
 use Zend\ServiceManager\Exception;

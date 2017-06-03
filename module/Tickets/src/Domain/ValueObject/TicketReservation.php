@@ -6,7 +6,7 @@
  * Time: 21:18
  */
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 
 class TicketReservation

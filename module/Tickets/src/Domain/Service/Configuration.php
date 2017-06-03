@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Service;
+namespace ConferenceTools\Tickets\Domain\Service;
 
-use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
-use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketMetadata;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketMetadata;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use Zend\Stdlib\ArrayUtils;
 
 class Configuration

@@ -1,10 +1,10 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 
-use OpenTickets\Tickets\Report\ReportManager;
+use ConferenceTools\Tickets\Report\ReportManager;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

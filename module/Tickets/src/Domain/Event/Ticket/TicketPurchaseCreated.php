@@ -6,11 +6,11 @@
  * Time: 18:21
  */
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use JMS\Serializer\Annotation as Jms;
 use Carnage\Cqrs\Event\EventInterface;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
 
 class TicketPurchaseCreated implements EventInterface
 {

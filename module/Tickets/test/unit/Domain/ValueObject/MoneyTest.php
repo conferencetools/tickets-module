@@ -1,7 +1,7 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 
 class MoneyTest extends \PHPUnit\Framework\TestCase

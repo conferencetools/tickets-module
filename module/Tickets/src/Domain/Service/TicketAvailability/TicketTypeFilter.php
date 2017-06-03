@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
 
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 
 class TicketTypeFilter
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
 use JMS\Serializer\Annotation as Jms;

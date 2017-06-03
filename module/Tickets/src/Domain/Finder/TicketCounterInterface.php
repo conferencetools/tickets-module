@@ -1,7 +1,7 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Domain\Finder;
+namespace ConferenceTools\Tickets\Domain\Finder;
 
 use Doctrine\Common\Collections\Collection;
 

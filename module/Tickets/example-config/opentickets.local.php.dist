@@ -1,6 +1,6 @@
 <?php
 
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType;
 
 return [
     'opentickets' => [

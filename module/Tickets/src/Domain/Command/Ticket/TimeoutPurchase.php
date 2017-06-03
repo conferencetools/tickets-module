@@ -6,7 +6,7 @@
  * Time: 12:52
  */
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 
 use Carnage\Cqrs\Command\CommandInterface;

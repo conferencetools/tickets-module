@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Service\Factory\Projection;
+namespace ConferenceTools\Tickets\Service\Factory\Projection;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
