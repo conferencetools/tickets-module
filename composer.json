@@ -24,7 +24,8 @@
     "zendframework/zend-view": "^2.5",
     "zfr/zfr-stripe-module": "~4.0",
     "crossjoin/pre-mailer": "^1.0",
-    "carnage/zendfony-cli": "~0.1.0"
+    "carnage/zendfony-cli": "~0.1.0",
+    "rwoverdijk/assetmanager": "^1.7"
   },
   "autoload": {
     "psr-4": {
