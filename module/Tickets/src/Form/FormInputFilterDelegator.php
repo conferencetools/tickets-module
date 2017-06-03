@@ -4,21 +4,44 @@ declare(strict_types=1);
 
 namespace OpenTickets\Tickets\Form;
 
+use Interop\Container\ContainerInterface;
 use Zend\Form\FormElementManager\FormElementManagerV2Polyfill;
+use Zend\Form\FormInterface;
+use Zend\InputFilter\InputFilter;
+use Zend\ServiceManager\DelegatorFactoryInterface;
+use Zend\ServiceManager\ServiceLocatorInterface;
 
-final class FormInputFilterDelegator
+final class FormInputFilterDelegator implements DelegatorFactoryInterface
 {
-    public function __invoke(
-        FormElementManagerV2Polyfill $serviceLocator,
-        string $name,
-        string $requestedName,
-        callable $callback
+    /**
+     * @param ServiceLocatorInterface|FormElementManagerV2Polyfill $serviceLocator
+     * @param string $name
+     * @param string $requestedName
+     * @param callable $callback
+     *
+     * @return FormInterface
+     */
+    public function createDelegatorWithName(
+        ServiceLocatorInterface $serviceLocator,
+        $name,
+        $requestedName,
+        $callback
     ) {
-        /* @var $form \Zend\Form\FormInterface */
-        $form = call_user_func($callback);
-        $inputFilterManager = $serviceLocator->getServiceLocator()->get('InputFilterManager');
+        return $this($serviceLocator->getServiceLocator(), $requestedName, $callback);
+    }
+
+
+    public function __invoke(
+        ContainerInterface $serviceLocator,
+        string $name,
+        callable $callback,
+        array $options = null
+    ) {
+        /* @var FormInterface $form */
+        $form = $callback();
+        $inputFilterManager = $serviceLocator->get('InputFilterManager');
         if ($inputFilterManager->has(get_class($form))) {
-            /* @var $inputFilter \Zend\InputFilter\InputFilter */
+            /* @var InputFilter $inputFilter */
             $inputFilter = $form->getInputFilter();
             $inputFilter->merge($inputFilterManager->get(get_class($form)));
             $form->setInputFilter($inputFilter);
