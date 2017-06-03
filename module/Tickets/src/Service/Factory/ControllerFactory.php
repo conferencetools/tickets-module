@@ -18,7 +18,8 @@ class ControllerFactory implements FactoryInterface
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
             $serviceLocator->get(StripeClient::class),
             $serviceLocator->get(Configuration::class),
-            $serviceLocator->get(TicketAvailability::class)
+            $serviceLocator->get(TicketAvailability::class),
+            $serviceLocator->get('FormElementManager')
         );
     }
 }

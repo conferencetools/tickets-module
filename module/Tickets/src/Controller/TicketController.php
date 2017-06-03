@@ -16,6 +16,7 @@ use OpenTickets\Tickets\Domain\ValueObject\Delegate;
 use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
 use OpenTickets\Tickets\Form\ManageTicket;
 use OpenTickets\Tickets\Form\PurchaseForm;
+use Zend\Form\FormElementManager\FormElementManagerV2Polyfill;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
 use ZfrStripe\Client\StripeClient;
@@ -41,16 +42,22 @@ class TicketController extends AbstractController
      * @var TicketAvailability
      */
     private $ticketAvailability;
+    /**
+     * @var FormElementManagerV2Polyfill
+     */
+    private $formElementManager;
 
     public function __construct(
         MessageBusInterface $commandBus,
         EntityManager $entityManager,
         StripeClient $stripeClient,
         Configuration $configuration,
-        TicketAvailability $ticketAvailability
+        TicketAvailability $ticketAvailability,
+        FormElementManagerV2Polyfill $formElementManager
     ) {
         parent::__construct($commandBus, $entityManager, $stripeClient, $configuration);
         $this->ticketAvailability = $ticketAvailability;
+        $this->formElementManager = $formElementManager;
     }
 
     public function indexAction()
@@ -276,7 +283,7 @@ class TicketController extends AbstractController
         $ticketRecord = $purchase->getTicketRecord($ticketId);
         $delegate = $ticketRecord->getDelegate();
 
-        $form = new ManageTicket();
+        $form = $this->formElementManager->get(ManageTicket::class);
         $data = [
             'delegate' => [
                 'firstname' => $delegate->getFirstname(),
