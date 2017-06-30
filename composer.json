@@ -4,8 +4,8 @@
   "license": "MIT",
   "require": {
     "php": ">=7.0.5",
-    "carnage/cqrs": "~0.1.2",
-    "carnage/cqorms": "~0.1.0",
+    "carnage/cqrs": ">=0.1.2",
+    "carnage/cqorms": ">=0.1.0",
     "doctrine/doctrine-orm-module": "^1.0.0",
     "doctrine/common": "^2.6.0",
     "neilime/zf2-twb-bundle": "2.*@stable",
@@ -29,13 +29,13 @@
   },
   "autoload": {
     "psr-4": {
-      "ConferenceTools\\Tickets\\": "module/Tickets/src",
+      "ConferenceTools\\Tickets\\": "src",
       "OpenTickets\\GoogleAnalytics\\": "module/GoogleAnalytics/src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ConferenceTools\\Tickets\\": "module/Tickets/test/unit"
+      "ConferenceTools\\Tickets\\": "test/unit"
     }
   },
   "require-dev": {
