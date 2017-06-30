@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenTickets\Tickets\Service\Factory;
+namespace ConferenceTools\Tickets\Service\Factory;
 
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

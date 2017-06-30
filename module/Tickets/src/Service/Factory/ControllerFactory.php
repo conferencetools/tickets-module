@@ -1,9 +1,9 @@
 <?php
-namespace OpenTickets\Tickets\Service\Factory;
+namespace ConferenceTools\Tickets\Service\Factory;
 
 use Carnage\Cqrs\Command\CommandBusInterface;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 use ZfrStripe\Client\StripeClient;

@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 
 use Carnage\Cqrs\Command\CommandBusInterface;
 use Carnage\Cqrs\Service\EventCatcher;
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 

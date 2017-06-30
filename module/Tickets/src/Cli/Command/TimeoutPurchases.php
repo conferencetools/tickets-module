@@ -1,12 +1,12 @@
 <?php
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\Command\Ticket\TimeoutPurchase;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
+use ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

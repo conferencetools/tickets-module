@@ -7,7 +7,7 @@
  * @license   http://framework.zend.com/license/new-bsd New BSD License
  */
 
-namespace OpenTickets\Tickets;
+namespace ConferenceTools\Tickets;
 
 use Zend\Mvc\MvcEvent;
 

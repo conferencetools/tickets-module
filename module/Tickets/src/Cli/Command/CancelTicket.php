@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenTickets\Tickets\Cli\Command;
+namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use OpenTickets\Tickets\Domain\Command\Ticket\CancelTicket as CancelTicketCommand;
+use ConferenceTools\Tickets\Domain\Command\Ticket\CancelTicket as CancelTicketCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

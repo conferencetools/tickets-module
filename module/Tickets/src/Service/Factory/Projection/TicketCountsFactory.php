@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenTickets\Tickets\Service\Factory\Projection;
+namespace ConferenceTools\Tickets\Service\Factory\Projection;
 
-use OpenTickets\Tickets\Domain\Service\Configuration as OpenTicketsConfiguration;
+use ConferenceTools\Tickets\Domain\Service\Configuration as TicketsConfiguration;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
 
@@ -13,7 +13,7 @@ class TicketCountsFactory implements FactoryInterface
         $serviceLocator = $serviceLocator->getServiceLocator();
         return new $requestedName(
             $serviceLocator->get('doctrine.entitymanager.orm_default'),
-            $serviceLocator->get(OpenTicketsConfiguration::class)
+            $serviceLocator->get(TicketsConfiguration::class)
         );
     }
 }

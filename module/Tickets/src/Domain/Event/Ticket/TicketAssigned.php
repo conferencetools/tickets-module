@@ -6,10 +6,10 @@
  * Time: 16:15
  */
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use JMS\Serializer\Annotation as Jms;
 
 class TicketAssigned implements EventInterface
@@ -21,7 +21,7 @@ class TicketAssigned implements EventInterface
     private $ticketId;
 
     /**
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Delegate")
+     * @Jms\Type("ConferenceTools\Tickets\Domain\ValueObject\Delegate")
      * @var Delegate
      */
     private $delegate;

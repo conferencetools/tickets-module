@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
 
 class TicketMetadataTest extends \PHPUnit\Framework\TestCase
 {

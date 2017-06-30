@@ -1,21 +1,21 @@
 <?php
 
-namespace OpenTickets\Tickets\Controller;
+namespace ConferenceTools\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Doctrine\ORM\EntityManager;
-use OpenTickets\Tickets\Domain\Command\Ticket\AssignToDelegate;
-use OpenTickets\Tickets\Domain\Command\Ticket\CompletePurchase;
-use OpenTickets\Tickets\Domain\Command\Ticket\ReserveTickets;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
-use OpenTickets\Tickets\Form\ManageTicket;
-use OpenTickets\Tickets\Form\PurchaseForm;
+use ConferenceTools\Tickets\Domain\Command\Ticket\AssignToDelegate;
+use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
+use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
+use ConferenceTools\Tickets\Form\ManageTicket;
+use ConferenceTools\Tickets\Form\PurchaseForm;
 use Zend\Form\FormElementManager\FormElementManagerV2Polyfill;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;

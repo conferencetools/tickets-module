@@ -7,11 +7,11 @@
  * Time: 21:48
  */
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 use Carnage\Cqrs\Command\CommandInterface;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservationRequest;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
 
 class ReserveTickets implements CommandInterface
 {

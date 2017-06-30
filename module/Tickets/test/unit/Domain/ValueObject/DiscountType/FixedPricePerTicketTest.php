@@ -1,12 +1,12 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject\DiscountType;
+namespace ConferenceTools\Tickets\Domain\ValueObject\DiscountType;
 
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\Basket;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
-use OpenTickets\Tickets\Domain\ValueObject\TicketReservation;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\Basket;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
 
 class FixedPricePerTicketTest extends \PHPUnit\Framework\TestCase
 {

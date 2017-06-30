@@ -6,11 +6,11 @@
  * Time: 14:10
  */
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 
 use Carnage\Cqrs\Command\CommandInterface;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 
 class CompletePurchase implements CommandInterface
 {

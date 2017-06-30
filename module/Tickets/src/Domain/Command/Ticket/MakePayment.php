@@ -6,14 +6,14 @@
  * Time: 12:43
  */
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 
 use Carnage\Cqrs\Command\CommandInterface;
 
 /**
  * Class MakePayment
- * @package OpenTickets\Tickets\Domain\Command\Ticket
+ * @package ConferenceTools\Tickets\Domain\Command\Ticket
  *
  * This class exists mostly for manually marking a purchase as paid eg for free issues or offline payments.
  */

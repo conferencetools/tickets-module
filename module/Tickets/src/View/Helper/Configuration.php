@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenTickets\Tickets\View\Helper;
+namespace ConferenceTools\Tickets\View\Helper;
 
-use OpenTickets\Tickets\Domain\Service\Configuration as OpenTicketsConfiguration;
+use ConferenceTools\Tickets\Domain\Service\Configuration as TicketsConfiguration;
 use Zend\View\Helper\AbstractHelper;
 
 class Configuration extends AbstractHelper
@@ -11,9 +11,9 @@ class Configuration extends AbstractHelper
 
     /**
      * Configuration constructor.
-     * @param OpenTicketsConfiguration $config
+     * @param TicketsConfiguration $config
      */
-    public function __construct(OpenTicketsConfiguration $config)
+    public function __construct(TicketsConfiguration $config)
     {
         $this->config = $config;
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Form\Fieldset;
+namespace ConferenceTools\Tickets\Form\Fieldset;
 
 use Zend\Form\Element\Text;
 use Zend\Form\Element\Textarea;

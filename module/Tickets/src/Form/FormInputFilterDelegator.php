@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace OpenTickets\Tickets\Form;
+namespace ConferenceTools\Tickets\Form;
 
 use Interop\Container\ContainerInterface;
 use Zend\Form\FormElementManager\FormElementManagerV2Polyfill;

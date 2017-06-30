@@ -6,7 +6,7 @@
  * Time: 18:20
  */
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use JMS\Serializer\Annotation as Jms;
 use Carnage\Cqrs\Event\EventInterface;

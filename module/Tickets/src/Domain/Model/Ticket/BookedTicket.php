@@ -1,11 +1,11 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Model\Ticket;
+namespace ConferenceTools\Tickets\Domain\Model\Ticket;
 
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketAssigned;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 
 class BookedTicket
 {

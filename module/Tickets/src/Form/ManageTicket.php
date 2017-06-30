@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace OpenTickets\Tickets\Form;
+namespace ConferenceTools\Tickets\Form;
 
-use OpenTickets\Tickets\Form\Fieldset\DelegateInformation;
+use ConferenceTools\Tickets\Form\Fieldset\DelegateInformation;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Form;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 
 class Basket
 {

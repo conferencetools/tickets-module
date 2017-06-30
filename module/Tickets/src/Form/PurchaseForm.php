@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenTickets\Tickets\Form;
+namespace ConferenceTools\Tickets\Form;
 
-use OpenTickets\Tickets\Domain\ValueObject\Delegate;
-use OpenTickets\Tickets\Form\Fieldset\DelegateInformation;
-use OpenTickets\Tickets\Hydrator\DelegateHydrator;
+use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
+use ConferenceTools\Tickets\Form\Fieldset\DelegateInformation;
+use ConferenceTools\Tickets\Hydrator\DelegateHydrator;
 use Zend\Form\Element\Collection;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Hidden;

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\View\Helper;
+namespace ConferenceTools\Tickets\View\Helper;
 
 use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
 use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;

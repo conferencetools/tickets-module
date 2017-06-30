@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 class PriceTest extends \PHPUnit\Framework\TestCase
 {

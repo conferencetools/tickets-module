@@ -1,18 +1,18 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Projection;
+namespace ConferenceTools\Tickets\Domain\Projection;
 
 use Carnage\Cqrs\Event\Projection\ResettableInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketReleased;
-use OpenTickets\Tickets\Domain\Event\Ticket\TicketReserved;
-use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
-use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 
 class TicketCounts extends AbstractMethodNameMessageHandler implements ResettableInterface
 {

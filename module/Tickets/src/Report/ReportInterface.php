@@ -1,7 +1,7 @@
 <?php
 
 
-namespace OpenTickets\Tickets\Report;
+namespace ConferenceTools\Tickets\Report;
 
 
 interface ReportInterface

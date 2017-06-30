@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Command\Ticket;
+namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
 

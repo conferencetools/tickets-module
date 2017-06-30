@@ -1,16 +1,16 @@
 <?php
 
-namespace OpenTickets\Tickets\View\Helper;
+namespace ConferenceTools\Tickets\View\Helper;
 
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use OpenTickets\Tickets\Domain\Service\Configuration as OpenTicketsConfiguration;
+use ConferenceTools\Tickets\Domain\Service\Configuration as TicketsConfiguration;
 
 class ConfigurationFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        $config = $serviceLocator->getServiceLocator()->get(OpenTicketsConfiguration::class);
+        $config = $serviceLocator->getServiceLocator()->get(TicketsConfiguration::class);
         return new Configuration($config);
     }
 

@@ -6,7 +6,7 @@ return [
         'options' => [
             'route' => '/',
             'defaults' => [
-                'controller' => \OpenTickets\Tickets\Controller\TicketController::class,
+                'controller' => \ConferenceTools\Tickets\Controller\TicketController::class,
                 'action' => 'index',
             ],
         ],
@@ -17,7 +17,7 @@ return [
                 'options' => [
                     'route' => 'select-tickets[/:discount-code]',
                     'defaults' => [
-                        'controller' => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'controller' => \ConferenceTools\Tickets\Controller\TicketController::class,
                         'action' => 'select-tickets',
                     ],
                 ],
@@ -27,7 +27,7 @@ return [
                 'options' => [
                     'route' => 'purchase/:purchaseId',
                     'defaults' => [
-                        'controller' => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'controller' => \ConferenceTools\Tickets\Controller\TicketController::class,
                         'action' => 'purchase',
                     ],
                 ],
@@ -37,7 +37,7 @@ return [
                 'options' => [
                     'route' => 'complete/:purchaseId',
                     'defaults' => [
-                        'controller' => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'controller' => \ConferenceTools\Tickets\Controller\TicketController::class,
                         'action' => 'complete',
                     ],
                 ],
@@ -47,7 +47,7 @@ return [
                 'options' => [
                     'route' => 'manage/:purchaseId/:ticketId',
                     'defaults' => [
-                        'controller' => \OpenTickets\Tickets\Controller\TicketController::class,
+                        'controller' => \ConferenceTools\Tickets\Controller\TicketController::class,
                         'action' => 'manage',
                     ],
                 ],

@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\EventListener;
+namespace ConferenceTools\Tickets\EventListener;
 
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;

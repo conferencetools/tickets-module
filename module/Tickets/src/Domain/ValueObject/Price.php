@@ -1,6 +1,6 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,15 +13,15 @@ class Price
 {
     /**
      * @var Money
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\Money")
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\Money")
+     * @ORM\Embedded(class="ConferenceTools\Tickets\Domain\ValueObject\Money")
+     * @Jms\Type("ConferenceTools\Tickets\Domain\ValueObject\Money")
      */
     private $net;
 
     /**
      * @var TaxRate
-     * @ORM\Embedded(class="OpenTickets\Tickets\Domain\ValueObject\TaxRate")
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\TaxRate")
+     * @ORM\Embedded(class="ConferenceTools\Tickets\Domain\ValueObject\TaxRate")
+     * @Jms\Type("ConferenceTools\Tickets\Domain\ValueObject\TaxRate")
      */
     private $taxRate;
 

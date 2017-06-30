@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\DiscountTypeInterface;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\DiscountTypeInterface;
 use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Class DiscountCode
- * @package OpenTickets\Tickets\Domain\ValueObject
+ * @package ConferenceTools\Tickets\Domain\ValueObject
  * @ORM\Embeddable()
  */
 class DiscountCode

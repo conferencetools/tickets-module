@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\ValueObject;
+namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
  * Class Delegate
- * @package OpenTickets\Tickets\Domain\ValueObject
+ * @package ConferenceTools\Tickets\Domain\ValueObject
  * @ORM\Embeddable()
  */
 class Delegate

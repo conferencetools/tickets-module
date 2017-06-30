@@ -6,13 +6,13 @@
  * Time: 13:32
  */
 
-namespace OpenTickets\Tickets\Domain\ReadModel\TicketCounts;
+namespace ConferenceTools\Tickets\Domain\ReadModel\TicketCounts;
 
 
-use OpenTickets\Tickets\Domain\ValueObject\Money;
-use OpenTickets\Tickets\Domain\ValueObject\Price;
-use OpenTickets\Tickets\Domain\ValueObject\TaxRate;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\ValueObject\Money;
+use ConferenceTools\Tickets\Domain\ValueObject\Price;
+use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use PHPUnit\Framework\TestCase;
 
 class TicketCounterTest extends TestCase

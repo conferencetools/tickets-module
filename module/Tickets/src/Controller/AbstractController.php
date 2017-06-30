@@ -1,10 +1,10 @@
 <?php
 
-namespace OpenTickets\Tickets\Controller;
+namespace ConferenceTools\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
 use Doctrine\ORM\EntityManager;
-use OpenTickets\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Zend\Mvc\Controller\AbstractActionController;
 use ZfrStripe\Client\StripeClient;
 

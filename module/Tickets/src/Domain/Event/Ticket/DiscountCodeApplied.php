@@ -1,9 +1,9 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Event\Ticket;
+namespace ConferenceTools\Tickets\Domain\Event\Ticket;
 
 use Carnage\Cqrs\Event\EventInterface;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountCode;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
 use JMS\Serializer\Annotation as Jms;
 
 class DiscountCodeApplied implements EventInterface
@@ -15,7 +15,7 @@ class DiscountCodeApplied implements EventInterface
     private $id;
 
     /**
-     * @Jms\Type("OpenTickets\Tickets\Domain\ValueObject\DiscountCode")
+     * @Jms\Type("ConferenceTools\Tickets\Domain\ValueObject\DiscountCode")
      * @var DiscountCode
      */
     private $discountCode;

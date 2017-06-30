@@ -186,19 +186,19 @@ The type of discount code, currently there are three types available:
 
 This type applies a percentage discount to the entire order.
 
-Set to `\OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage::class`
+Set to `\ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage::class`
 
 ##### Fixed
 
 This applies a fixed discount to the whole order, regardless of how many tickets are purchased.
 
-Set to `\OpenTickets\Tickets\Domain\ValueObject\DiscountType\Fixed::class`
+Set to `\ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Fixed::class`
 
 ##### Fixed Per Ticket
 
 This applies a fixed discount to each ticket a customer purchases.
 
-Set to `\OpenTickets\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket::class`
+Set to `\ConferenceTools\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket::class`
 
 #### Options
 

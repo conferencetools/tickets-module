@@ -1,14 +1,14 @@
 <?php
 
-namespace OpenTickets\Tickets\Report;
+namespace ConferenceTools\Tickets\Report;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\EntityRepository;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use OpenTickets\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Fixed;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket;
-use OpenTickets\Tickets\Domain\ValueObject\DiscountType\Percentage;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Fixed;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\FixedPerTicket;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
 
 final class TicketSales implements ReportInterface
 {

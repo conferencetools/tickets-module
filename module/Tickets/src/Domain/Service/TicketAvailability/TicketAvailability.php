@@ -1,13 +1,13 @@
 <?php
 
-namespace OpenTickets\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
 
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\EntityManagerInterface;
-use OpenTickets\Tickets\Domain\Finder\TicketCounterInterface;
-use OpenTickets\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use OpenTickets\Tickets\Domain\Service\Configuration;
-use OpenTickets\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 
 class TicketAvailability
 {
