@@ -15,6 +15,7 @@
     "zendframework/zend-http": "^2.5",
     "zendframework/zend-inputfilter": "^2.5",
     "zendframework/zend-log": "^2.5",
+    "zendframework/zend-math": "^2.5",
     "zendframework/zend-mail": "^2.5",
     "zendframework/zend-mime": "^2.5",
     "zendframework/zend-mvc": "^2.5",
