@@ -240,7 +240,7 @@ you can override.
 
 You can change the base uri for the app with the following piece of config.
 
-`'router' => ['routes' => ['root' => ['options' => ['route' => '/tickets/' ] ] ] ]`
+`'router' => ['routes' => ['tickets' => ['options' => ['route' => '/tickets/' ] ] ] ]`
 
 This example would prefix all application urls with `/tickets/`
 

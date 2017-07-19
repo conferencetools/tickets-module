@@ -13,7 +13,7 @@
                 <table class="table">
                     <?php foreach($this->purchase->getTickets() as $ticket):?>
                         <?php $url = $this->url(
-                                'root/manage',
+                                'tickets/manage',
                                 ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()]
                         )?>
                         <tr>

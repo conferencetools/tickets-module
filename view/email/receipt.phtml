@@ -124,7 +124,7 @@
                             <table style="border-spacing: 0; border-collapse: collapse !important; color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box; width: 100%; max-width: 100%; margin-bottom: 20px;" bgcolor="transparent !important">
                                 <?php foreach($this->purchase->getTickets() as $ticket):?>
                                     <?php $url = $this->url(
-                                    'root/manage',
+                                    'tickets/manage',
                                     ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()]
                                     )?>
                                     <tr style="color: #000 !important; text-shadow: none !important; background-color: transparent !important; -webkit-box-shadow: none !important; box-shadow: none !important; page-break-inside: avoid; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;" bgcolor="transparent !important">
@@ -145,7 +145,7 @@
     </div>
 </div>
 <?php $url = $this->url(
-    'root/complete',
+    'tickets/complete',
     ['purchaseId' => $this->purchase->getPurchaseId()]
 )?>
 Email broken? <a href="<?=  $this->serverUrl() .  $url?>" style="background-color: transparent !important; color: #337ab7 !important; text-shadow: none !important; -webkit-box-shadow: none !important; box-shadow: none !important; text-decoration: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; box-sizing: border-box;">Click here to view in a browser</a>

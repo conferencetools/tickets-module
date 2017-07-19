@@ -1,6 +1,6 @@
 {
-  "name": "opentickets/opentickets",
-  "description": "Ticket selling application",
+  "name": "conferencetools/tickets",
+  "description": "Ticket selling module",
   "license": "MIT",
   "require": {
     "php": ">=7.0.5",
