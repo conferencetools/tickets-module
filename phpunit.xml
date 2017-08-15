@@ -1,15 +1,15 @@
 <phpunit bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="Open tickets domain unit tests">
-            <directory>module/Tickets/test/unit/Domain</directory>
+            <directory>test/unit/Domain</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">module/Tickets/src/Domain</directory>
+            <directory suffix=".php">src/Domain</directory>
             <exclude>
-                <directory suffix=".php">module/Tickets/src/Domain/Command</directory>
-                <directory suffix=".php">module/Tickets/src/Domain/Event</directory>
+                <directory suffix=".php">src/Domain/Command</directory>
+                <directory suffix=".php">src/Domain/Event</directory>
             </exclude>
         </whitelist>
 
