@@ -7,7 +7,7 @@
     "carnage/cqrs": ">=0.1.2",
     "carnage/cqorms": ">=0.1.0",
     "carnage/zendfony-cli": "~0.1.0",
-    "conferencetool/googleanalytics": "^0.1",
+    "conferencetools/googleanalytics": "^0.1",
     "crossjoin/pre-mailer": "^1.0",
     "doctrine/doctrine-orm-module": "^1.0.0",
     "doctrine/common": "^2.6.0",
