@@ -1,41 +1,44 @@
 {
-  "name": "opentickets/opentickets",
-  "description": "Ticket selling application",
+  "name": "conferencetools/tickets",
+  "description": "Ticket selling module",
   "license": "MIT",
   "require": {
     "php": ">=7.0.5",
-    "carnage/cqrs": "~0.1.2",
-    "carnage/cqorms": "~0.1.0",
+    "carnage/cqrs": ">=0.1.2",
+    "carnage/cqorms": ">=0.1.0",
+    "carnage/zendfony-cli": "~0.1.0",
+    "conferencetools/googleanalytics": "^0.1",
+    "crossjoin/pre-mailer": "^1.0",
     "doctrine/doctrine-orm-module": "^1.0.0",
     "doctrine/common": "^2.6.0",
     "neilime/zf2-twb-bundle": "2.*@stable",
+    "rwoverdijk/assetmanager": "^1.7",
     "zendframework/zend-console": "^2.5",
     "zendframework/zend-filter": "^2.5",
     "zendframework/zend-form": "^2.5",
     "zendframework/zend-http": "^2.5",
     "zendframework/zend-inputfilter": "^2.5",
     "zendframework/zend-log": "^2.5",
+    "zendframework/zend-math": "^2.5",
     "zendframework/zend-mail": "^2.5",
     "zendframework/zend-mime": "^2.5",
     "zendframework/zend-mvc": "^2.5",
     "zendframework/zend-servicemanager": "^2.5",
     "zendframework/zend-stdlib": "^2.5",
+    "zendframework/zend-session": "^2.5",
     "zendframework/zend-validator": "^2.5",
     "zendframework/zend-view": "^2.5",
-    "zfr/zfr-stripe-module": "~4.0",
-    "crossjoin/pre-mailer": "^1.0",
-    "carnage/zendfony-cli": "~0.1.0",
-    "rwoverdijk/assetmanager": "^1.7"
+    "zfr/zfr-stripe-module": "~4.0"
   },
   "autoload": {
     "psr-4": {
-      "ConferenceTools\\Tickets\\": "module/Tickets/src",
+      "ConferenceTools\\Tickets\\": "src",
       "OpenTickets\\GoogleAnalytics\\": "module/GoogleAnalytics/src"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "ConferenceTools\\Tickets\\": "module/Tickets/test/unit"
+      "ConferenceTools\\Tickets\\": "test/unit"
     }
   },
   "require-dev": {

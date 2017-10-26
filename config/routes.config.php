@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'root' => [
+    'tickets' => [
         'type' => 'Segment',
         'options' => [
             'route' => '/',

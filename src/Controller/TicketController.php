@@ -62,7 +62,7 @@ class TicketController extends AbstractController
 
     public function indexAction()
     {
-        return $this->redirect()->toRoute('root/select-tickets');
+        return $this->redirect()->toRoute('tickets/select-tickets');
     }
 
     public function selectTicketsAction()
@@ -96,7 +96,7 @@ class TicketController extends AbstractController
                 $this->getCommandBus()->dispatch($command);
                 /** @var TicketPurchaseCreated $event */
                 $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
-                return $this->redirect()->toRoute('root/purchase', ['purchaseId' => $event->getId()]);
+                return $this->redirect()->toRoute('tickets/purchase', ['purchaseId' => $event->getId()]);
             }
         } else {
             try {
@@ -181,12 +181,12 @@ class TicketController extends AbstractController
 
         if ($purchase === null || $purchase->hasTimedout()) {
             $this->flashMessenger()->addErrorMessage('Purchase Id invalid or your purchase timed out');
-            return $this->redirect()->toRoute('root/select-tickets');
+            return $this->redirect()->toRoute('tickets/select-tickets');
         }
 
         if ($purchase->isPaid()) {
             $this->flashMessenger()->addInfoMessage('This purchase has already been paid for');
-            return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
+            return $this->redirect()->toRoute('tickets/complete', ['purchaseId' => $purchaseId]);
         }
 
         $form = new PurchaseForm($purchase->getTicketCount());
@@ -221,7 +221,7 @@ class TicketController extends AbstractController
                             'You will receive an email shortly with your receipt. ' .
                             'Tickets will be sent to the delegates shortly before the event'
                         );
-                    return $this->redirect()->toRoute('root/complete', ['purchaseId' => $purchaseId]);
+                    return $this->redirect()->toRoute('tickets/complete', ['purchaseId' => $purchaseId]);
                 } catch (CardErrorException $e) {
                     $this->flashMessenger()->addErrorMessage(
                         sprintf(
@@ -268,7 +268,7 @@ class TicketController extends AbstractController
 
         if ($purchase === null) {
             $this->flashMessenger()->addErrorMessage('Purchase Id invalid');
-            return $this->redirect()->toRoute('root/select-tickets');
+            return $this->redirect()->toRoute('tickets/select-tickets');
         }
 
         return new ViewModel(['purchase' => $purchase]);
