@@ -5,11 +5,8 @@ This is an open source ticketing system I built for PHP Yorkshire. The features 
 
 The entire application is event sourced, so even if you don't run a conference, you might find this an interesting application to study.
 
-# Install (dev)
-
-copy the .dist files in config to files without the .dist in the name; edit the config to your liking 
-(Doctrine shouldn't need changing if you use the docker env), do a composer install (requires php 7) 
-then run `make run` (requires pwgen installed) from the root directory. 
+# Documenation
+Full documantation is available at https://conferencetools.github.io/docs/tickets/
 
 # Features
 
