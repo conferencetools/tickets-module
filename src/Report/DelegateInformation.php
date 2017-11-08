@@ -36,6 +36,10 @@ final class DelegateInformation implements ReportInterface
                 'type' => $ticket->getTicketType()->getDisplayName(),
             ];
 
+            foreach ($ticket->getDelegate()->getAdditionalInformation()->getQuestions() as $question) {
+                $item[$question->getHandle()] = $question->getHandle();
+            }
+
             $report[] = $item;
         }
 

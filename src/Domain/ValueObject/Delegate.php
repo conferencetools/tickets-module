@@ -173,4 +173,12 @@ class Delegate
     {
         return $this->requirements;
     }
+
+    /**
+     * @return DelegateAdditionalInformation
+     */
+    public function getAdditionalInformation(): DelegateAdditionalInformation
+    {
+        return $this->additionalInformation;
+    }
 }
