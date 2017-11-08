@@ -34,7 +34,7 @@ class TimeoutPurchases extends Command
 
     protected function configure()
     {
-        $this->setName('opentickets:timeout-purchases')
+        $this->setName('tickets:timeout-purchases')
             ->setDescription('Times out all purchases over 30 mins old.');
     }
 

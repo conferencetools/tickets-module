@@ -34,7 +34,7 @@ class ReportToCsv extends Command
 
     protected function configure()
     {
-        $this->setName('opentickets:report-to-csv')
+        $this->setName('tickets:report-to-csv')
             ->setDescription('Creates a csv export of a report')
             ->setDefinition([
                 new InputArgument('report', InputArgument::REQUIRED, 'Report to run'),
