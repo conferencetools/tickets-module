@@ -27,7 +27,7 @@ class TicketRecordTest extends TestCase
 
     public function testUpdateDelegate()
     {
-        $data['firstname']= 'Ed';
+        $data['firstname'] = 'Ed';
         $data['lastname'] = 'Nigma';
         $data['email'] = 'ed.nigma@gmail.com';
         $data['company'] = 'Mystery Inc.';

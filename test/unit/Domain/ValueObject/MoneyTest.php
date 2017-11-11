@@ -64,7 +64,7 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
     {
         $sut = new Money(10, 'GBP');
         $money1 = new Money(9, 'GBP');
-        $money2 =  new Money(11, 'GBP');
+        $money2 = new Money(11, 'GBP');
 
         self::assertTrue($sut->lessThan($money2));
         self::assertFalse($sut->lessThan($money1));

@@ -51,7 +51,7 @@ class TicketAvailabilityTest extends MockeryTestCase
             $this->config->getAvailableTickets('free')
         );
 
-        $this->ticketCounters= new ArrayCollection($ticketCounters);
+        $this->ticketCounters = new ArrayCollection($ticketCounters);
     }
 
     public function testFetchAllAvailableTickets()
