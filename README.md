@@ -1,5 +1,5 @@
 # Conference Tools: Tickets
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/conferencetools/opentickets/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/conferencetools/opentickets/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/conferencetools/opentickets/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/conferencetools/opentickets/?branch=master) 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/conferencetools/tickets-module/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/conferencetools/tickets-module/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/conferencetools/tickets-module/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/conferencetools/tickets-module/?branch=master) 
 
 This is an open source ticketing system I built for PHP Yorkshire. The features are still quite restricted, however the core is fairly solid. Please try this out for your event and if it doesn't meet your needs, raise issues for any missing features you would require to use it in the future. 
 
