@@ -285,14 +285,7 @@ class TicketController extends AbstractController
 
         $form = $this->formElementManager->get(ManageTicket::class);
         $data = [
-            'delegate' => [
-                'firstname' => $delegate->getFirstname(),
-                'lastname' => $delegate->getLastname(),
-                'email' => $delegate->getEmail(),
-                'company' => $delegate->getCompany(),
-                'twitter' => $delegate->getTwitter(),
-                'requirements' => $delegate->getRequirements()
-            ]
+            'delegate' => $delegate->toArray()
         ];
 
         $form->bind(new ArrayObject($data));

@@ -50,6 +50,13 @@ class Delegate
     private $requirements;
 
     /**
+     * @var DelegateAdditionalInformation
+     * @ORM\Column(type="json_object")
+     * @JMS\Type("ConferenceTools\Tickets\Domain\ValueObject\DelegateAdditionalInformation")
+     */
+    private $additionalInformation;
+
+    /**
      * Delegate constructor.
      * @param string $firstname
      * @param string $lastname
@@ -66,6 +73,7 @@ class Delegate
         $this->company = $company;
         $this->twitter = $twitter;
         $this->requirements = $requirements;
+        $this->additionalInformation = new DelegateAdditionalInformation();
     }
 
     public static function emptyObject()
@@ -75,7 +83,7 @@ class Delegate
 
     public static function fromArray(array $data)
     {
-        return new static(
+        $instance = new static(
             $data['firstname'],
             $data['lastname'],
             $data['email'],
@@ -83,6 +91,39 @@ class Delegate
             $data['twitter'],
             $data['requirements']
         );
+
+        unset(
+            $data['firstname'],
+            $data['lastname'],
+            $data['email'],
+            $data['company'],
+            $data['twitter'],
+            $data['requirements']
+        );
+
+        foreach ($data as $questionHandle => $questionAnswer) {
+            $instance->additionalInformation->addQuestion($questionHandle, $questionAnswer);
+        }
+
+        return $instance;
+    }
+
+    public function toArray()
+    {
+        $data = [
+            'firstname' => $this->firstname,
+            'lastname' => $this->lastname,
+            'email' => $this->email,
+            'company' => $this->company,
+            'twitter' => $this->twitter,
+            'requirements' => $this->requirements,
+        ];
+
+        foreach ($this->additionalInformation->getQuestions() as $question) {
+            $data[$question->getHandle()] = $question->getAnswer();
+        }
+
+        return $data;
     }
 
     /**
@@ -131,5 +172,13 @@ class Delegate
     public function getRequirements()
     {
         return $this->requirements;
+    }
+
+    /**
+     * @return DelegateAdditionalInformation
+     */
+    public function getAdditionalInformation(): DelegateAdditionalInformation
+    {
+        return $this->additionalInformation;
     }
 }
