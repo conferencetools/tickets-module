@@ -47,7 +47,7 @@ class IssueFreeTicket extends Command
 
     protected function configure()
     {
-        $this->setName('opentickets:issue-free-ticket')
+        $this->setName('tickets:issue-free-ticket')
             ->setDescription('Creates a free ticket purchase record for a given email address')
             ->setDefinition([
                 new InputArgument('ticketType', InputArgument::REQUIRED, 'Ticket type to issue'),

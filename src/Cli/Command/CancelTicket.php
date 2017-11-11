@@ -26,7 +26,7 @@ class CancelTicket extends Command
 
     protected function configure()
     {
-        $this->setName('opentickets:cancel-ticket')
+        $this->setName('tickets:cancel-ticket')
             ->setDescription('Cancels a ticket - does not handle refund.')
             ->setDefinition([
                 new InputArgument('purchaseId', InputArgument::REQUIRED, 'Purchase id'),
