@@ -175,7 +175,7 @@ class Configuration
 
         $this->avaliableTickets[$identifier] = $ticket['available'];
 
-        $ticket['metadata'] = ArrayUtils::merge(['private' => false], (isset($ticket['metadata'])?$ticket['metadata']:[]));
+        $ticket['metadata'] = ArrayUtils::merge(['private' => false], (isset($ticket['metadata']) ? $ticket['metadata'] : []));
 
         if (isset($ticket['metadata']['availableFrom']) && isset($ticket['metadata']['availableTo'])) {
             $this->ticketMetadata[$identifier] = new TicketMetadata(

@@ -45,7 +45,7 @@ class ReportToCsv extends Command
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $reportName = $input->getArgument('report');
-        if (!$this->reportManager->has($reportName)){
+        if (!$this->reportManager->has($reportName)) {
             throw new \Exception('Invalid report name');
         }
 

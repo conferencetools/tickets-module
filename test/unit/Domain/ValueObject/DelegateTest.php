@@ -8,7 +8,7 @@ class DelegateTest extends TestCase
 {
     public function testFromArray()
     {
-        $data['firstname']= 'Ed';
+        $data['firstname'] = 'Ed';
         $data['lastname'] = 'Nigma';
         $data['email'] = 'ed.nigma@gmail.com';
         $data['company'] = 'Mystery Inc.';
@@ -26,7 +26,7 @@ class DelegateTest extends TestCase
 
     public function testEmpty()
     {
-        $data['firstname']= '';
+        $data['firstname'] = '';
         $data['lastname'] = '';
         $data['email'] = '';
         $data['company'] = '';
