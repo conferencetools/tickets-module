@@ -11,9 +11,9 @@ class BasketTest extends \PHPUnit\Framework\TestCase
      * @var Configuration
      */
     private $config;
+
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
-
         parent::__construct($name, $data, $dataName);
         $this->config = Configuration::fromArray([
             'tickets' => [
@@ -96,6 +96,55 @@ class BasketTest extends \PHPUnit\Framework\TestCase
             [
                 [$stdReservation, $earlyReservation],
                 Price::fromNetCost(new Money(7500, $this->config->getCurrency()), $this->config->getTaxRate())
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider provideContainingOnly
+     *
+     * @param $reservations
+     * @param $ticketTypes
+     * @param $expected
+     */
+    public function testContainingOnly($reservations, $ticketTypes, $expected)
+    {
+        $sut = Basket::fromReservations(
+            $this->config,
+            ... $reservations
+        );
+
+        $result = $sut->containingOnly(...$ticketTypes);
+
+        $this->assertEquals($expected, array_values($result->getTickets()));
+
+    }
+
+    public function provideContainingOnly()
+    {
+        $stdReservation = new TicketReservation($this->config->getTicketType('std'), 'abc');
+        $earlyReservation = new TicketReservation($this->config->getTicketType('early'), 'abc');
+
+        return [
+            [
+                [$stdReservation],
+                [$this->config->getTicketType('std')],
+                [$stdReservation]
+            ],
+            [
+                [$stdReservation, $stdReservation],
+                [$this->config->getTicketType('std')],
+                [$stdReservation, $stdReservation],
+            ],
+            [
+                [$stdReservation, $earlyReservation],
+                [$this->config->getTicketType('std')],
+                [$stdReservation],
+            ],
+            [
+                [$stdReservation, $earlyReservation],
+                [$this->config->getTicketType('std'), $this->config->getTicketType('early')],
+                [$stdReservation, $earlyReservation],
             ]
         ];
     }

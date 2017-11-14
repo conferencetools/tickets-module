@@ -6,7 +6,11 @@ use ConferenceTools\Tickets\Domain\Service\Configuration;
 
 class Basket
 {
+    /**
+     * @var TicketReservation[]
+     */
     private $tickets;
+
     /**
      * @var Price
      */
@@ -39,10 +43,9 @@ class Basket
         );
 
         $zero = Price::fromNetCost(new Money(0, $config->getCurrency()), $config->getTaxRate());
-        $total = $instance->calculateTotal($zero);
+        $instance->preDiscountTotal = $instance->calculateTotal($zero);
 
-        $instance->preDiscountTotal = $total;
-        $instance->total = $total;
+        $instance->total = $instance->preDiscountTotal;
         return $instance;
     }
 
@@ -56,10 +59,9 @@ class Basket
         );
 
         $zero = Price::fromNetCost(new Money(0, $config->getCurrency()), $config->getTaxRate());
-        $total = $instance->calculateTotal($zero);
+        $instance->preDiscountTotal = $instance->calculateTotal($zero);
 
-        $instance->preDiscountTotal = $total;
-        $instance->total = $total->subtract($discountCode->apply($instance));
+        $instance->total = $instance->preDiscountTotal->subtract($discountCode->apply($instance));
         $instance->discountCode = $discountCode;
 
         return $instance;
@@ -73,17 +75,11 @@ class Basket
         return $this->tickets;
     }
 
-    /**
-     * @return Price
-     */
     public function getTotal(): Price
     {
         return $this->total;
     }
 
-    /**
-     * @return bool
-     */
     public function hasDiscountCode(): bool
     {
         return !($this->discountCode === null);
@@ -110,5 +106,29 @@ class Basket
     public function getPreDiscountTotal(): Price
     {
         return $this->preDiscountTotal;
+    }
+
+    public function containingOnly(TicketType ...$ticketTypes)
+    {
+        $filteredReservations = [];
+        foreach($this->tickets as $ticketReservation) {
+            if (in_array($ticketReservation->getTicketType(), $ticketTypes, false)) {
+                $filteredReservations[] = $ticketReservation;
+            }
+        }
+
+        $instance = new self(
+            ...$filteredReservations
+        );
+
+        $zero = Price::fromNetCost(
+            new Money(0, $this->preDiscountTotal->getNet()->getCurrency()),
+            $this->preDiscountTotal->getTaxRate()
+        );
+
+        $instance->preDiscountTotal = $instance->calculateTotal($zero);
+        $instance->total = $instance->preDiscountTotal;
+
+        return $instance;
     }
 }
