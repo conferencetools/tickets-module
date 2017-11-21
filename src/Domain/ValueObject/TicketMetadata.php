@@ -8,6 +8,7 @@ class TicketMetadata
     private $availableFrom;
     private $availableTo;
     private $privateTicket;
+    private $afterSoldOut;
 
     /**
      * TicketMetadata constructor.
@@ -28,14 +29,18 @@ class TicketMetadata
         $this->privateTicket = $privateTicket;
     }
 
-    public static function createWithoutDates(TicketType $ticketType, $privateTicket): TicketMetadata
+    public static function fromArray(TicketType $ticketType, array $metadata)
     {
-        return new self(
+        $instance = new static(
             $ticketType,
-            (new \DateTime())->sub(new \DateInterval('P1D')),
-            (new \DateTime())->add(new \DateInterval('P1D')),
-            $privateTicket
+            $metadata['availableFrom'] ?? (new \DateTime())->sub(new \DateInterval('P1D')),
+            $metadata['availableTo'] ?? (new \DateTime())->add(new \DateInterval('P1D')),
+            $metadata['private'] ?? false
         );
+
+        $instance->afterSoldOut = $metadata['after'] ?? [];
+
+        return $instance;
     }
 
     /**
@@ -73,5 +78,10 @@ class TicketMetadata
     public function isPrivateTicket(): bool
     {
         return $this->privateTicket;
+    }
+
+    public function getAfterSoldOut(): array
+    {
+        return $this->afterSoldOut;
     }
 }

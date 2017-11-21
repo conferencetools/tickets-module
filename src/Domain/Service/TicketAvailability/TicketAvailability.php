@@ -2,35 +2,35 @@
 
 namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
 
+use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\EntityManagerInterface;
-use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
+use Doctrine\Common\Collections\Criteria;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters\FilterInterface;
 
 class TicketAvailability
 {
     /**
-     * @var TicketTypeFilter
+     * @var FilterInterface[]
      */
-    private $filter;
+    private $filters;
 
     /**
-     * @var TicketCounterInterface
+     * @var RepositoryInterface
      */
-    private $finder;
+    private $repository;
 
     /**
      * TicketAvailability constructor.
-     *
-     * @param TicketTypeFilter $filter
-     * @param TicketCounterInterface $finder
+     * @param RepositoryInterface $repository
+     * @param FilterInterface[] $filters
      */
-    public function __construct(TicketTypeFilter $filter, TicketCounterInterface $finder)
+    public function __construct(RepositoryInterface $repository, FilterInterface ...$filters)
     {
-        $this->finder = $finder;
-        $this->filter = $filter;
+        $this->filters = $filters;
+        $this->repository = $repository;
     }
 
     /**
@@ -38,13 +38,9 @@ class TicketAvailability
      */
     public function fetchAllAvailableTickets()
     {
-        $ticketTypes = $this->filter->getPubliclyAvailableTicketTypeIdentifiers();
+        $tickets = $this->repository->matching(new Criteria());
 
-        $ticketCounters = $this->finder->byTicketTypeIdentifiers(...$ticketTypes);
-
-        return $ticketCounters->filter(function(TicketCounter $ticketCounter) {
-            return $ticketCounter->getRemaining() > 0;
-        });
+        return $this->reindex($this->filterSet($tickets));
     }
 
     public function isAvailable(TicketType $ticketType, int $quantity)
@@ -52,5 +48,26 @@ class TicketAvailability
         $tickets = $this->fetchAllAvailableTickets();
         return isset($tickets[$ticketType->getIdentifier()]) &&
             $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
+    }
+
+    private function filterSet(Collection $tickets): Collection
+    {
+        foreach ($this->filters as $filter) {
+            /** @var FilterInterface $tickets */
+            $tickets = $filter->filter($tickets);
+        }
+
+        return $tickets;
+    }
+
+    private function reindex(Collection $tickets): Collection
+    {
+        $result = [];
+        foreach($tickets as $ticket) {
+            /** @var TicketCounter $ticket */
+            $result[$ticket->getTicketType()->getIdentifier()] = $ticket;
+        }
+
+        return new ArrayCollection($result);
     }
 }

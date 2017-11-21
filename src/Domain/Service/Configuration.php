@@ -175,21 +175,10 @@ class Configuration
 
         $this->avaliableTickets[$identifier] = $ticket['available'];
 
-        $ticket['metadata'] = ArrayUtils::merge(['private' => false], (isset($ticket['metadata']) ? $ticket['metadata'] : []));
-
-        if (isset($ticket['metadata']['availableFrom']) && isset($ticket['metadata']['availableTo'])) {
-            $this->ticketMetadata[$identifier] = new TicketMetadata(
-                $this->ticketTypes[$identifier],
-                $ticket['metadata']['availableFrom'],
-                $ticket['metadata']['availableTo'],
-                $ticket['metadata']['private']
-            );
-        } else {
-            $this->ticketMetadata[$identifier] = TicketMetadata::createWithoutDates(
-                $this->ticketTypes[$identifier],
-                $ticket['metadata']['private']
-            );
-        }
+        $this->ticketMetadata[$identifier] = TicketMetadata::fromArray(
+            $this->ticketTypes[$identifier],
+            $ticket['metadata'] ?? []
+        );
     }
 
     /**
