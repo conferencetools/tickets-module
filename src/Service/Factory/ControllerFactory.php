@@ -2,6 +2,7 @@
 namespace ConferenceTools\Tickets\Service\Factory;
 
 use Carnage\Cqrs\Command\CommandBusInterface;
+use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\Service\Availability\TicketAvailability;
 use Zend\ServiceManager\FactoryInterface;
@@ -19,6 +20,7 @@ class ControllerFactory implements FactoryInterface
             $serviceLocator->get(StripeClient::class),
             $serviceLocator->get(Configuration::class),
             $serviceLocator->get(TicketAvailability::class),
+            $serviceLocator->get(DiscountCodeAvailability::class),
             $serviceLocator->get('FormElementManager')
         );
     }

@@ -60,12 +60,13 @@ class TicketController extends AbstractController
         StripeClient $stripeClient,
         Configuration $configuration,
         TicketAvailability $ticketAvailability,
+        DiscountCodeAvailability $discountCodeAvailability,
         FormElementManagerV2Polyfill $formElementManager
     ) {
         parent::__construct($commandBus, $entityManager, $stripeClient, $configuration);
         $this->ticketAvailability = $ticketAvailability;
         $this->formElementManager = $formElementManager;
-        $this->discountCodeAvailability = new DiscountCodeAvailability();
+        $this->discountCodeAvailability = $discountCodeAvailability;
     }
 
     public function indexAction()
