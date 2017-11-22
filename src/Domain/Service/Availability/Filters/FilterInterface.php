@@ -6,7 +6,7 @@
  * Time: 16:34
  */
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters;
+namespace ConferenceTools\Tickets\Domain\Service\Availability\Filters;
 
 
 use Doctrine\Common\Collections\Collection;

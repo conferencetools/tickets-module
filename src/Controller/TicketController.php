@@ -11,7 +11,7 @@ use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
-use ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability;
+use ConferenceTools\Tickets\Domain\Service\Availability\TicketAvailability;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
 use ConferenceTools\Tickets\Form\ManageTicket;

@@ -11,7 +11,7 @@ return [
     'service_manager' => [
         'factories' => [
             \ConferenceTools\Tickets\Domain\Service\Configuration::class => \ConferenceTools\Tickets\Service\Factory\ConfigurationFactory::class,
-            \ConferenceTools\Tickets\Domain\Service\TicketAvailability\TicketAvailability::class => \ConferenceTools\Tickets\Service\Factory\Service\TicketAvailability::class,
+            \ConferenceTools\Tickets\Domain\Service\Availability\TicketAvailability::class => \ConferenceTools\Tickets\Service\Factory\Service\TicketAvailability::class,
             \ConferenceTools\Tickets\Report\ReportManager::class => \ConferenceTools\Tickets\Report\ReportManagerFactory::class,
         ],
         'abstract_factories' => [

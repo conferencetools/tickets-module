@@ -1,6 +1,6 @@
 <?php
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
-use ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 
 class TicketAvailability
 {
