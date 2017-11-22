@@ -3,6 +3,7 @@
 namespace ConferenceTools\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
+use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability;
 use Doctrine\ORM\EntityManager;
 use ConferenceTools\Tickets\Domain\Command\Ticket\AssignToDelegate;
 use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
@@ -42,6 +43,12 @@ class TicketController extends AbstractController
      * @var TicketAvailability
      */
     private $ticketAvailability;
+
+    /**
+     * @var DiscountCodeAvailability
+     */
+    private $discountCodeAvailability;
+
     /**
      * @var FormElementManagerV2Polyfill
      */
@@ -58,6 +65,7 @@ class TicketController extends AbstractController
         parent::__construct($commandBus, $entityManager, $stripeClient, $configuration);
         $this->ticketAvailability = $ticketAvailability;
         $this->formElementManager = $formElementManager;
+        $this->discountCodeAvailability = new DiscountCodeAvailability();
     }
 
     public function indexAction()
@@ -154,23 +162,26 @@ class TicketController extends AbstractController
      */
     private function validateDiscountCode($data)
     {
-        $errors = false;
+        $discountCode = trim(strtolower($data['discount_code']));
+        if ($discountCode === '') {
+            return null;
+        }
 
         $validCodes = $this->getConfiguration()->getDiscountCodes();
-        $validCodes[''] = null;
-
-        $discountCode = strtolower($data['discount_code']);
 
         if (!array_key_exists($discountCode, $validCodes)) {
             $this->flashMessenger()->addErrorMessage('Invalid discount code');
-            $errors = true;
-        }
-
-        if ($errors) {
             throw new \InvalidArgumentException('input contained errors');
         }
 
-        return $validCodes[$discountCode];
+        $discountCode = $validCodes[$discountCode];
+
+        if ($this->discountCodeAvailability->isAvailable($discountCode)) {
+            $this->flashMessenger()->addErrorMessage('Discount code cannot be applied to your purchase');
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        return $discountCode;
     }
 
     public function purchaseAction()
