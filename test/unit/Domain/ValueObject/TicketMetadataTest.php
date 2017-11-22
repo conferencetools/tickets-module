@@ -16,7 +16,7 @@ class TicketMetadataTest extends \PHPUnit\Framework\TestCase
     {
         $ticketType = new TicketType('z', Price::fromNetCost(new Money(0, 'gbp'), new TaxRate(20)), 'Z');
 
-        $sut = TicketMetadata::createWithoutDates($ticketType, false);
+        $sut = TicketMetadata::fromArray($ticketType, []);
         $this->assertEquals($expected, $sut->isAvailableOn($test));
     }
 

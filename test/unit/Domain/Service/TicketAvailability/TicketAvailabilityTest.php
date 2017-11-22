@@ -2,6 +2,8 @@
 
 namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
 
+use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters\FilterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
@@ -21,6 +23,11 @@ class TicketAvailabilityTest extends MockeryTestCase
      */
     private $ticketCounters;
 
+    /**
+     * @var FilterInterface[]
+     */
+    private $filters;
+
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
@@ -28,7 +35,7 @@ class TicketAvailabilityTest extends MockeryTestCase
             'tickets' => [
                 'early' => ['name' => 'Early Bird', 'cost' => 5000, 'available' => 75],
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
-                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 0]
+                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]]
             ],
             'financial' => [
                 'taxRate' => 10,
@@ -52,16 +59,21 @@ class TicketAvailabilityTest extends MockeryTestCase
         );
 
         $this->ticketCounters = new ArrayCollection($ticketCounters);
+
+        $this->filters = [
+            new Filters\IsAvailable(),
+            new Filters\AfterSoldOut($this->config),
+            new Filters\ByDate($this->config),
+            new Filters\IsPrivate($this->config)
+        ];
     }
 
     public function testFetchAllAvailableTickets()
     {
-        $mockFinder = m::mock(TicketCounterInterface::class);
-        $mockFinder->shouldReceive('byTicketTypeIdentifiers')
-            ->with('early', 'std', 'free')
-            ->andReturn($this->ticketCounters);
+        $mockFinder = m::mock(RepositoryInterface::class);
+        $mockFinder->shouldReceive('matching')->andReturn($this->ticketCounters);
 
-        $sut = new TicketAvailability(new TicketTypeFilter($this->config), $mockFinder);
+        $sut = new TicketAvailability($mockFinder, ...$this->filters);
 
         $result = $sut->fetchAllAvailableTickets();
 
@@ -78,12 +90,10 @@ class TicketAvailabilityTest extends MockeryTestCase
      */
     public function testIsAvailable($ticketType, $quantity, $expected)
     {
-        $mockFinder = m::mock(TicketCounterInterface::class);
-        $mockFinder->shouldReceive('byTicketTypeIdentifiers')
-            ->with('early', 'std', 'free')
-            ->andReturn($this->ticketCounters);
+        $mockFinder = m::mock(RepositoryInterface::class);
+        $mockFinder->shouldReceive('matching')->andReturn($this->ticketCounters);
 
-        $sut = new TicketAvailability(new TicketTypeFilter($this->config), $mockFinder);
+        $sut = new TicketAvailability($mockFinder, ...$this->filters);
 
         self::assertEquals($expected, $sut->isAvailable($ticketType, $quantity));
     }
