@@ -3,6 +3,7 @@
 namespace ConferenceTools\Tickets\Domain\Service;
 
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCodeMetadata;
 use ConferenceTools\Tickets\Domain\ValueObject\Money;
 use ConferenceTools\Tickets\Domain\ValueObject\Price;
 use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
@@ -126,6 +127,19 @@ class Configuration
      */
     private $ticketMetadata;
 
+    /**
+     * Contains metadata about discount codes eg when they are available for use
+     *
+     * configkey: discountCodes->metadata
+     * structure: [
+     *     'availableFrom' => DateTime code can be used from,
+     *     'availableTo' => DateTime code expires at
+     * ]
+     *
+     * @var DiscountCodeMetadata[]
+     */
+    private $discountCodeMetadata;
+
     private function __construct() {}
 
     public static function fromArray(array $settings)
@@ -143,14 +157,8 @@ class Configuration
         }
 
         foreach ($settings['discountCodes'] as $identifier => $code) {
-            // Be careful here; configuration object is still under constrcution at the time it is passed in
-            // Might need to rethink this at some point
-            $discountType = call_user_func([$code['type'], 'fromArray'], $code['options'], $instance);
-            $instance->discountCodes[$identifier] = new DiscountCode(
-                $identifier,
-                $code['name'],
-                $discountType
-            );
+            $instance->addDiscountCodeInformation($code, $identifier);
+
         }
 
         return $instance;
@@ -179,6 +187,23 @@ class Configuration
         $this->ticketMetadata[$identifier] = TicketMetadata::fromArray(
             $this->ticketTypes[$identifier],
             $ticket['metadata'] ?? []
+        );
+    }
+
+    private function addDiscountCodeInformation(array $code, string $identifier)
+    {
+        // Be careful here; configuration object is still under constrcution at the time it is passed in
+        // Might need to rethink this at some point
+        $discountType = call_user_func([$code['type'], 'fromArray'], $code['options'], $this);
+        $this->discountCodes[$identifier] = new DiscountCode(
+            $identifier,
+            $code['name'],
+            $discountType
+        );
+
+        $this->discountCodeMetadata[$identifier] = DiscountCodeMetadata::fromArray(
+            $this->discountCodes[$identifier],
+            $code['metadata'] ?? []
         );
     }
 
@@ -239,5 +264,10 @@ class Configuration
     public function getTicketMetadata(string $identifier): TicketMetadata
     {
         return $this->ticketMetadata[$identifier];
+    }
+
+    public function getDiscountCodeMetadata(string $code): DiscountCodeMetadata
+    {
+        return $this->discountCodeMetadata[$code];
     }
 }

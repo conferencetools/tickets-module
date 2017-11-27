@@ -177,7 +177,7 @@ class TicketController extends AbstractController
 
         $discountCode = $validCodes[$discountCode];
 
-        if ($this->discountCodeAvailability->isAvailable($discountCode)) {
+        if (!$this->discountCodeAvailability->isAvailable($discountCode)) {
             $this->flashMessenger()->addErrorMessage('Discount code cannot be applied to your purchase');
             throw new \InvalidArgumentException('input contained errors');
         }

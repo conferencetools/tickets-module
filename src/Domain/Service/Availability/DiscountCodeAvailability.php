@@ -15,22 +15,59 @@ use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 class DiscountCodeAvailability
 {
     /**
-     * @var Configuration
+     * @var FilterInterface[]
      */
-    private $configuration;
+    private $filters;
+    /**
+     * @var RepositoryInterface
+     */
+    private $repository;
 
     /**
      * TicketAvailability constructor.
      * @param RepositoryInterface $repository
      * @param FilterInterface[] $filters
      */
-    public function __construct()//Configuration $configuration)
+    public function __construct(RepositoryInterface $repository, FilterInterface ...$filters)
     {
-        //$this->configuration = $configuration;
+        $this->filters = $filters;
+        $this->repository = $repository;
+    }
+
+    /**
+     * @return TicketCounter[]|Collection
+     */
+    public function fetchAllAvailableDiscountCodes()
+    {
+        $tickets = $this->repository->matching(new Criteria());
+
+        return $this->reindex($this->filterSet($tickets));
+    }
+
+    private function filterSet(Collection $tickets): Collection
+    {
+        foreach ($this->filters as $filter) {
+            /** @var FilterInterface $tickets */
+            $tickets = $filter->filter($tickets);
+        }
+
+        return $tickets;
+    }
+
+    private function reindex(Collection $discountCodes): Collection
+    {
+        $result = [];
+        foreach($discountCodes as $discountCode) {
+            /** @var DiscountCode $discountCode */
+            $result[$discountCode->getCode()] = $discountCode;
+        }
+
+        return new ArrayCollection($result);
     }
 
     public function isAvailable(DiscountCode $discountCode)
     {
-        return true;
+        $discountCodes = $this->fetchAllAvailableDiscountCodes();
+        return isset($discountCodes[$discountCode->getCode()]);
     }
 }
