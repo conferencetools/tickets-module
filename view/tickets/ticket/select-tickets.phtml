@@ -23,6 +23,11 @@
                                     <span class="hidden-xs col-md-6">
                                     <?=$ticket->getRemaining()?> remaining
                                     </span>
+                                    <?php if (!empty($ticket->getTicketType()->getDescription())):?>
+                                        <span class="help-block col-xs-12 col-md-12">
+                                            <?=$ticket->getTicketType()->getDescription()?>
+                                        </span>
+                                    <?php endif?>
                                 </td>
                                 <td class="col-md-3 col-xs-6">
                                     <span class="col-xs-6">

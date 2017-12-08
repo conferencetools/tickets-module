@@ -170,7 +170,8 @@ class Configuration
         $this->ticketTypes[$identifier] = new TicketType(
             $identifier,
             $price,
-            $ticket['name']
+            $ticket['name'],
+            $ticket['description'] ?? ''
         );
 
         $this->avaliableTickets[$identifier] = $ticket['available'];

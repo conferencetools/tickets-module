@@ -34,39 +34,37 @@ final class TicketType
     private $displayName;
 
     /**
-     * TicketType constructor.
-     * @param string $identifier
-     * @param Price $price
-     * @param string $displayName
+     * @var string
+     * @Jms\Type("string")
+     * @ORM\Column(type="string")
      */
-    public function __construct(string $identifier, Price $price, string $displayName)
+    private $description;
+
+    public function __construct(string $identifier, Price $price, string $displayName, string $description = '')
     {
         $this->identifier = $identifier;
         $this->price = $price;
         $this->displayName = $displayName;
+        $this->description = $description;
     }
 
-    /**
-     * @return string
-     */
     public function getIdentifier(): string
     {
         return $this->identifier;
     }
 
-    /**
-     * @return Price
-     */
     public function getPrice(): Price
     {
         return $this->price;
     }
 
-    /**
-     * @return string
-     */
-    public function getDisplayName(): string 
+    public function getDisplayName(): string
     {
         return $this->displayName;
+    }
+
+    public function getDescription(): string
+    {
+        return $this->description;
     }
 }
