@@ -18,6 +18,7 @@ use ConferenceTools\Tickets\Domain\Command\Ticket\MakePayment;
 use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
 use ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use ConferenceTools\Tickets\Domain\Model\Ticket\TicketPurchase;
+use ConferenceTools\Tickets\Domain\Service\Basket\Factory;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\Basket;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
@@ -28,31 +29,26 @@ class Ticket extends AbstractMethodNameMessageHandler
      * @var GeneratorInterface
      */
     private $identityGenerator;
-    /**
-     * @var GeneratorInterface
-     */
-    private $ticketIdGenerator;
 
     /**
      * @var RepositoryInterface
      */
     private $repository;
+
     /**
-     * @var Configuration
+     * @var Factory
      */
-    private $configuration;
+    private $basketFactory;
 
     public function __construct(
         GeneratorInterface $identityGenerator,
-        GeneratorInterface $ticketIdGenerator,
         RepositoryInterface $repository,
-        Configuration $configuration
+        Factory $basketFactory
     ) {
 
         $this->identityGenerator = $identityGenerator;
-        $this->ticketIdGenerator = $ticketIdGenerator;
         $this->repository = $repository;
-        $this->configuration = $configuration;
+        $this->basketFactory = $basketFactory;
     }
 
     /**
@@ -61,26 +57,15 @@ class Ticket extends AbstractMethodNameMessageHandler
      */
     protected function handleReserveTickets(ReserveTickets $command)
     {
-        $tickets = [];
-        foreach ($command->getReservationRequests() as $reservationRequest) {
-            for ($i = 0; $i < $reservationRequest->getQuantity(); $i++) {
-                $tickets[] = new TicketReservation($reservationRequest->getTicketType(), $this->ticketIdGenerator->generateIdentity());
-            }
-        }
-
-        if (count($tickets) === 0) {
-            throw new \RuntimeException('Must specify at least 1 ticket for purchase');
-        }
-
         if ($command->hasDiscountCode()) {
-            $basket = Basket::fromReservationsWithDiscount(
-                $this->configuration,
+            $basket = $this->basketFactory->basketWithDiscount(
                 $command->getDiscountCode(),
-                ...$tickets
+                ...$command->getReservationRequests()
             );
         } else {
-            $basket = Basket::fromReservations($this->configuration, ...$tickets);
+            $basket = $this->basketFactory->basket(...$command->getReservationRequests());
         }
+
         $purchase = TicketPurchase::create($this->identityGenerator->generateIdentity(), $basket);
 
         $this->repository->save($purchase);
