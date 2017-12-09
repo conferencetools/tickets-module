@@ -137,7 +137,7 @@ class TicketController extends AbstractController
         }
 
         if ($total < 1) {
-            $this->flashMessenger()->addErrorMessage('You must specify at least 1 ticket to purchase');
+            $this->flashMessenger()->addErrorMessage('You must choose at least 1 ticket to purchase');
             $errors = true;
         }
 

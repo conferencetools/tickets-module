@@ -21,27 +21,41 @@ class Factory
      */
     private $configuration;
 
-    public function __construct(GeneratorInterface $ticketIdGenerator, Configuration $configuration)
-    {
+    /**
+     * @var BasketValidator
+     */
+    private $basketValidator;
+
+    public function __construct(
+        GeneratorInterface $ticketIdGenerator,
+        Configuration $configuration,
+        BasketValidator $basketValidator
+    ) {
         $this->ticketIdGenerator = $ticketIdGenerator;
         $this->configuration = $configuration;
+        $this->basketValidator = $basketValidator;
     }
 
     public function basket(TicketReservationRequest ...$reservationRequests): Basket
     {
-        $tickets = $this->createTicketReservations($reservationRequests);
+        $tickets = $this->createTicketReservations(...$reservationRequests);
 
-        return Basket::fromReservations($this->configuration, ...$tickets);
+        return Basket::fromReservations(
+            $this->configuration,
+            $this->basketValidator,
+            ...$tickets
+        );
     }
 
     public function basketWithDiscount(
         DiscountCode $discountCode,
         TicketReservationRequest ...$reservationRequests
     ): Basket {
-        $tickets = $this->createTicketReservations($reservationRequests);
+        $tickets = $this->createTicketReservations(...$reservationRequests);
 
         return Basket::fromReservationsWithDiscount(
             $this->configuration,
+            $this->basketValidator,
             $discountCode,
             ...$tickets
         );
@@ -58,10 +72,6 @@ class Factory
                 $tickets[] = new TicketReservation($reservationRequest->getTicketType(),
                     $this->ticketIdGenerator->generateIdentity());
             }
-        }
-
-        if (count($tickets) === 0) {
-            throw new \RuntimeException('Must specify at least 1 ticket for purchase');
         }
 
         return $tickets;
