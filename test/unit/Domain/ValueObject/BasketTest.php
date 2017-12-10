@@ -2,10 +2,13 @@
 
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
+use ConferenceTools\Tickets\Domain\Service\Basket\BasketValidator;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
+use Mockery as m;
+use Mockery\Adapter\Phpunit\MockeryTestCase;
 
-class BasketTest extends \PHPUnit\Framework\TestCase
+class BasketTest extends MockeryTestCase
 {
     /**
      * @var Configuration
@@ -35,8 +38,12 @@ class BasketTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetTotalNoDiscount(array $reservations, Price $expected)
     {
+        $validator = m::mock(BasketValidator::class);
+        $validator->shouldReceive('validate');
+
         $sut = Basket::fromReservations(
             $this->config,
+            $validator,
             ... $reservations
         );
 
@@ -70,8 +77,12 @@ class BasketTest extends \PHPUnit\Framework\TestCase
      */
     public function testGetTotalWithDiscount(array $reservations, Price $expected)
     {
+        $validator = m::mock(BasketValidator::class);
+        $validator->shouldReceive('validate');
+
         $sut = Basket::fromReservationsWithDiscount(
             $this->config,
+            $validator,
             new DiscountCode('50off', '50% off', new Percentage(50)),
             ... $reservations
         );
@@ -109,8 +120,12 @@ class BasketTest extends \PHPUnit\Framework\TestCase
      */
     public function testContainingOnly($reservations, $ticketTypes, $expected)
     {
+        $validator = m::mock(BasketValidator::class);
+        $validator->shouldReceive('validate');
+
         $sut = Basket::fromReservations(
             $this->config,
+            $validator,
             ... $reservations
         );
 
