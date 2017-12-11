@@ -42,8 +42,8 @@ class ValidateBasketTest extends TestCase
     {
         $sut = new ValidateBasket();
 
-        $this->expectException(\RuntimeException::class);
-        $this->expectExceptionMessage('Must choose at least 1 ticket to purchase');
+        $this->expectException(\DomainException::class);
+        $this->expectExceptionMessage('You must choose at least 1 ticket to purchase');
 
         Basket::fromReservations(
             $this->config,
