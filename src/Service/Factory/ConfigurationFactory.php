@@ -10,6 +10,7 @@ class ConfigurationFactory implements FactoryInterface
 {
     public function createService(ServiceLocatorInterface $serviceLocator)
     {
-        return Configuration::fromArray($serviceLocator->get('Config')['opentickets']);
+        $config = $serviceLocator->get('Config');
+        return Configuration::fromArray($config['conferencetools']['tickets']);
     }
 }
