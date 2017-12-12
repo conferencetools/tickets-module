@@ -6,14 +6,17 @@
  * Time: 16:57
  */
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters;
+namespace ConferenceTools\Tickets\Domain\Service\Availability\Filters;
 
-
-use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\ReadModel\Counts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
 use Doctrine\Common\Collections\Collection;
 
-class ByDate implements FilterInterface
+/**
+ * @TODO refactor this to use a single filter
+ */
+class DiscountByDate implements FilterInterface
 {
     /**
      * @var Configuration
@@ -30,8 +33,8 @@ class ByDate implements FilterInterface
         $configuration = $this->configuration;
         $today = new \DateTime();
 
-        $p = function (TicketCounter $ticket) use ($configuration, $today) {
-            $metadata = $configuration->getTicketMetadata($ticket->getTicketType()->getIdentifier());
+        $p = function (DiscountCode $discountCode) use ($configuration, $today) {
+            $metadata = $configuration->getDiscountCodeMetadata($discountCode->getCode());
             return $metadata->isAvailableOn($today);
         };
 

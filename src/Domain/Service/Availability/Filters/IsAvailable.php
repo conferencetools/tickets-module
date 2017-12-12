@@ -1,6 +1,6 @@
 <?php
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters;
+namespace ConferenceTools\Tickets\Domain\Service\Availability\Filters;
 
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Configuration;

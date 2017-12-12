@@ -1,9 +1,9 @@
 <?php
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
-use ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
 use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;

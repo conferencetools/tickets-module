@@ -1,22 +1,23 @@
 <?php
 
-namespace ConferenceTools\Tickets\Domain\Service\TicketAvailability;
+namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\ReadModel\Counts\TicketCounter;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
-use ConferenceTools\Tickets\Domain\Service\TicketAvailability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 
-class TicketAvailability
+class DiscountCodeAvailability
 {
     /**
      * @var FilterInterface[]
      */
     private $filters;
-
     /**
      * @var RepositoryInterface
      */
@@ -36,18 +37,11 @@ class TicketAvailability
     /**
      * @return TicketCounter[]|Collection
      */
-    public function fetchAllAvailableTickets()
+    public function fetchAllAvailableDiscountCodes()
     {
         $tickets = $this->repository->matching(new Criteria());
 
         return $this->reindex($this->filterSet($tickets));
-    }
-
-    public function isAvailable(TicketType $ticketType, int $quantity)
-    {
-        $tickets = $this->fetchAllAvailableTickets();
-        return isset($tickets[$ticketType->getIdentifier()]) &&
-            $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
     }
 
     private function filterSet(Collection $tickets): Collection
@@ -60,14 +54,20 @@ class TicketAvailability
         return $tickets;
     }
 
-    private function reindex(Collection $tickets): Collection
+    private function reindex(Collection $discountCodes): Collection
     {
         $result = [];
-        foreach($tickets as $ticket) {
-            /** @var TicketCounter $ticket */
-            $result[$ticket->getTicketType()->getIdentifier()] = $ticket;
+        foreach($discountCodes as $discountCode) {
+            /** @var DiscountCode $discountCode */
+            $result[$discountCode->getCode()] = $discountCode;
         }
 
         return new ArrayCollection($result);
+    }
+
+    public function isAvailable(DiscountCode $discountCode)
+    {
+        $discountCodes = $this->fetchAllAvailableDiscountCodes();
+        return isset($discountCodes[$discountCode->getCode()]);
     }
 }
