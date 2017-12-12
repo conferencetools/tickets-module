@@ -11,35 +11,41 @@
                 <form class="form-horizontal" method="POST" action="">
                     <div class="row">
                         <div class="col-xs-12">
-                        <table class="table">
-                        <?php foreach($this->tickets as $id => $ticket):
-                        /** @var \ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter $ticket */
-                        ?>
-                            <tr>
-                                <td class="col-md-9 col-xs-6">
-                                    <span class="col-xs-12 col-md-6">
-                                    <?=$ticket->getTicketType()->getDisplayName()?>
-                                    </span>
-                                    <span class="hidden-xs col-md-6">
-                                    <?=$ticket->getRemaining()?> remaining
-                                    </span>
-                                    <?php if (!empty($ticket->getTicketType()->getDescription())):?>
-                                        <span class="help-block col-xs-12 col-md-12">
-                                            <?=$ticket->getTicketType()->getDescription()?>
-                                        </span>
-                                    <?php endif?>
-                                </td>
-                                <td class="col-md-3 col-xs-6">
-                                    <span class="col-xs-6">
-                                    <?=$this->moneyFormat($ticket->getTicketType()->getPrice())?>
-                                    </span>
-                                    <span class="col-xs-6">
-                                    <input class="form-control" min="0" max="<?=$ticket->getRemaining()?>" value="0" title="quantity" type="number" name="quantity[<?=$id?>]" />
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach;?>
-                        </table>
+                            <table class="table">
+                                <?php if (count($this->tickets) === 0): ?>
+                                    <tr>
+                                        <td>Sorry, there are no tickets currently available</td>
+                                    </tr>
+                                <?php
+                                else:
+                                    foreach ($this->tickets as $id => $ticket):
+                                    /** @var \ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter $ticket */
+                                        ?>
+                                        <tr>
+                                            <td class="col-md-9 col-xs-6">
+                                                <span class="col-xs-12 col-md-6"><?= $ticket->getTicketType()->getDisplayName() ?></span>
+                                                <span class="hidden-xs col-md-6">
+                                                    <?= $ticket->getRemaining() ?> remaining
+                                                </span>
+                                                <?php if ( ! empty($ticket->getTicketType()->getDescription())): ?>
+                                                    <span class="help-block col-xs-12 col-md-12"><?= $ticket->getTicketType()->getDescription() ?></span>
+                                                <?php endif ?>
+                                            </td>
+                                            <td class="col-md-3 col-xs-6">
+                                                <span class="col-xs-6"><?= $this->moneyFormat($ticket->getTicketType()->getPrice()) ?></span>
+                                                <span class="col-xs-6">
+                                                    <input class="form-control" min="0" value="0" title="quantity"
+                                                           type="number" name="quantity[<?= $id ?>]"
+                                                           max="<?= $ticket->getRemaining() ?>"
+                                                    />
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php
+                                    endforeach;
+                                endif;
+                                ?>
+                            </table>
                         </div>
                     </div>
                     <div class="row">
