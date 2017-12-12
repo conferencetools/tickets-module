@@ -114,7 +114,7 @@ return [
         ],
         'factories' => [
             'stripeKey' => \ConferenceTools\Tickets\View\Helper\StripeKeyFactory::class,
-            'openTicketsConfig' => \ConferenceTools\Tickets\View\Helper\ConfigurationFactory::class,
+            'ticketsConfig' => \ConferenceTools\Tickets\View\Helper\ConfigurationFactory::class,
             'serverUrl' => \ConferenceTools\Tickets\View\Helper\ServerUrlFactory::class,
         ],
     ],
@@ -148,15 +148,15 @@ return [
     ],
     'doctrine' => [
         'driver' => [
-            'opentickets_tickets_read_orm_driver' => [
+            'conferencetools_tickets_read_orm_driver' => [
                 'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
                 'paths' => [__DIR__ . '/../src/Domain/ReadModel']
             ],
             'orm_default' => [
                 'drivers' => [
-                    'ConferenceTools\Tickets\Domain\ReadModel' => 'opentickets_tickets_read_orm_driver',
-                    'ConferenceTools\Tickets\Domain\ValueObject' => 'opentickets_tickets_read_orm_driver',
+                    'ConferenceTools\Tickets\Domain\ReadModel' => 'conferencetools_tickets_read_orm_driver',
+                    'ConferenceTools\Tickets\Domain\ValueObject' => 'conferencetools_tickets_read_orm_driver',
                 ],
             ],
         ],

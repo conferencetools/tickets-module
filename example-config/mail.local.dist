@@ -12,15 +12,17 @@ return [
             'ssl' => '',
         ],
     ],
-    'mailconf' => [
-        'purchase' => [
-            'subject' => 'Your PHP Yorkshire Ticket Receipt',
-            'from' => 'info@phpyorkshire.co.uk',
+    'conferencetools' => [
+        'mailconf' => [
+            'purchase' => [
+                'subject' => 'Your PHP Yorkshire Ticket Receipt',
+                'from' => 'info@phpyorkshire.co.uk',
+            ],
         ],
-    ],
-    'website' => [
-        'host' => '',
-        'scheme' => 'http',
-        'port' => 80,
+        'website' => [
+            'host' => '',
+            'scheme' => 'http',
+            'port' => 80,
+        ],
     ],
 ];

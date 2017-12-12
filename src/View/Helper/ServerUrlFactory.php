@@ -15,13 +15,14 @@ class ServerUrlFactory implements FactoryInterface
         $config = $serviceLocator->get('Config');
 
         $serverUrlHelper = new ServerUrl();
-        if (Console::isConsole() && isset($config['website']['host'])) {
+        $websiteConfig = $config['conferencetools']['website'];
+        if (Console::isConsole() && isset($websiteConfig['host'])) {
             $serverUrlHelper
-                ->setHost($config['website']['host'])
-                ->setScheme($config['website']['scheme']);
+                ->setHost($websiteConfig['host'])
+                ->setScheme($websiteConfig['scheme']);
 
-            if (isset($config['website']['port'])) {
-                $serverUrlHelper->setPort($config['website']['port']);
+            if (isset($websiteConfig['port'])) {
+                $serverUrlHelper->setPort($websiteConfig['port']);
             }
 
         }
