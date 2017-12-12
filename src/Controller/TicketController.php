@@ -101,11 +101,14 @@ class TicketController extends AbstractController
                 } else {
                     $command = new ReserveTickets(...$purchases);
                 }
-
-                $this->getCommandBus()->dispatch($command);
-                /** @var TicketPurchaseCreated $event */
-                $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
-                return $this->redirect()->toRoute('tickets/purchase', ['purchaseId' => $event->getId()]);
+                try {
+                    $this->getCommandBus()->dispatch($command);
+                    /** @var TicketPurchaseCreated $event */
+                    $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
+                    return $this->redirect()->toRoute('tickets/purchase', ['purchaseId' => $event->getId()]);
+                } catch (\DomainException $e) {
+                    $this->flashMessenger()->addErrorMessage($e->getMessage());
+                }
             }
         } else {
             try {
@@ -143,11 +146,6 @@ class TicketController extends AbstractController
                 $total += $quantity;
                 $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
             }
-        }
-
-        if ($total < 1) {
-            $this->flashMessenger()->addErrorMessage('You must specify at least 1 ticket to purchase');
-            $errors = true;
         }
 
         if ($errors) {

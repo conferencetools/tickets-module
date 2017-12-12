@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Tickets\Domain\ValueObject\DiscountType;
 
+use ConferenceTools\Tickets\Domain\Service\Basket\ValidateBasket;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\Basket;
 use ConferenceTools\Tickets\Domain\ValueObject\Money;
@@ -45,10 +46,12 @@ class FixedTest extends \PHPUnit\Framework\TestCase
 
     public function provideTestApply()
     {
+        $validator = new ValidateBasket();
         return [
             [
                 Basket::fromReservations(
                     $this->config,
+                    $validator,
                     new TicketReservation($this->config->getTicketType('std'), 'abc'),
                     new TicketReservation($this->config->getTicketType('std'), 'abc')
                 ),
@@ -58,6 +61,7 @@ class FixedTest extends \PHPUnit\Framework\TestCase
             [
                 Basket::fromReservations(
                     $this->config,
+                    $validator,
                     new TicketReservation($this->config->getTicketType('std'), 'abc')
                 ),
                 Price::fromNetCost(new Money(1000, $this->config->getCurrency()), $this->config->getTaxRate()),

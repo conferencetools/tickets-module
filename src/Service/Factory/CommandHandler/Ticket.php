@@ -5,6 +5,8 @@ namespace ConferenceTools\Tickets\Service\Factory\CommandHandler;
 use Carnage\Cqrs\Aggregate\Identity\YouTubeStyleIdentityGenerator;
 use ConferenceTools\Tickets\Domain\CommandHandler\Ticket as TicketCommandHandler;
 use ConferenceTools\Tickets\Domain\Model\Ticket\TicketPurchase;
+use ConferenceTools\Tickets\Domain\Service\Basket\Factory;
+use ConferenceTools\Tickets\Domain\Service\Basket\ValidateBasket;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Service\Identity\TicketIdentityGenerator;
 use Zend\ServiceManager\FactoryInterface;
@@ -20,9 +22,12 @@ class Ticket implements FactoryInterface
 
         return new TicketCommandHandler(
             new YouTubeStyleIdentityGenerator(),
-            new TicketIdentityGenerator(),
             $repositoryManager->get(TicketPurchase::class),
-            $mainServiceLocator->get(Configuration::class)
+            new Factory(
+                new TicketIdentityGenerator(),
+                $mainServiceLocator->get(Configuration::class),
+                new ValidateBasket()
+            )
         );
     }
 }

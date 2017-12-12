@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
+use ConferenceTools\Tickets\Domain\Service\Basket\BasketValidator;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 
 class Basket
@@ -28,16 +29,14 @@ class Basket
 
     private function __construct(TicketReservation ...$tickets)
     {
-        if (count($tickets) === 0) {
-            throw new \InvalidArgumentException('Must put at least one Ticket reservation into a basket');
-        }
-
         $this->tickets = $tickets;
-
     }
 
-    public static function fromReservations(Configuration $config, TicketReservation ...$tickets)
-    {
+    public static function fromReservations(
+        Configuration $config,
+        BasketValidator $validator,
+        TicketReservation ...$tickets
+    ) {
         $instance = new self(
             ...$tickets
         );
@@ -46,14 +45,18 @@ class Basket
         $instance->preDiscountTotal = $instance->calculateTotal($zero);
 
         $instance->total = $instance->preDiscountTotal;
+
+        $validator->validate($instance);
+
         return $instance;
     }
 
     public static function fromReservationsWithDiscount(
         Configuration $config,
+        BasketValidator $validator,
         DiscountCode $discountCode,
-        TicketReservation ...$tickets)
-    {
+        TicketReservation ...$tickets
+    ) {
         $instance = new self(
             ...$tickets
         );
@@ -63,6 +66,8 @@ class Basket
 
         $instance->total = $instance->preDiscountTotal->subtract($discountCode->apply($instance));
         $instance->discountCode = $discountCode;
+
+        $validator->validate($instance);
 
         return $instance;
     }
