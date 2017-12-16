@@ -5,7 +5,7 @@
   "require": {
     "php": ">=7.0.5",
     "carnage/cqrs": "~0.2.0",
-    "carnage/cqorms": "~0.2.0",
+    "carnage/cqorms": "~0.3.0",
     "carnage/zendfony-cli": "~0.2.0",
     "carnage/zend-layout-per-module": "~0.1.0",
     "conferencetools/googleanalytics": "^0.1",
