@@ -21,9 +21,9 @@
                                 <?=$ticket->getTicketType()->getDisplayName()?>
                             </td>
                             <td class="col-xs-6">
-                                <?php if ($ticket->getTicketType()->isSupplementary()): ?>
+                                <?php if (!$ticket->getTicketType()->isSupplementary()): ?>
                                     <a href="<?= $this->serverUrl() . $url?>">Manage</a>
-                                <?endif;?>
+                                <?php endif;?>
 
                             </td>
                         </tr>

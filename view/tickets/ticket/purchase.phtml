@@ -30,19 +30,25 @@ $this->headLink()->appendStylesheet('/css/card.css');
 
             <?php
             $i = 0;
-            foreach ($this->purchase->getTickets() as $id => $ticket):?>
-                <div class="panel panel-default credit-card-box">
-                    <div class="panel-heading display-table" >
-                        <div class="row display-tr" >
-                            <h3 class="panel-title display-td-full" >Delegate Information <?=++$i?> (<?=$ticket->getTicketType()->getDisplayName()?>) </h3>
+            foreach ($this->purchase->getTickets() as $id => $ticket):
+                if (!$ticket->getTicketType()->isSupplementary()):?>
+
+                    <div class="panel panel-default credit-card-box">
+                        <div class="panel-heading display-table" >
+                            <div class="row display-tr" >
+                                <h3 class="panel-title display-td-full" >Delegate Information <?=++$i?> (<?=$ticket->getTicketType()->getDisplayName()?>) </h3>
+                            </div>
+                        </div>
+                        <div class="panel-body">
+                            <p class="help-block">You can complete this information later if you wish</p>
+                            <?php echo $this->formCollection($this->form->get('delegates_' . $id));?>
                         </div>
                     </div>
-                    <div class="panel-body">
-                        <p class="help-block">You can complete this information later if you wish</p>
-                        <?php echo $this->formCollection($this->form->get('delegates_' . $id));?>
-                    </div>
-                </div>
-            <?php endforeach;?>
+
+                    <?php
+                endif;
+            endforeach;
+            ?>
             <?php echo $this->formHidden($this->form->get('security'))?>
         </form>
     </div>
