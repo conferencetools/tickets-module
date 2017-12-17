@@ -112,7 +112,7 @@ class Configuration
      *
      * @var DiscountCode[]
      */
-    private $discountCodes;
+    private $discountCodes = [];
 
     /**
      * Contains metadata about tickets eg when they are available for sale
