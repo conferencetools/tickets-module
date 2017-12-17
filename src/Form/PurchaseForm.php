@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Tickets\Form;
 
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use ConferenceTools\Tickets\Form\Fieldset\DelegateInformation;
 use ConferenceTools\Tickets\Hydrator\DelegateHydrator;
@@ -15,7 +16,7 @@ use Zend\Validator\NotEmpty;
 
 class PurchaseForm extends Form
 {
-    public function __construct($tickets)
+    public function __construct(PurchaseRecord $purchase)
     {
         parent::__construct('delegate-form');
         $this->add(['type' => Hidden::class, 'name' => 'stripe_token']);
@@ -28,7 +29,7 @@ class PurchaseForm extends Form
             ]
         ]);
 
-        for ($i = 0; $i < $tickets; $i++) {
+        foreach ($purchase->getTickets() as $i => $ticket) {
             $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
         }
 

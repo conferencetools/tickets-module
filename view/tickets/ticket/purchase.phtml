@@ -28,11 +28,11 @@ $this->headLink()->appendStylesheet('/css/card.css');
                 </div>
             </div>
 
-            <?php for($i = 0; $i < $purchase->getTicketCount(); $i++):?>
+            <?php foreach ($this->purchase->getTickets() as $i => $ticket):?>
                 <div class="panel panel-default credit-card-box">
                     <div class="panel-heading display-table" >
                         <div class="row display-tr" >
-                            <h3 class="panel-title display-td" >Delegate Information <?=$i+1?></h3>
+                            <h3 class="panel-title display-td" >Delegate Information <?=$ticket->getTicketType()->getDisplayName()?> <?=$i+1?></h3>
                             <div class="display-td" ></div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ $this->headLink()->appendStylesheet('/css/card.css');
                         <?php echo $this->formCollection($this->form->get('delegates_' . $i));?>
                     </div>
                 </div>
-            <?php endfor;?>
+            <?php endforeach;?>
             <?php echo $this->formHidden($this->form->get('security'))?>
         </form>
     </div>

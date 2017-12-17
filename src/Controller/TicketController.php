@@ -199,7 +199,7 @@ class TicketController extends AbstractController
             return $this->redirect()->toRoute('tickets/complete', ['purchaseId' => $purchaseId]);
         }
 
-        $form = new PurchaseForm($purchase->getTicketCount());
+        $form = new PurchaseForm($purchase);
 
         if ($this->getRequest()->isPost()) {
             $noPayment = true;
