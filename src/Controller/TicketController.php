@@ -219,8 +219,12 @@ class TicketController extends AbstractController
 
                     $delegateInfo = [];
 
-                    for ($i = 0; $i < $purchase->getTicketCount(); $i++) {
-                        $delegateInfo[] = Delegate::fromArray($data['delegates_' . $i]);
+                    foreach ($purchase->getTickets() as $i => $ticket) {
+                        if (!$ticket->getTicketType()->isSupplementary()) {
+                            $delegateInfo[] = Delegate::fromArray($data['delegates_' . $i]);
+                        } else {
+                            $delegateInfo[] = Delegate::emptyObject();
+                        }
                     }
 
                     $command = new CompletePurchase($purchaseId, $data['purchase_email'], ...$delegateInfo);

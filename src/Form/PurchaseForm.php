@@ -3,6 +3,7 @@
 namespace ConferenceTools\Tickets\Form;
 
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use ConferenceTools\Tickets\Form\Fieldset\DelegateInformation;
 use ConferenceTools\Tickets\Hydrator\DelegateHydrator;
@@ -30,7 +31,10 @@ class PurchaseForm extends Form
         ]);
 
         foreach ($purchase->getTickets() as $i => $ticket) {
-            $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
+            /** @var TicketRecord $ticket */
+            if (!$ticket->getTicketType()->isSupplementary()) {
+                $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
+            }
         }
 
         $this->add(new Csrf('security'));

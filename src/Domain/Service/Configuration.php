@@ -179,7 +179,8 @@ class Configuration
             $identifier,
             $price,
             $ticket['name'],
-            $ticket['description'] ?? ''
+            $ticket['description'] ?? '',
+            $ticket['supplementary'] ?? false
         );
 
         $this->avaliableTickets[$identifier] = $ticket['available'];
