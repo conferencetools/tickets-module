@@ -40,12 +40,25 @@ final class TicketType
      */
     private $description;
 
-    public function __construct(string $identifier, Price $price, string $displayName, string $description = '')
-    {
+    /**
+     * @var boolean
+     * @Jms\Type("boolean")
+     * @ORM\Column(type="boolean")
+     */
+    private $supplementary = false;
+
+    public function __construct(
+        string $identifier,
+        Price $price,
+        string $displayName,
+        string $description = '',
+        bool $supplementary = false
+    ) {
         $this->identifier = $identifier;
         $this->price = $price;
         $this->displayName = $displayName;
         $this->description = $description;
+        $this->supplementary = $supplementary;
     }
 
     public function getIdentifier(): string
@@ -66,5 +79,10 @@ final class TicketType
     public function getDescription(): string
     {
         return $this->description;
+    }
+
+    public function isSupplementary(): bool
+    {
+        return $this->supplementary;
     }
 }

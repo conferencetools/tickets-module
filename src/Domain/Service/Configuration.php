@@ -112,7 +112,7 @@ class Configuration
      *
      * @var DiscountCode[]
      */
-    private $discountCodes;
+    private $discountCodes = [];
 
     /**
      * Contains metadata about tickets eg when they are available for sale
@@ -179,7 +179,8 @@ class Configuration
             $identifier,
             $price,
             $ticket['name'],
-            $ticket['description'] ?? ''
+            $ticket['description'] ?? '',
+            $ticket['supplementary'] ?? false
         );
 
         $this->avaliableTickets[$identifier] = $ticket['available'];

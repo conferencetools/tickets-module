@@ -40,6 +40,11 @@ body { margin-top:20px; }
     vertical-align: middle;
     width: 50%;
 }
+.credit-card-box .display-td-full {
+    display: table-cell;
+    vertical-align: middle;
+    width: 100%;
+}
 /* Just looks nicer */
 .credit-card-box .panel-heading img {
     min-width: 180px;
