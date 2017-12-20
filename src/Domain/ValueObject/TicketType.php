@@ -38,7 +38,7 @@ final class TicketType
      * @Jms\Type("string")
      * @ORM\Column(type="string")
      */
-    private $description;
+    private $description = '';
 
     /**
      * @var boolean
