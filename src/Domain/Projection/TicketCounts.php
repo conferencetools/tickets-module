@@ -33,7 +33,7 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
     {
         $em = $this->em;
 
-        $q = $em->createQuery(sprintf('delete from %s', TicketCounter::class));
+        $q = $em->createQuery(sprintf('delete from %s tc', TicketCounter::class));
         $q->execute();
 
         foreach ($this->ticketConfig->getTicketTypes() as $handle => $ticketType) {
