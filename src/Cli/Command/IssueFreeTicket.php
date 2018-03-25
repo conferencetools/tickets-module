@@ -53,7 +53,7 @@ class IssueFreeTicket extends Command
                 new InputArgument('ticketType', InputArgument::REQUIRED, 'Ticket type to issue'),
                 new InputArgument('email', InputArgument::REQUIRED, 'Email address to send ticket to'),
                 new InputOption('number', '', InputOption::VALUE_OPTIONAL, 'Number of tickets to add to purchase', 1),
-                new InputOption('discountCode', '', InputOption::VALUE_OPTIONAL, 'Discount code to apply to the purchase', 1)
+                new InputOption('discountCode', '', InputOption::VALUE_OPTIONAL, 'Discount code to apply to the purchase')
             ]);
     }
 
@@ -130,8 +130,11 @@ class IssueFreeTicket extends Command
 
     private function getDiscountCode($type) /* : ?DiscountCode*/
     {
+        if (empty($type)) {
+            return null;
+        }
+
         $discountCodes = $this->config->getDiscountCodes();
-        $discountCodes[''] = null;
 
         if (!isset($discountCodes[$type])) {
             throw new \Exception('Invalid discount code');
