@@ -61,18 +61,28 @@ return [
             \ConferenceTools\Tickets\Domain\Projection\TicketCounts::class,
             \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
         ],
-        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        ],
         \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => [
             \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
-            \ConferenceTools\Tickets\EventListener\EmailPurchase::class,
+            //\ConferenceTools\Tickets\EventListener\EmailPurchase::class,
         ],
         \ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied::class => [
             \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
         ],
-        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
-        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
-        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
-        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled::class => \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        ],
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        ],
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        ],
+        \ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled::class => [
+            \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
+        ],
     ],
     'controllers' => [
         'factories' => [
