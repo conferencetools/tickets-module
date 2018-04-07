@@ -6,7 +6,6 @@ use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Mockery as m;
@@ -31,32 +30,42 @@ class TicketAvailabilityTest extends MockeryTestCase
     public function __construct($name = null, array $data = array(), $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
-        $this->config = Configuration::fromArray([
+        $settings = [
             'tickets' => [
                 'early' => ['name' => 'Early Bird', 'cost' => 5000, 'available' => 75],
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
-                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]]
+                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]],
+                'expired' => ['name' => 'Expired', 'cost' => 1000, 'available' => 100, 'metadata' => [
+                    'availableFrom' =>(new \DateTime)->sub(new \DateInterval('P1D')),
+                    'availableTo' =>(new \DateTime)->sub(new \DateInterval('P1D')),
+                ]],
+                'after_early' => ['name' => 'After Early', 'cost' => 7500, 'available' => 100, 'metadata' => [
+                    'after' => ['early']
+                ]],
+                'after_expired' => ['name' => 'After Expired', 'cost' => 2500, 'available' => 100, 'metadata' => [
+                    'after' => ['expired']
+                ]],
+                'soldout' => ['name' => 'Sold out', 'cost' => 1500, 'available' => 0, 'metadata' => [
+                ]],
+                'after_soldout' => ['name' => 'After Sold out', 'cost' => 3500, 'available' => 100, 'metadata' => [
+                    'after' => ['soldout']
+                ]],
             ],
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
                 'displayTax' => true
             ]
-        ]);
-        $ticketCounters['early'] = new TicketCounter(
-            $this->config->getTicketType('early'),
-            $this->config->getAvailableTickets('early')
-        );
+        ];
+        $this->config = Configuration::fromArray($settings);
 
-        $ticketCounters['std'] = new TicketCounter(
-            $this->config->getTicketType('std'),
-            $this->config->getAvailableTickets('std')
-        );
-
-        $ticketCounters['free'] = new TicketCounter(
-            $this->config->getTicketType('free'),
-            $this->config->getAvailableTickets('free')
-        );
+        $ticketCounters = [];
+        foreach (array_keys($settings['tickets']) as $identifier) {
+            $ticketCounters[$identifier] = new TicketCounter(
+                $this->config->getTicketType($identifier),
+                $this->config->getAvailableTickets($identifier)
+            );
+        }
 
         $this->ticketCounters = new ArrayCollection($ticketCounters);
 
@@ -77,7 +86,7 @@ class TicketAvailabilityTest extends MockeryTestCase
 
         $result = $sut->fetchAllAvailableTickets();
 
-        self::assertTrue($result->count() === 2, 'The expected number of tickets was not returned');
+        self::assertTrue($result->count() === 4, 'The expected number of tickets was not returned');
         self::assertFalse($result->contains($this->ticketCounters['free']), 'Free tickets were included in the result');
     }
 
@@ -102,8 +111,14 @@ class TicketAvailabilityTest extends MockeryTestCase
     {
         return [
             [$this->config->getTicketType('free'), 1, false],
-            [$this->config->getTicketType('std'), 1, true],
+            [$this->config->getTicketType('soldout'), 1, false],
+            [$this->config->getTicketType('expired'), 1, false],
+            [$this->config->getTicketType('after_early'), 1, false],
             [$this->config->getTicketType('early'), 76, false],
+            [$this->config->getTicketType('after_expired'), 1, true],
+            [$this->config->getTicketType('after_soldout'), 1, true],
+            [$this->config->getTicketType('std'), 1, true],
+            [$this->config->getTicketType('early'), 1, true],
         ];
     }
 }
