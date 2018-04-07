@@ -33,7 +33,7 @@ class DiscountByDate implements FilterInterface
         $configuration = $this->configuration;
         $today = new \DateTime();
 
-        $p = function (DiscountCode $discountCode) use ($configuration, $today) {
+        $p = function(DiscountCode $discountCode) use ($configuration, $today) {
             $metadata = $configuration->getDiscountCodeMetadata($discountCode->getCode());
             return $metadata->isAvailableOn($today);
         };

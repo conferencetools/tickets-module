@@ -63,7 +63,7 @@ class TicketAvailability
     private function reindex(Collection $tickets): Collection
     {
         $result = [];
-        foreach($tickets as $ticket) {
+        foreach ($tickets as $ticket) {
             /** @var TicketCounter $ticket */
             $result[$ticket->getTicketType()->getIdentifier()] = $ticket;
         }

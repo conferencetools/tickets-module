@@ -60,7 +60,7 @@ class FactoryTest extends MockeryTestCase
 
         $ticketReservations = $basket->getTickets();
         $ticketIdsFromBasket = array_map(
-            function (TicketReservation $item) {
+            function(TicketReservation $item) {
                 return $item->getReservationId();
             },
             $ticketReservations

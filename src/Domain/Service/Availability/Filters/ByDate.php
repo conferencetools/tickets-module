@@ -30,7 +30,7 @@ class ByDate implements FilterInterface
         $configuration = $this->configuration;
         $today = new \DateTime();
 
-        $p = function (TicketCounter $ticket) use ($configuration, $today) {
+        $p = function(TicketCounter $ticket) use ($configuration, $today) {
             $metadata = $configuration->getTicketMetadata($ticket->getTicketType()->getIdentifier());
             return $metadata->isAvailableOn($today);
         };

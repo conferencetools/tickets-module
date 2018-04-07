@@ -57,7 +57,7 @@ class DiscountCodeAvailability
     private function reindex(Collection $discountCodes): Collection
     {
         $result = [];
-        foreach($discountCodes as $discountCode) {
+        foreach ($discountCodes as $discountCode) {
             /** @var DiscountCode $discountCode */
             $result[$discountCode->getCode()] = $discountCode;
         }

@@ -116,7 +116,7 @@ class Basket
     public function containingOnly(TicketType ...$ticketTypes)
     {
         $filteredReservations = [];
-        foreach($this->tickets as $ticketReservation) {
+        foreach ($this->tickets as $ticketReservation) {
             if (in_array($ticketReservation->getTicketType(), $ticketTypes, false)) {
                 $filteredReservations[] = $ticketReservation;
             }

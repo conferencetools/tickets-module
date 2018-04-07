@@ -28,7 +28,7 @@ class IsPrivate implements FilterInterface
     public function filter(Collection $tickets): Collection
     {
         $configuration = $this->configuration;
-        $p = function (TicketCounter $ticket) use ($configuration) {
+        $p = function(TicketCounter $ticket) use ($configuration) {
             $metadata = $configuration->getTicketMetadata($ticket->getTicketType()->getIdentifier());
             return !$metadata->isPrivateTicket();
         };
