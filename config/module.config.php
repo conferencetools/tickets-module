@@ -25,6 +25,7 @@ return [
             \ConferenceTools\Tickets\Cli\Command\IssueFreeTicket::class => \ConferenceTools\Tickets\Cli\Command\IssueFreeTicketFactory::class,
             \ConferenceTools\Tickets\Cli\Command\ReportToCsv::class => \ConferenceTools\Tickets\Cli\Command\ReportToCsvFactory::class,
             \ConferenceTools\Tickets\Cli\Command\CancelTicket::class => \ConferenceTools\Tickets\Cli\Command\CancelTicketFactory::class,
+            \ConferenceTools\Tickets\Cli\Command\MarkPurchasePaid::class => \ConferenceTools\Tickets\Cli\Command\MarkPurchasePaidFactory::class,
         ],
     ],
     'command_handlers' => [
