@@ -84,4 +84,9 @@ class TicketMetadata
     {
         return $this->afterSoldOut;
     }
+
+    public function expiredOn(\DateTime $date)
+    {
+        return !($date < $this->availableTo);
+    }
 }

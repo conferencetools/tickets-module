@@ -33,6 +33,14 @@ class AfterSoldOut implements FilterInterface
             return $ticketCounter->getTicketType()->getIdentifier();
         });
 
+        //Filter out tickets which have an availability period in the past.
+        $p = function (string $identifier) use ($configuration) {
+            $metadata = $configuration->getTicketMetadata($identifier);
+
+            return !($metadata->expiredOn(new \DateTime()));
+        };
+        $identifiers = $identifiers->filter($p);
+
         $p = function (TicketCounter $ticket) use ($configuration, $identifiers) {
             $metadata = $configuration->getTicketMetadata($ticket->getTicketType()->getIdentifier());
 
