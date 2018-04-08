@@ -2,6 +2,7 @@
 
 namespace ConferenceTools\Tickets\EventListener;
 
+use Zend\Mail\Transport\Factory;
 use Zend\Mail\Transport\Smtp;
 use Zend\Mail\Transport\SmtpOptions;
 use Zend\ServiceManager\FactoryInterface;
@@ -13,8 +14,7 @@ class EmailPurchaseFactory implements FactoryInterface
     {
         $serviceLocator = $serviceLocator->getServiceLocator();
         $config = $serviceLocator->get('Config');
-        $options = new SmtpOptions($config['mail']);
-        $transport = new Smtp($options);
+        $transport = Factory::create($config['mail']);
 
         return new EmailPurchase(
             $serviceLocator->get('doctrine.entitymanager.orm_default'),

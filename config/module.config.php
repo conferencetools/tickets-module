@@ -67,7 +67,7 @@ return [
         ],
         \ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid::class => [
             \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
-            //\ConferenceTools\Tickets\EventListener\EmailPurchase::class,
+            \ConferenceTools\Tickets\EventListener\EmailPurchase::class,
         ],
         \ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied::class => [
             \ConferenceTools\Tickets\Domain\Projection\TicketRecord::class,
