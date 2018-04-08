@@ -13,8 +13,9 @@
                 <table class="table">
                     <?php foreach($this->purchase->getTickets() as $ticket):?>
                         <?php $url = $this->url(
-                                'tickets/manage',
-                                ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()]
+                                'tickets/purchasing/manage',
+                                ['purchaseId' => $this->purchase->getPurchaseId(), 'ticketId' => $ticket->getTicketId()],
+                                ['force_canonical' => true]
                         )?>
                         <tr>
                             <td class="col-xs-6">
@@ -22,7 +23,7 @@
                             </td>
                             <td class="col-xs-6">
                                 <?php if (!$ticket->getTicketType()->isSupplementary()): ?>
-                                    <a href="<?= $this->serverUrl() . $url?>">Manage</a>
+                                    <a href="<?=$url?>">Manage</a>
                                 <?php endif;?>
 
                             </td>

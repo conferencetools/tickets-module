@@ -2,6 +2,12 @@
 
 return [
     'tickets' => [
+        'type' => \Zend\Mvc\Router\Http\Literal::class,
+        'options' => [
+            'route' => ''
+        ],
+        'child_routes' => [
+            'purchasing' => [
         'type' => 'Segment',
         'options' => [
             'route' => '/',
@@ -52,6 +58,8 @@ return [
                     ],
                 ],
             ],
+        ],
+    ],
         ],
     ],
 ];
