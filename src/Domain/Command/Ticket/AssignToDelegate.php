@@ -1,15 +1,22 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
 use Carnage\Cqrs\Command\CommandInterface;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 
 /**
- * Class AssignToDelegate
- * @package ConferenceTools\Tickets\Domain\Command\Ticket
- *
- * This command is intended for updating tickets at a later date after they have been purchased
+ * Class AssignToDelegate.
  */
 class AssignToDelegate implements CommandInterface
 {
@@ -30,6 +37,7 @@ class AssignToDelegate implements CommandInterface
 
     /**
      * AssignToDelegate constructor.
+     *
      * @param $delegate
      * @param $ticketId
      * @param $purchaseId

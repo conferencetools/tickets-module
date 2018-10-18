@@ -1,21 +1,22 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Cli\Command;
 
-use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use Carnage\Cqrs\Service\EventCatcher;
-use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
-use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
-use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
-use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
 use ConferenceTools\Tickets\Report\ReportInterface;
 use ConferenceTools\Tickets\Report\ReportManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ReportToCsv extends Command
@@ -29,6 +30,7 @@ class ReportToCsv extends Command
     {
         $instance = new self();
         $instance->reportManager = $reportManager;
+
         return $instance;
     }
 
@@ -38,8 +40,8 @@ class ReportToCsv extends Command
             ->setDescription('Creates a csv export of a report')
             ->setDefinition([
                 new InputArgument('report', InputArgument::REQUIRED, 'Report to run'),
-                new InputArgument('outputFile', InputArgument::OPTIONAL, 'File to output report to', '/tmp/report.csv')
-             ]);
+                new InputArgument('outputFile', InputArgument::OPTIONAL, 'File to output report to', '/tmp/report.csv'),
+            ]);
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -56,8 +58,8 @@ class ReportToCsv extends Command
                 throw new \Exception(sprintf('Cannot write to output file: %s', $outputFile));
             }
         } else {
-            if (!is_writable(dirname($outputFile))) {
-                throw new \Exception(sprintf('Cannot write to output directory: %s', dirname($outputFile)));
+            if (!is_writable(\dirname($outputFile))) {
+                throw new \Exception(sprintf('Cannot write to output directory: %s', \dirname($outputFile)));
             }
         }
 
@@ -66,7 +68,7 @@ class ReportToCsv extends Command
 
         $reportData = $report->produceReport();
 
-        $h = fopen($outputFile, 'w+');
+        $h = fopen($outputFile, 'w+b');
         $header = array_keys(current($reportData) ?: []);
         fputcsv($h, $header);
 

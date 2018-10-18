@@ -1,9 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 28/11/16
- * Time: 21:37
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\CommandHandler;
@@ -19,9 +23,7 @@ use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
 use ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use ConferenceTools\Tickets\Domain\Model\Ticket\TicketPurchase;
 use ConferenceTools\Tickets\Domain\Service\Basket\Factory;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\Basket;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
 
 class Ticket extends AbstractMethodNameMessageHandler
 {
@@ -45,7 +47,6 @@ class Ticket extends AbstractMethodNameMessageHandler
         RepositoryInterface $repository,
         Factory $basketFactory
     ) {
-
         $this->identityGenerator = $identityGenerator;
         $this->repository = $repository;
         $this->basketFactory = $basketFactory;
@@ -53,6 +54,7 @@ class Ticket extends AbstractMethodNameMessageHandler
 
     /**
      * @TODO can we refactor the command to pass a basket directly?
+     *
      * @param ReserveTickets $command
      */
     protected function handleReserveTickets(ReserveTickets $command)
@@ -70,7 +72,7 @@ class Ticket extends AbstractMethodNameMessageHandler
 
         $this->repository->save($purchase);
     }
-    
+
     protected function handleMakePayment(MakePayment $command)
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
@@ -84,14 +86,14 @@ class Ticket extends AbstractMethodNameMessageHandler
         $purchase->timeoutPurchase();
         $this->repository->save($purchase);
     }
-    
+
     protected function handleAssignToDelegate(AssignToDelegate $command)
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
         $purchase->assignTicketToDelegate($command->getTicketId(), $command->getDelegate());
         $this->repository->save($purchase);
     }
-    
+
     protected function handleCompletePurchase(CompletePurchase $command)
     {
         $purchase = $this->loadPurchase($command->getPurchaseId());
@@ -105,14 +107,14 @@ class Ticket extends AbstractMethodNameMessageHandler
         $purchase->cancelTicket($command->getTicketId());
         $this->repository->save($purchase);
     }
-    
+
     /**
      * @param string $purchaseId
+     *
      * @return TicketPurchase
      */
     private function loadPurchase(string $purchaseId): TicketPurchase
     {
-        $purchase = $this->repository->load($purchaseId);
-        return $purchase;
+        return $this->repository->load($purchaseId);
     }
 }

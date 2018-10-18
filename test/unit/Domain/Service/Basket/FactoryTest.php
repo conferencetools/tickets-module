@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Service\Basket;
 
 use Carnage\Cqrs\Aggregate\Identity\GeneratorInterface;
@@ -9,30 +19,33 @@ use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use PHPUnit\Framework\TestCase;
 use Mockery as m;
 
-class FactoryTest extends MockeryTestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class FactoryTest extends MockeryTestCase
 {
     /**
      * @var Configuration
      */
     private $config;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->config = Configuration::fromArray([
             'tickets' => [
                 'early' => ['name' => 'Early Bird', 'cost' => 5000, 'available' => 75],
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
-                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]]
+                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]],
             ],
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
-                'displayTax' => true
-            ]
+                'displayTax' => true,
+            ],
         ]);
     }
 
@@ -60,15 +73,15 @@ class FactoryTest extends MockeryTestCase
 
         $ticketReservations = $basket->getTickets();
         $ticketIdsFromBasket = array_map(
-            function(TicketReservation $item) {
+            function (TicketReservation $item) {
                 return $item->getReservationId();
             },
             $ticketReservations
         );
 
-        self::assertEquals(2, count($ticketReservations));
-        self::assertEquals($ticketIds, $ticketIdsFromBasket);
-        self::assertFalse($basket->hasDiscountCode());
+        $this->assertCount(2, $ticketReservations);
+        $this->assertSame($ticketIds, $ticketIdsFromBasket);
+        $this->assertFalse($basket->hasDiscountCode());
     }
 
     public function testBasketWithDiscount()
@@ -101,8 +114,8 @@ class FactoryTest extends MockeryTestCase
 
         $ticketReservations = $basket->getTickets();
 
-        self::assertEquals(2, count($ticketReservations));
-        self::assertTrue($basket->hasDiscountCode());
-        self::assertSame($discountCode, $basket->getDiscountCode());
+        $this->assertCount(2, $ticketReservations);
+        $this->assertTrue($basket->hasDiscountCode());
+        $this->assertSame($discountCode, $basket->getDiscountCode());
     }
 }

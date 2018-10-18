@@ -1,14 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Service\Factory\Service;
 
 use Carnage\Cqrs\Persistence\ReadModel\InMemoryRepository;
+use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability as DiscountCodeAvailabilityService;
 use ConferenceTools\Tickets\Domain\Service\Availability\Filters;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
-use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability as DiscountCodeAvailabilityService;
 use Zend\ServiceManager\FactoryInterface;
 use Zend\ServiceManager\ServiceLocatorInterface;
-use Carnage\Cqorms\Persistence\ReadModel\DoctrineRepository;
 
 class DiscountCodeAvailability implements FactoryInterface
 {

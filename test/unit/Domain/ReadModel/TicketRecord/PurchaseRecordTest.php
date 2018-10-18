@@ -1,32 +1,46 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ReadModel\TicketRecord;
 
-use Doctrine\Common\Collections\Collection;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
 use ConferenceTools\Tickets\Domain\ValueObject\Money;
 use ConferenceTools\Tickets\Domain\ValueObject\Price;
 use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
+use Doctrine\Common\Collections\Collection;
 use PHPUnit\Framework\TestCase;
 
-class PurchaseRecordTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class PurchaseRecordTest extends TestCase
 {
     public function testCreate()
     {
         $price = Price::fromNetCost(new Money(0, 'GBP'), new TaxRate(0));
         $sut = new PurchaseRecord('randomid');
 
-        self::assertEquals('randomid', $sut->getPurchaseId());
-        self::assertEquals(0, $sut->getTicketCount());
-        self::assertEquals(false, $sut->isPaid());
-        self::assertEquals(new \DateTime(), $sut->getCreatedAt(), null, 2);
-        self::assertInstanceOf(Collection::class, $sut->getTickets());
-        self::assertEquals(0, $sut->getTickets()->count());
-        self::assertTrue($sut->getTotalCost()->equals($price));
-        self::assertFalse($sut->hasDiscountCode());
-        self::assertFalse($sut->hasTimedout());
+        $this->assertSame('randomid', $sut->getPurchaseId());
+        $this->assertSame(0, $sut->getTicketCount());
+        $this->assertFalse($sut->isPaid());
+        $this->assertEquals(new \DateTime(), $sut->getCreatedAt(), null, 2);
+        $this->assertInstanceOf(Collection::class, $sut->getTickets());
+        $this->assertSame(0, $sut->getTickets()->count());
+        $this->assertTrue($sut->getTotalCost()->equals($price));
+        $this->assertFalse($sut->hasDiscountCode());
+        $this->assertFalse($sut->hasTimedout());
     }
 
     public function testApplyDiscountCode()
@@ -35,8 +49,8 @@ class PurchaseRecordTest extends TestCase
         $discountCode = new DiscountCode('code', 'Code', new Percentage(5));
         $sut->applyDiscountCode($discountCode);
 
-        self::assertTrue($sut->hasDiscountCode());
-        self::assertEquals($discountCode->getCode(), $sut->getDiscountCode()->getCode());
+        $this->assertTrue($sut->hasDiscountCode());
+        $this->assertSame($discountCode->getCode(), $sut->getDiscountCode()->getCode());
     }
 
     public function testSetTotalCost()
@@ -45,7 +59,7 @@ class PurchaseRecordTest extends TestCase
         $price = Price::fromNetCost(new Money(100, 'GBP'), new TaxRate(20));
         $sut->setTotalCost($price);
 
-        self::assertTrue($price->equals($sut->getTotalCost()));
+        $this->assertTrue($price->equals($sut->getTotalCost()));
     }
 
     public function testAddTicketRecord()
@@ -57,8 +71,8 @@ class PurchaseRecordTest extends TestCase
         $sut->addTicketRecord($ticketType, 'ticketid');
         $ticketRecord = $sut->getTicketRecord('ticketid');
 
-        self::assertEquals(1, $sut->getTicketCount());
-        self::assertEquals($ticketType, $ticketRecord->getTicketType());
+        $this->assertSame(1, $sut->getTicketCount());
+        $this->assertSame($ticketType, $ticketRecord->getTicketType());
     }
 
     public function testGetInvalidTicketRecord()
@@ -78,13 +92,13 @@ class PurchaseRecordTest extends TestCase
         $sut->addTicketRecord($ticketType, 'ticketid2');
         $sut->cancelTicket('ticketid2');
 
-        self::assertEquals(1, $sut->getTicketCount());
-        self::assertEquals(false, $sut->shouldBeCancelled());
+        $this->assertSame(1, $sut->getTicketCount());
+        $this->assertFalse($sut->shouldBeCancelled());
 
         $sut->cancelTicket('ticketid');
 
-        self::assertEquals(0, $sut->getTicketCount());
-        self::assertEquals(true, $sut->shouldBeCancelled());
+        $this->assertSame(0, $sut->getTicketCount());
+        $this->assertTrue($sut->shouldBeCancelled());
     }
 
     public function testPay()
@@ -92,8 +106,8 @@ class PurchaseRecordTest extends TestCase
         $sut = new PurchaseRecord('randomid');
         $sut->pay('test@email.com');
 
-        self::assertTrue($sut->isPaid());
-        self::assertEquals('test@email.com', $sut->getPurchaserEmail());
+        $this->assertTrue($sut->isPaid());
+        $this->assertSame('test@email.com', $sut->getPurchaserEmail());
     }
 
     public function testGetTicketSummary()
@@ -104,7 +118,7 @@ class PurchaseRecordTest extends TestCase
 
         $expected = [
             'test' => ['quantity' => 2, 'lineTotal' => $price->add($price), 'ticketType' => $ticketType],
-            'test2' => ['quantity' => 1, 'lineTotal' => $price, 'ticketType' => $ticketType2]
+            'test2' => ['quantity' => 1, 'lineTotal' => $price, 'ticketType' => $ticketType2],
         ];
 
         $sut = new PurchaseRecord('randomid');
@@ -112,6 +126,6 @@ class PurchaseRecordTest extends TestCase
         $sut->addTicketRecord($ticketType, 'ticketid2');
         $sut->addTicketRecord($ticketType2, 'ticketid3');
 
-        self::assertEquals($expected, $sut->getTicketSummary());
+        $this->assertSame($expected, $sut->getTicketSummary());
     }
 }

@@ -1,39 +1,54 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use ConferenceTools\Tickets\Domain\Service\Basket\BasketValidator;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\Percentage;
-use Mockery as m;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
+use Mockery as m;
 
-class BasketTest extends MockeryTestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class BasketTest extends MockeryTestCase
 {
     /**
      * @var Configuration
      */
     private $config;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->config = Configuration::fromArray([
             'tickets' => [
                 'early' => ['name' => 'Early Bird', 'cost' => 5000, 'available' => 75],
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
-                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 0]
+                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 0],
             ],
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
-                'displayTax' => true
-            ]
+                'displayTax' => true,
+            ],
         ]);
     }
 
     /**
      * @dataProvider provideGetTotalNoDiscount
+     *
      * @param array $reservations
      */
     public function testGetTotalNoDiscount(array $reservations, Price $expected)
@@ -44,7 +59,7 @@ class BasketTest extends MockeryTestCase
         $sut = Basket::fromReservations(
             $this->config,
             $validator,
-            ... $reservations
+            ...$reservations
         );
 
         $this->assertTrue($expected->equals($sut->getTotal()), 'Total didn\'t match expected total');
@@ -58,21 +73,22 @@ class BasketTest extends MockeryTestCase
         return [
             [
                 [$stdReservation],
-                Price::fromNetCost(new Money(10000, $this->config->getCurrency()), $this->config->getTaxRate())
+                Price::fromNetCost(new Money(10000, $this->config->getCurrency()), $this->config->getTaxRate()),
             ],
             [
                 [$stdReservation, $stdReservation],
-                Price::fromNetCost(new Money(20000, $this->config->getCurrency()), $this->config->getTaxRate())
+                Price::fromNetCost(new Money(20000, $this->config->getCurrency()), $this->config->getTaxRate()),
             ],
             [
                 [$stdReservation, $earlyReservation],
-                Price::fromNetCost(new Money(15000, $this->config->getCurrency()), $this->config->getTaxRate())
-            ]
+                Price::fromNetCost(new Money(15000, $this->config->getCurrency()), $this->config->getTaxRate()),
+            ],
         ];
     }
 
     /**
      * @dataProvider provideGetTotalWithDiscount
+     *
      * @param array $reservations
      */
     public function testGetTotalWithDiscount(array $reservations, Price $expected)
@@ -84,7 +100,7 @@ class BasketTest extends MockeryTestCase
             $this->config,
             $validator,
             new DiscountCode('50off', '50% off', new Percentage(50)),
-            ... $reservations
+            ...$reservations
         );
 
         $this->assertTrue($expected->equals($sut->getTotal()), 'Total didn\'t match expected total');
@@ -98,16 +114,16 @@ class BasketTest extends MockeryTestCase
         return [
             [
                 [$stdReservation],
-                Price::fromNetCost(new Money(5000, $this->config->getCurrency()), $this->config->getTaxRate())
+                Price::fromNetCost(new Money(5000, $this->config->getCurrency()), $this->config->getTaxRate()),
             ],
             [
                 [$stdReservation, $stdReservation],
-                Price::fromNetCost(new Money(10000, $this->config->getCurrency()), $this->config->getTaxRate())
+                Price::fromNetCost(new Money(10000, $this->config->getCurrency()), $this->config->getTaxRate()),
             ],
             [
                 [$stdReservation, $earlyReservation],
-                Price::fromNetCost(new Money(7500, $this->config->getCurrency()), $this->config->getTaxRate())
-            ]
+                Price::fromNetCost(new Money(7500, $this->config->getCurrency()), $this->config->getTaxRate()),
+            ],
         ];
     }
 
@@ -126,13 +142,12 @@ class BasketTest extends MockeryTestCase
         $sut = Basket::fromReservations(
             $this->config,
             $validator,
-            ... $reservations
+            ...$reservations
         );
 
         $result = $sut->containingOnly(...$ticketTypes);
 
-        $this->assertEquals($expected, array_values($result->getTickets()));
-
+        $this->assertSame($expected, array_values($result->getTickets()));
     }
 
     public function provideContainingOnly()
@@ -144,7 +159,7 @@ class BasketTest extends MockeryTestCase
             [
                 [$stdReservation],
                 [$this->config->getTicketType('std')],
-                [$stdReservation]
+                [$stdReservation],
             ],
             [
                 [$stdReservation, $stdReservation],
@@ -160,7 +175,7 @@ class BasketTest extends MockeryTestCase
                 [$stdReservation, $earlyReservation],
                 [$this->config->getTicketType('std'), $this->config->getTicketType('early')],
                 [$stdReservation, $earlyReservation],
-            ]
+            ],
         ];
     }
 }

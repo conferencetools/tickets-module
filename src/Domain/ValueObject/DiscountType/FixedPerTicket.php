@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject\DiscountType;
 
 use ConferenceTools\Tickets\Domain\Service\Configuration;
@@ -12,12 +22,14 @@ class FixedPerTicket implements DiscountTypeInterface
 {
     /**
      * @JMS\Type("Price")
+     *
      * @var Price
      */
     private $discount;
 
     /**
      * Percentage constructor.
+     *
      * @param $discount
      */
     public function __construct(Price $discount)
@@ -27,7 +39,8 @@ class FixedPerTicket implements DiscountTypeInterface
 
     public function apply(Basket $to): Price
     {
-        $tickets = count($to->getTickets());
+        $tickets = \count($to->getTickets());
+
         return $this->discount->multiply($tickets);
     }
 

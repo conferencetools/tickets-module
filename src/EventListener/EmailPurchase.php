@@ -1,19 +1,28 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\EventListener;
 
 use Carnage\Cqrs\Event\DomainMessage;
 use Carnage\Cqrs\MessageBus\MessageInterface;
 use Carnage\Cqrs\MessageHandler\MessageHandlerInterface;
-use Crossjoin\PreMailer\HtmlString;
-use Doctrine\ORM\EntityManagerInterface;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
+use Doctrine\ORM\EntityManagerInterface;
 use Zend\Http\Response;
 use Zend\Mail\Message;
 use Zend\Mail\Transport\TransportInterface;
-use Zend\Mime\Part as MimePart;
 use Zend\Mime\Message as MimeMessage;
+use Zend\Mime\Part as MimePart;
 use Zend\View\Model\ViewModel;
 use Zend\View\View;
 
@@ -35,10 +44,11 @@ class EmailPurchase implements MessageHandlerInterface
 
     /**
      * EmailPurchase constructor.
+     *
      * @param EntityManagerInterface $em
-     * @param View $view
-     * @param TransportInterface $mail
-     * @param array $config
+     * @param View                   $view
+     * @param TransportInterface     $mail
+     * @param array                  $config
      */
     public function __construct(EntityManagerInterface $em, View $view, TransportInterface $mail, array $config = [])
     {
@@ -47,7 +57,6 @@ class EmailPurchase implements MessageHandlerInterface
         $this->mail = $mail;
         $this->config = $config;
     }
-
 
     public function handleDomainMessage(DomainMessage $message)
     {
@@ -61,7 +70,7 @@ class EmailPurchase implements MessageHandlerInterface
         }
 
         $purchase = $this->em->getRepository(PurchaseRecord::class)->findOneBy([
-            'purchaseId' => $message->getId()
+            'purchaseId' => $message->getId(),
         ]);
 
         $viewModel = new ViewModel(['purchase' => $purchase]);
@@ -80,13 +89,12 @@ class EmailPurchase implements MessageHandlerInterface
 
     private function buildMessage($htmlMarkup)
     {
-
         $html = new MimePart($htmlMarkup);
         $html->setCharset('UTF-8');
-        $html->type = "text/html";
+        $html->type = 'text/html';
 
         $body = new MimeMessage();
-        $body->setParts(array($html));
+        $body->setParts([$html]);
 
         $message = new Message();
         $message->setBody($body);

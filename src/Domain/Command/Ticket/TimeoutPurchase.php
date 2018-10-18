@@ -1,13 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 29/11/16
- * Time: 12:52
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\Command\Ticket;
-
 
 use Carnage\Cqrs\Command\CommandInterface;
 
@@ -20,6 +23,7 @@ class TimeoutPurchase implements CommandInterface
 
     /**
      * TimeoutPurchase constructor.
+     *
      * @param $purchaseId
      */
     public function __construct(string $purchaseId)

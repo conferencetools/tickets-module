@@ -1,13 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 13/05/17
- * Time: 13:32
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\ReadModel\TicketCounts;
-
 
 use ConferenceTools\Tickets\Domain\ValueObject\Money;
 use ConferenceTools\Tickets\Domain\ValueObject\Price;
@@ -15,7 +18,11 @@ use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use PHPUnit\Framework\TestCase;
 
-class TicketCounterTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class TicketCounterTest extends TestCase
 {
     public function testCreate()
     {
@@ -24,8 +31,8 @@ class TicketCounterTest extends TestCase
 
         $sut = new TicketCounter($ticketType, 10);
 
-        self::assertEquals($ticketType, $sut->getTicketType());
-        self::assertEquals(10, $sut->getRemaining());
+        $this->assertSame($ticketType, $sut->getTicketType());
+        $this->assertSame(10, $sut->getRemaining());
     }
 
     public function testTicketsReserved()
@@ -36,7 +43,7 @@ class TicketCounterTest extends TestCase
         $sut = new TicketCounter($ticketType, 10);
         $sut->ticketsReserved(5);
 
-        self::assertEquals(5, $sut->getRemaining());
+        $this->assertSame(5, $sut->getRemaining());
     }
 
     public function testTicketsReleased()
@@ -47,6 +54,6 @@ class TicketCounterTest extends TestCase
         $sut = new TicketCounter($ticketType, 10);
         $sut->ticketsReleased(5);
 
-        self::assertEquals(15, $sut->getRemaining());
+        $this->assertSame(15, $sut->getRemaining());
     }
 }

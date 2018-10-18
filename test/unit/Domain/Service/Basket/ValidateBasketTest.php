@@ -1,9 +1,13 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 10/12/17
- * Time: 13:50
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace OpenTickets\Tickets\Domain\Service\Basket;
@@ -14,27 +18,31 @@ use ConferenceTools\Tickets\Domain\ValueObject\Basket;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservation;
 use PHPUnit\Framework\TestCase;
 
-class ValidateBasketTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class ValidateBasketTest extends TestCase
 {
     /**
      * @var Configuration
      */
     private $config;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->config = Configuration::fromArray([
             'tickets' => [
                 'early' => ['name' => 'Early Bird', 'cost' => 5000, 'available' => 75],
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
-                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]]
+                'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]],
             ],
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
-                'displayTax' => true
-            ]
+                'displayTax' => true,
+            ],
         ]);
     }
 

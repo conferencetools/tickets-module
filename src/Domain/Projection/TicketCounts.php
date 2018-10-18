@@ -1,18 +1,24 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Projection;
 
 use Carnage\Cqrs\Event\Projection\ResettableInterface;
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
-use Doctrine\ORM\EntityManagerInterface;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
-use ConferenceTools\Tickets\Domain\ValueObject\Money;
-use ConferenceTools\Tickets\Domain\ValueObject\Price;
-use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TicketCounts extends AbstractMethodNameMessageHandler implements ResettableInterface
 {
@@ -55,7 +61,7 @@ class TicketCounts extends AbstractMethodNameMessageHandler implements Resettabl
         $counter->ticketsReserved(1);
         $this->em->flush();
     }
-    
+
     protected function handleTicketReleased(TicketReleased $event)
     {
         $counter = $this->em->getRepository(TicketCounter::class)->findOneBy(

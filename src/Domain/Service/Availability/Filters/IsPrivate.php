@@ -1,13 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 15/11/17
- * Time: 16:57
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\Service\Availability\Filters;
-
 
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
@@ -28,10 +31,12 @@ class IsPrivate implements FilterInterface
     public function filter(Collection $tickets): Collection
     {
         $configuration = $this->configuration;
-        $p = function(TicketCounter $ticket) use ($configuration) {
+        $p = function (TicketCounter $ticket) use ($configuration) {
             $metadata = $configuration->getTicketMetadata($ticket->getTicketType()->getIdentifier());
+
             return !$metadata->isPrivateTicket();
         };
+
         return $tickets->filter($p);
     }
 }

@@ -1,13 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as JMS;
 
 /**
- * Class Delegate
- * @package ConferenceTools\Tickets\Domain\ValueObject
+ * Class Delegate.
+ *
  * @ORM\Embeddable()
  */
 class Delegate
@@ -58,6 +68,7 @@ class Delegate
 
     /**
      * Delegate constructor.
+     *
      * @param string $firstname
      * @param string $lastname
      * @param string $email

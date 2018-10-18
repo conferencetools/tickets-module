@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountType\DiscountTypeInterface;
-use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Jms;
 
 /**
- * Class DiscountCode
- * @package ConferenceTools\Tickets\Domain\ValueObject
+ * Class DiscountCode.
+ *
  * @ORM\Embeddable()
  */
 class DiscountCode
@@ -16,6 +26,7 @@ class DiscountCode
     /**
      * @JMS\Type("string")
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $code;
@@ -23,6 +34,7 @@ class DiscountCode
     /**
      * @JMS\Type("string")
      * @ORM\Column(type="string")
+     *
      * @var string
      */
     private $displayName;
@@ -30,12 +42,14 @@ class DiscountCode
     /**
      * @JMS\Type("Object")
      * @ORM\Column(type="json_object")
+     *
      * @var DiscountTypeInterface
      */
     private $discountType;
 
     /**
      * DiscountCode constructor.
+     *
      * @param $code
      * @param $displayName
      * @param $discountType
@@ -73,6 +87,7 @@ class DiscountCode
 
     /**
      * @param Basket $to
+     *
      * @return Price
      */
     public function apply(Basket $to): Price

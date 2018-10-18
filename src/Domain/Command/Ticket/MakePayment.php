@@ -1,21 +1,21 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 29/11/16
- * Time: 12:43
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\Command\Ticket;
 
-
 use Carnage\Cqrs\Command\CommandInterface;
 
 /**
- * Class MakePayment
- * @package ConferenceTools\Tickets\Domain\Command\Ticket
- *
- * This class exists mostly for manually marking a purchase as paid eg for free issues or offline payments.
+ * Class MakePayment.
  */
 class MakePayment implements CommandInterface
 {
@@ -30,6 +30,7 @@ class MakePayment implements CommandInterface
 
     /**
      * MakePayment constructor.
+     *
      * @param string $purchaseId
      * @param string $purchaserEmail
      */

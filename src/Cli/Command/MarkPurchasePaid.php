@@ -1,22 +1,22 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use Carnage\Cqrs\Service\EventCatcher;
-use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
 use ConferenceTools\Tickets\Domain\Command\Ticket\MakePayment;
-use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
-use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
-use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
-use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class MarkPurchasePaid extends Command

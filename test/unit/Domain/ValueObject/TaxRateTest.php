@@ -1,22 +1,34 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-
-class TaxRateTest extends \PHPUnit\Framework\TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class TaxRateTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @dataProvider provideCompare
      *
      * @param TaxRate $a
      * @param TaxRate $b
-     * @param int $expected
+     * @param int     $expected
      */
     public function testCompare(TaxRate $a, TaxRate $b, $expected)
     {
-        self::assertEquals($expected, $a->compare($b));
-        self::assertEquals(-1 * $expected, $b->compare($a));
+        $this->assertSame($expected, $a->compare($b));
+        $this->assertSame(-1 * $expected, $b->compare($a));
     }
 
     public function provideCompare()
@@ -40,10 +52,9 @@ class TaxRateTest extends \PHPUnit\Framework\TestCase
         $taxrate1 = new TaxRate(20);
         $taxrate2 = new TaxRate(10);
 
-        self::assertTrue($sut->equals($taxrate1));
-        self::assertFalse($sut->equals($taxrate2));
+        $this->assertTrue($sut->equals($taxrate1));
+        $this->assertFalse($sut->equals($taxrate2));
     }
-
 
     public function testLessThan()
     {
@@ -51,8 +62,8 @@ class TaxRateTest extends \PHPUnit\Framework\TestCase
         $taxrate1 = new TaxRate(25);
         $taxrate2 = new TaxRate(10);
 
-        self::assertTrue($sut->lessThan($taxrate1));
-        self::assertFalse($sut->lessThan($taxrate2));
+        $this->assertTrue($sut->lessThan($taxrate1));
+        $this->assertFalse($sut->lessThan($taxrate2));
     }
 
     public function testGreaterThan()
@@ -61,14 +72,14 @@ class TaxRateTest extends \PHPUnit\Framework\TestCase
         $taxrate1 = new TaxRate(10);
         $taxrate2 = new TaxRate(25);
 
-        self::assertTrue($sut->greaterThan($taxrate1));
-        self::assertFalse($sut->greaterThan($taxrate2));
+        $this->assertTrue($sut->greaterThan($taxrate1));
+        $this->assertFalse($sut->greaterThan($taxrate2));
     }
 
     public function testCreate()
     {
         $sut = new TaxRate(15);
 
-        self::assertEquals(15, $sut->getPercentage());
+        $this->assertSame(15, $sut->getPercentage());
     }
 }

@@ -1,22 +1,32 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability;
-use Doctrine\ORM\EntityManager;
 use ConferenceTools\Tickets\Domain\Command\Ticket\AssignToDelegate;
 use ConferenceTools\Tickets\Domain\Command\Ticket\CompletePurchase;
 use ConferenceTools\Tickets\Domain\Command\Ticket\ReserveTickets;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
+use ConferenceTools\Tickets\Domain\Service\Availability\DiscountCodeAvailability;
 use ConferenceTools\Tickets\Domain\Service\Availability\TicketAvailability;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketReservationRequest;
 use ConferenceTools\Tickets\Form\ManageTicket;
 use ConferenceTools\Tickets\Form\PurchaseForm;
+use Doctrine\ORM\EntityManager;
 use Zend\Form\FormElementManager\FormElementManagerV2Polyfill;
 use Zend\Stdlib\ArrayObject;
 use Zend\View\Model\ViewModel;
@@ -81,6 +91,7 @@ class TicketController extends AbstractController
         if ($this->getRequest()->isPost()) {
             $data = $this->getRequest()->getPost();
             $failed = false;
+
             try {
                 $purchases = $this->validateSelectedTickets($data, $tickets);
             } catch (\InvalidArgumentException $e) {
@@ -96,15 +107,17 @@ class TicketController extends AbstractController
             }
 
             if (!$failed) {
-                if ($discountCode !== null) {
+                if (null !== $discountCode) {
                     $command = ReserveTickets::withDiscountCode($discountCode, ...$purchases);
                 } else {
                     $command = new ReserveTickets(...$purchases);
                 }
+
                 try {
                     $this->getCommandBus()->dispatch($command);
                     /** @var TicketPurchaseCreated $event */
                     $event = $this->events()->getEventsByType(TicketPurchaseCreated::class)[0];
+
                     return $this->redirect()->toRoute('tickets/purchasing/purchase', ['purchaseId' => $event->getId()], ['force_canonical' => true]);
                 } catch (\DomainException $e) {
                     $this->flashMessenger()->addErrorMessage($e->getMessage());
@@ -122,80 +135,21 @@ class TicketController extends AbstractController
         return new ViewModel(['tickets' => $tickets, 'discountCode' => $discountCodeStr]);
     }
 
-    /**
-     * @param $data
-     * @param TicketCounter[] $tickets
-     * @return array
-     */
-    private function validateSelectedTickets($data, $tickets): array
-    {
-        $total = 0;
-        $purchases = [];
-        $errors = false;
-        foreach ($data['quantity'] as $id => $quantity) {
-            if (!is_numeric($quantity) || $quantity < 0) {
-                $this->flashMessenger()->addErrorMessage('Quantity needs to be a number :)');
-                $errors = true;
-            } elseif (!$this->ticketAvailability->isAvailable($tickets[$id]->getTicketType(), $quantity)) {
-                $this->flashMessenger()->addErrorMessage(
-                    sprintf('Not enough %s remaining', $tickets[$id]->getTicketType()->getDisplayName())
-                );
-                $total++;
-                $errors = true;
-            } elseif ($quantity > 0) {
-                $total += $quantity;
-                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
-            }
-        }
-
-        if ($errors) {
-            throw new \InvalidArgumentException('input contained errors');
-        }
-
-        return $purchases;
-    }
-
-    /**
-     * @param $data
-     * @return ?DiscountCode
-     */
-    private function validateDiscountCode($data)
-    {
-        $discountCode = trim(strtolower($data['discount_code']));
-        if ($discountCode === '') {
-            return null;
-        }
-
-        $validCodes = $this->getConfiguration()->getDiscountCodes();
-
-        if (!array_key_exists($discountCode, $validCodes)) {
-            $this->flashMessenger()->addErrorMessage('Invalid discount code');
-            throw new \InvalidArgumentException('input contained errors');
-        }
-
-        $discountCode = $validCodes[$discountCode];
-
-        if (!$this->discountCodeAvailability->isAvailable($discountCode)) {
-            $this->flashMessenger()->addErrorMessage('Discount code cannot be applied to your purchase');
-            throw new \InvalidArgumentException('input contained errors');
-        }
-
-        return $discountCode;
-    }
-
     public function purchaseAction()
     {
         $purchaseId = $this->params()->fromRoute('purchaseId');
         $noPayment = false;
         $purchase = $this->fetchPurchaseRecord($purchaseId);
 
-        if ($purchase === null || $purchase->hasTimedout()) {
+        if (null === $purchase || $purchase->hasTimedout()) {
             $this->flashMessenger()->addErrorMessage('Purchase Id invalid or your purchase timed out');
+
             return $this->redirect()->toRoute('tickets/purchasing/select-tickets', [], ['force_canonical' => true]);
         }
 
         if ($purchase->isPaid()) {
             $this->flashMessenger()->addInfoMessage('This purchase has already been paid for');
+
             return $this->redirect()->toRoute('tickets/purchasing/complete', ['purchaseId' => $purchaseId], ['force_canonical' => true]);
         }
 
@@ -208,20 +162,20 @@ class TicketController extends AbstractController
             if ($form->isValid()) {
                 try {
                     $this->getStripeClient()->createCharge([
-                        "amount" => $purchase->getTotalCost()->getGross()->getAmount(),
-                        "currency" => $purchase->getTotalCost()->getGross()->getCurrency(),
+                        'amount' => $purchase->getTotalCost()->getGross()->getAmount(),
+                        'currency' => $purchase->getTotalCost()->getGross()->getCurrency(),
                         'source' => $data['stripe_token'],
                         'metadata' => [
                             'email' => $data['purchase_email'],
-                            'purchaseId' => $purchaseId
-                        ]
+                            'purchaseId' => $purchaseId,
+                        ],
                     ]);
 
                     $delegateInfo = [];
 
                     foreach ($purchase->getTickets() as $i => $ticket) {
                         if (!$ticket->getTicketType()->isSupplementary()) {
-                            $delegateInfo[] = Delegate::fromArray($data['delegates_' . $i]);
+                            $delegateInfo[] = Delegate::fromArray($data['delegates_'.$i]);
                         } else {
                             $delegateInfo[] = Delegate::emptyObject();
                         }
@@ -231,10 +185,11 @@ class TicketController extends AbstractController
                     $this->getCommandBus()->dispatch($command);
                     $this->flashMessenger()
                         ->addSuccessMessage(
-                            'Your ticket purchase is completed. ' .
-                            'You will receive an email shortly with your receipt. ' .
+                            'Your ticket purchase is completed. '.
+                            'You will receive an email shortly with your receipt. '.
                             'Tickets will be sent to the delegates shortly before the event'
                         );
+
                     return $this->redirect()->toRoute('tickets/purchasing/complete', ['purchaseId' => $purchaseId], ['force_canonical' => true]);
                 } catch (CardErrorException $e) {
                     $this->flashMessenger()->addErrorMessage(
@@ -249,30 +204,8 @@ class TicketController extends AbstractController
         }
 
         $this->flashMessenger()->addInfoMessage('Your tickets have been reserved for 30 mins, please complete payment before then');
+
         return new ViewModel(['purchase' => $purchase, 'form' => $form, 'noPayment' => $noPayment]);
-    }
-
-    /**
-     * @param $purchaseId
-     * @return PurchaseRecord|null
-     */
-    private function fetchPurchaseRecord($purchaseId)
-    {
-        /** @var PurchaseRecord $purchase */
-        $purchase = $this->getEntityManager()->getRepository(PurchaseRecord::class)->findOneBy([
-            'purchaseId' => $purchaseId
-        ]);
-        return $purchase;
-    }
-
-    private function getDetailedErrorMessage(CardErrorException $e)
-    {
-        $response = $e->getResponse();
-        $errors = json_decode($response->getBody(true), true);
-        $code = isset($errors['error']['code']) ? $errors['error']['code'] : 'processing_error';
-        $code = isset(static::$cardErrorMessages[$code]) ? $code : 'processing_error';
-
-        return static::$cardErrorMessages[$code];
     }
 
     public function completeAction()
@@ -280,8 +213,9 @@ class TicketController extends AbstractController
         $purchaseId = $this->params()->fromRoute('purchaseId');
         $purchase = $this->fetchPurchaseRecord($purchaseId);
 
-        if ($purchase === null) {
+        if (null === $purchase) {
             $this->flashMessenger()->addErrorMessage('Purchase Id invalid');
+
             return $this->redirect()->toRoute('tickets/purchasing/select-tickets', [], ['force_canonical' => true]);
         }
 
@@ -299,7 +233,7 @@ class TicketController extends AbstractController
 
         $form = $this->formElementManager->get(ManageTicket::class);
         $data = [
-            'delegate' => $delegate->toArray()
+            'delegate' => $delegate->toArray(),
         ];
 
         $form->bind(new ArrayObject($data));
@@ -316,10 +250,99 @@ class TicketController extends AbstractController
                     ->addSuccessMessage(
                         'Details updated successfully'
                     );
+
                 return $this->redirect()->refresh();
             }
         }
 
         return new ViewModel(['purchase' => $purchase, 'form' => $form]);
+    }
+
+    /**
+     * @param $data
+     * @param TicketCounter[] $tickets
+     *
+     * @return array
+     */
+    private function validateSelectedTickets($data, $tickets): array
+    {
+        $total = 0;
+        $purchases = [];
+        $errors = false;
+        foreach ($data['quantity'] as $id => $quantity) {
+            if (!is_numeric($quantity) || $quantity < 0) {
+                $this->flashMessenger()->addErrorMessage('Quantity needs to be a number :)');
+                $errors = true;
+            } elseif (!$this->ticketAvailability->isAvailable($tickets[$id]->getTicketType(), $quantity)) {
+                $this->flashMessenger()->addErrorMessage(
+                    sprintf('Not enough %s remaining', $tickets[$id]->getTicketType()->getDisplayName())
+                );
+                ++$total;
+                $errors = true;
+            } elseif ($quantity > 0) {
+                $total += $quantity;
+                $purchases[] = new TicketReservationRequest($tickets[$id]->getTicketType(), (int) $quantity);
+            }
+        }
+
+        if ($errors) {
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        return $purchases;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return ?DiscountCode
+     */
+    private function validateDiscountCode($data)
+    {
+        $discountCode = trim(strtolower($data['discount_code']));
+        if ('' === $discountCode) {
+            return null;
+        }
+
+        $validCodes = $this->getConfiguration()->getDiscountCodes();
+
+        if (!array_key_exists($discountCode, $validCodes)) {
+            $this->flashMessenger()->addErrorMessage('Invalid discount code');
+
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        $discountCode = $validCodes[$discountCode];
+
+        if (!$this->discountCodeAvailability->isAvailable($discountCode)) {
+            $this->flashMessenger()->addErrorMessage('Discount code cannot be applied to your purchase');
+
+            throw new \InvalidArgumentException('input contained errors');
+        }
+
+        return $discountCode;
+    }
+
+    /**
+     * @param $purchaseId
+     *
+     * @return null|PurchaseRecord
+     */
+    private function fetchPurchaseRecord($purchaseId)
+    {
+        /** @var PurchaseRecord $purchase */
+        return $this->getEntityManager()->getRepository(PurchaseRecord::class)->findOneBy([
+            'purchaseId' => $purchaseId,
+        ]);
+    }
+
+    private function getDetailedErrorMessage(CardErrorException $e)
+    {
+        $response = $e->getResponse();
+        $errors = json_decode($response->getBody(true), true);
+        $code = isset($errors['error']['code']) ? $errors['error']['code'] : 'processing_error';
+        $code = isset(static::$cardErrorMessages[$code]) ? $code : 'processing_error';
+
+        return static::$cardErrorMessages[$code];
     }
 }

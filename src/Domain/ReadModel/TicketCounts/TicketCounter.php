@@ -1,19 +1,29 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ReadModel\TicketCounts;
 
-use Doctrine\ORM\Mapping as ORM;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class TicketCounter
- * @package ConferenceTools\Tickets\Domain\ReadModel\TicketCounts
+ * Class TicketCounter.
+ *
  * @ORM\Entity()
  */
 class TicketCounter
 {
     /**
-     * @var integer
+     * @var int
      * @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer")
      */
     private $id;
@@ -25,15 +35,16 @@ class TicketCounter
     private $ticketType;
 
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="integer")
      */
     private $remaining;
 
     /**
      * TicketCounter constructor.
+     *
      * @param TicketType $ticketType
-     * @param int $remaining
+     * @param int        $remaining
      */
     public function __construct(TicketType $ticketType, int $remaining)
     {

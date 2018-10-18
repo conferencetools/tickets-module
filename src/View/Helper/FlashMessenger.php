@@ -1,19 +1,29 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\View\Helper;
 
-use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
 use Zend\Mvc\Controller\Plugin\FlashMessenger as PluginFlashMessenger;
+use Zend\View\Helper\FlashMessenger as ZendFlashMessenger;
 
 class FlashMessenger extends ZendFlashMessenger
 {
-    protected $classMessages = array(
+    protected $classMessages = [
         PluginFlashMessenger::NAMESPACE_INFO => 'alert-info',
         PluginFlashMessenger::NAMESPACE_ERROR => 'alert-danger',
         PluginFlashMessenger::NAMESPACE_SUCCESS => 'alert-success',
         PluginFlashMessenger::NAMESPACE_DEFAULT => 'alert-info',
         PluginFlashMessenger::NAMESPACE_WARNING => 'alert-warning',
-    );
+    ];
 
     public function renderAll()
     {
@@ -29,8 +39,8 @@ class FlashMessenger extends ZendFlashMessenger
 
     protected function renderMessages(
         $namespace = PluginFlashMessenger::NAMESPACE_DEFAULT,
-        array $messages = array(),
-        array $classes = array(),
+        array $messages = [],
+        array $classes = [],
         $autoEscape = null
     ) {
         // Prepare classes for opening tag
@@ -40,7 +50,7 @@ class FlashMessenger extends ZendFlashMessenger
             } else {
                 $classes = $this->classMessages[PluginFlashMessenger::NAMESPACE_DEFAULT];
             }
-            $classes = array($classes);
+            $classes = [$classes];
         }
 
         if (null === $autoEscape) {
@@ -60,19 +70,20 @@ class FlashMessenger extends ZendFlashMessenger
     /**
      * @param array $messages
      * @param $autoEscape
+     *
      * @return array
      */
     private function flattenMessages(array $messages, $autoEscape)
     {
         // Flatten message array
         $escapeHtml = $this->getEscapeHtmlHelper();
-        $messagesToPrint = array();
+        $messagesToPrint = [];
         $translator = $this->getTranslator();
         $translatorTextDomain = $this->getTranslatorTextDomain();
         array_walk_recursive(
             $messages,
-            function($item) use (& $messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
-                if ($translator !== null) {
+            function ($item) use (&$messagesToPrint, $escapeHtml, $autoEscape, $translator, $translatorTextDomain) {
+                if (null !== $translator) {
                     $item = $translator->translate(
                         $item,
                         $translatorTextDomain
@@ -81,12 +92,14 @@ class FlashMessenger extends ZendFlashMessenger
 
                 if ($autoEscape) {
                     $messagesToPrint[] = $escapeHtml($item);
+
                     return;
                 }
 
                 $messagesToPrint[] = $item;
             }
         );
+
         return $messagesToPrint;
     }
 }

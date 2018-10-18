@@ -1,13 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Jms;
 
 /**
- * Class TaxRate
- * @package ConferenceTools\Tickets\Domain\ValueObject
+ * Class TaxRate.
+ *
  * @ORM\Embeddable
  */
 class TaxRate
@@ -21,6 +31,7 @@ class TaxRate
 
     /**
      * TaxRate constructor.
+     *
      * @param $percentage
      */
     public function __construct(int $percentage)
@@ -57,6 +68,53 @@ class TaxRate
     }
 
     /**
+     * @param TaxRate $other
+     *
+     * @return bool
+     */
+    public function equals(self $other): bool
+    {
+        return $other->percentage === $this->percentage;
+    }
+
+    /**
+     * @param TaxRate $other
+     *
+     * @return int
+     */
+    public function compare(self $other): int
+    {
+        if ($this->percentage < $other->percentage) {
+            return -1;
+        }
+        if ($this->percentage === $other->percentage) {
+            return 0;
+        }
+
+        return 1;
+    }
+
+    /**
+     * @param TaxRate $other
+     *
+     * @return bool
+     */
+    public function greaterThan(self $other): bool
+    {
+        return 1 === $this->compare($other);
+    }
+
+    /**
+     * @param TaxRate $other
+     *
+     * @return bool
+     */
+    public function lessThan(self $other): bool
+    {
+        return -1 === $this->compare($other);
+    }
+
+    /**
      * @return float
      */
     private function getInversePercentage()
@@ -70,47 +128,5 @@ class TaxRate
     private function getPercentageAsFloat(): float
     {
         return (float) ($this->percentage / 100);
-    }
-
-    /**
-     * @param TaxRate $other
-     * @return bool
-     */
-    public function equals(TaxRate $other): bool
-    {
-        return ($other->percentage === $this->percentage);
-    }
-
-    /**
-     * @param TaxRate $other
-     * @return int
-     */
-    public function compare(TaxRate $other): int
-    {
-        if ($this->percentage < $other->percentage) {
-            return -1;
-        } elseif ($this->percentage == $other->percentage) {
-            return 0;
-        } else {
-            return 1;
-        }
-    }
-
-    /**
-     * @param TaxRate $other
-     * @return bool
-     */
-    public function greaterThan(TaxRate $other): bool
-    {
-        return 1 === $this->compare($other);
-    }
-
-    /**
-     * @param TaxRate $other
-     * @return bool
-     */
-    public function lessThan(TaxRate $other): bool
-    {
-        return -1 === $this->compare($other);
     }
 }

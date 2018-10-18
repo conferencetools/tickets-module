@@ -1,9 +1,18 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Projection;
 
 use Carnage\Cqrs\MessageHandler\AbstractMethodNameMessageHandler;
-use Doctrine\ORM\EntityManagerInterface;
 use ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled;
@@ -15,6 +24,7 @@ use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord as TicketRecordReadModel;
+use Doctrine\ORM\EntityManagerInterface;
 
 class TicketRecord extends AbstractMethodNameMessageHandler
 {
@@ -105,15 +115,16 @@ class TicketRecord extends AbstractMethodNameMessageHandler
 
     /**
      * @param string $purchaseId
+     *
      * @return PurchaseRecord
      */
     private function fetchPurchaseRecord(string $purchaseId): PurchaseRecord
     {
         $purchase = $this->em->getRepository(PurchaseRecord::class)->findOneBy([
-            'purchaseId' => $purchaseId
+            'purchaseId' => $purchaseId,
         ]);
 
-        if ($purchase === null) {
+        if (null === $purchase) {
             throw new \InvalidArgumentException('Purchase Id does not exist');
         }
 
@@ -123,12 +134,13 @@ class TicketRecord extends AbstractMethodNameMessageHandler
     /**
      * @param string $purchaseId
      * @param string $ticketId
+     *
      * @return TicketRecordReadModel
      */
     private function fetchTicketRecord(string $purchaseId, string $ticketId): TicketRecordReadModel
     {
         $purchase = $this->fetchPurchaseRecord($purchaseId);
-        $ticket = $purchase->getTicketRecord($ticketId);
-        return $ticket;
+
+        return $purchase->getTicketRecord($ticketId);
     }
 }

@@ -1,16 +1,28 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
 
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-
-class MoneyTest extends \PHPUnit\Framework\TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class MoneyTest extends \PHPUnit\Framework\TestCase
 {
     public function testCreate()
     {
         $sut = Money::EUR(300);
-        self::assertEquals(300, $sut->getAmount());
-        self::assertEquals('EUR', $sut->getCurrency());
+        $this->assertSame(300, $sut->getAmount());
+        $this->assertSame('EUR', $sut->getCurrency());
     }
 
     /**
@@ -18,12 +30,12 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
      *
      * @param Money $a
      * @param Money $b
-     * @param int $expected
+     * @param int   $expected
      */
     public function testCompare(Money $a, Money $b, $expected)
     {
-        self::assertEquals($expected, $a->compare($b));
-        self::assertEquals(-1 * $expected, $b->compare($a));
+        $this->assertSame($expected, $a->compare($b));
+        $this->assertSame(-1 * $expected, $b->compare($a));
     }
 
     public function provideCompare()
@@ -32,6 +44,7 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $b = new Money(10, 'GBP');
         $c = new Money(11, 'GBP');
         $d = new Money(12, 'GBP');
+
         return [
             [$a, $b, 0],
             [$b, $c, -1],
@@ -42,7 +55,7 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
 
     public function testExceptionWithDifferentCurrencies()
     {
-        $this->setExpectedException(\InvalidArgumentException::class);
+        $this->expectException(\InvalidArgumentException::class);
 
         $sut = new Money(10, 'GBP');
         $money1 = new Money(9, 'USD');
@@ -56,8 +69,8 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $money1 = new Money(10, 'GBP');
         $money2 = new Money(11, 'GBP');
 
-        self::assertTrue($sut->equals($money1));
-        self::assertFalse($sut->equals($money2));
+        $this->assertTrue($sut->equals($money1));
+        $this->assertFalse($sut->equals($money2));
     }
 
     public function testLessThan()
@@ -66,8 +79,8 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $money1 = new Money(9, 'GBP');
         $money2 = new Money(11, 'GBP');
 
-        self::assertTrue($sut->lessThan($money2));
-        self::assertFalse($sut->lessThan($money1));
+        $this->assertTrue($sut->lessThan($money2));
+        $this->assertFalse($sut->lessThan($money1));
     }
 
     public function testGreaterThan()
@@ -76,7 +89,7 @@ class MoneyTest extends \PHPUnit\Framework\TestCase
         $money1 = new Money(9, 'GBP');
         $money2 = new Money(11, 'GBP');
 
-        self::assertTrue($sut->greaterThan($money1));
-        self::assertFalse($sut->greaterThan($money2));
+        $this->assertTrue($sut->greaterThan($money1));
+        $this->assertFalse($sut->greaterThan($money2));
     }
 }

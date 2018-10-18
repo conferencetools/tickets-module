@@ -1,12 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Jms;
 
 /**
- * Class Money
+ * Class Money.
+ *
  * @ORM\Embeddable()
  */
 final class Money
@@ -25,6 +36,7 @@ final class Money
 
     /**
      * Money constructor.
+     *
      * @param $amount
      * @param $currency
      */
@@ -34,8 +46,13 @@ final class Money
         $this->currency = $currency;
     }
 
+    public static function __callStatic(string $method, array $arguments): self
+    {
+        return new self($arguments[0], $method);
+    }
+
     /**
-     * @return integer
+     * @return int
      */
     public function getAmount(): int
     {
@@ -50,85 +67,85 @@ final class Money
         return $this->currency;
     }
 
-    public static function __callStatic(string $method, array $arguments): Money
-    {
-        return new self($arguments[0], $method);
-    }
-
     /**
      * @param Money $other
+     *
      * @return bool
      */
-    public function isSameCurrency(Money $other): bool
+    public function isSameCurrency(self $other): bool
     {
         return $this->currency === $other->currency;
     }
 
-    /**
-     * @throws \InvalidArgumentException
-     */
-    private function assertSameCurrency(Money $other)
+    public function equals(self $other): bool
     {
-        if (!$this->isSameCurrency($other)) {
-            throw new \InvalidArgumentException('Different currencies');
-        }
-    }
-
-    public function equals(Money $other): bool
-    {
-        return ($this->isSameCurrency($other) && $other->amount === $this->amount);
+        return $this->isSameCurrency($other) && $other->amount === $this->amount;
     }
 
     /**
      * @param Money $other
+     *
      * @return int
      */
-    public function compare(Money $other): int
+    public function compare(self $other): int
     {
         $this->assertSameCurrency($other);
         if ($this->amount < $other->amount) {
             return -1;
-        } elseif ($this->amount == $other->amount) {
-            return 0;
-        } else {
-            return 1;
         }
+        if ($this->amount === $other->amount) {
+            return 0;
+        }
+
+        return 1;
     }
 
     /**
      * @param Money $other
+     *
      * @return bool
      */
-    public function greaterThan(Money $other): bool
+    public function greaterThan(self $other): bool
     {
         return 1 === $this->compare($other);
     }
 
     /**
      * @param Money $other
+     *
      * @return bool
      */
-    public function lessThan(Money $other): bool
+    public function lessThan(self $other): bool
     {
         return -1 === $this->compare($other);
     }
 
-    public function add(Money $addend): Money
+    public function add(self $addend): self
     {
         $this->assertSameCurrency($addend);
 
         return new self($this->amount + $addend->amount, $this->currency);
     }
 
-    public function subtract(Money $subtrahend): Money
+    public function subtract(self $subtrahend): self
     {
         $this->assertSameCurrency($subtrahend);
 
         return new self($this->amount - $subtrahend->amount, $this->currency);
     }
 
-    public function multiply($multiple): Money
+    public function multiply($multiple): self
     {
         return new self(ceil($this->amount * $multiple), $this->currency);
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     */
+    private function assertSameCurrency(self $other)
+    {
+        if (!$this->isSameCurrency($other)) {
+            throw new \InvalidArgumentException('Different currencies');
+        }
     }
 }

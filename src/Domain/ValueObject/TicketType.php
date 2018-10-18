@@ -1,13 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation as Jms;
 
 /**
- * Class TicketType
- * @package ConferenceTools\Tickets\Domain\ValueObject
+ * Class TicketType.
+ *
  * @ORM\Embeddable
  */
 final class TicketType
@@ -41,7 +51,7 @@ final class TicketType
     private $description = '';
 
     /**
-     * @var boolean
+     * @var bool
      * @Jms\Type("boolean")
      * @ORM\Column(type="boolean")
      */
