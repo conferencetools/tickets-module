@@ -1,0 +1,33 @@
+language: php
+# Versions of PHP you want your project run with.
+php:
+ - 5.5
+ - 5.6
+ - 7.0
+ - 7.1
+ - 7.2
+# Commands to be run before your environment runs.
+before_script:
+- composer self-update
+
+# Update composer
+before-install:
+ - composer self-update
+
+# Install composer dependencies,
+# Create database, schema and fixtures
+install:
+ - composer install
+ - cp example-config/doctrine.local.php.dist example-config/doctrine.local.php
+ - cp example-config/zfr_stripe.local.php.dist example-config/zfr_stripe.local.php
+ - cp example-config/mail.local.php.dist example-config/mail.local.php
+ - php vendor/bin/doctrine-module orm:schema-tool:create
+ - php vendor/bin/cli cqrs:rebuild-projection -a
+ - php vendor/bin/cli tickets:timeout-purchases
+
+# After a build, send email notification with the build results
+notifications:
+ email: #mail de Louis
+ email: #Mail de Joris
+ email: #Mail de Remy
+ email: #Mail de Lavan
