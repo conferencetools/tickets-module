@@ -1,5 +1,5 @@
 <?php
-
+///////////test
 namespace ConferenceTools\Tickets\View\Helper;
 
 use ConferenceTools\Tickets\Domain\Service\Configuration as TicketsConfiguration;
