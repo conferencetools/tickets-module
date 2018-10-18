@@ -10,6 +10,7 @@ before_script:
 
 # Update composer
 before-install:
+ - composer install
  - composer self-update
 
 # Install composer dependencies,
