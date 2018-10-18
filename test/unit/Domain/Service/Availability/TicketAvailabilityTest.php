@@ -1,16 +1,30 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
 use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Mockery as m;
 
-class TicketAvailabilityTest extends MockeryTestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class TicketAvailabilityTest extends MockeryTestCase
 {
     /**
      * @var Configuration
@@ -27,7 +41,7 @@ class TicketAvailabilityTest extends MockeryTestCase
      */
     private $filters;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $settings = [
@@ -36,26 +50,26 @@ class TicketAvailabilityTest extends MockeryTestCase
                 'std' => ['name' => 'Standard', 'cost' => 10000, 'available' => 150],
                 'free' => ['name' => 'Free', 'cost' => 0, 'available' => 100, 'metadata' => ['private' => true]],
                 'expired' => ['name' => 'Expired', 'cost' => 1000, 'available' => 100, 'metadata' => [
-                    'availableFrom' =>(new \DateTime)->sub(new \DateInterval('P1D')),
-                    'availableTo' =>(new \DateTime)->sub(new \DateInterval('P1D')),
+                    'availableFrom' => (new \DateTime())->sub(new \DateInterval('P1D')),
+                    'availableTo' => (new \DateTime())->sub(new \DateInterval('P1D')),
                 ]],
                 'after_early' => ['name' => 'After Early', 'cost' => 7500, 'available' => 100, 'metadata' => [
-                    'after' => ['early']
+                    'after' => ['early'],
                 ]],
                 'after_expired' => ['name' => 'After Expired', 'cost' => 2500, 'available' => 100, 'metadata' => [
-                    'after' => ['expired']
+                    'after' => ['expired'],
                 ]],
                 'soldout' => ['name' => 'Sold out', 'cost' => 1500, 'available' => 0, 'metadata' => [
                 ]],
                 'after_soldout' => ['name' => 'After Sold out', 'cost' => 3500, 'available' => 100, 'metadata' => [
-                    'after' => ['soldout']
+                    'after' => ['soldout'],
                 ]],
             ],
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
-                'displayTax' => true
-            ]
+                'displayTax' => true,
+            ],
         ];
         $this->config = Configuration::fromArray($settings);
 
@@ -73,7 +87,7 @@ class TicketAvailabilityTest extends MockeryTestCase
             new Filters\IsAvailable(),
             new Filters\AfterSoldOut($this->config),
             new Filters\ByDate($this->config),
-            new Filters\IsPrivate($this->config)
+            new Filters\IsPrivate($this->config),
         ];
     }
 
@@ -86,8 +100,8 @@ class TicketAvailabilityTest extends MockeryTestCase
 
         $result = $sut->fetchAllAvailableTickets();
 
-        self::assertTrue($result->count() === 4, 'The expected number of tickets was not returned');
-        self::assertFalse($result->contains($this->ticketCounters['free']), 'Free tickets were included in the result');
+        $this->assertTrue(4 === $result->count(), 'The expected number of tickets was not returned');
+        $this->assertFalse($result->contains($this->ticketCounters['free']), 'Free tickets were included in the result');
     }
 
     /**
@@ -104,7 +118,7 @@ class TicketAvailabilityTest extends MockeryTestCase
 
         $sut = new TicketAvailability($mockFinder, ...$this->filters);
 
-        self::assertEquals($expected, $sut->isAvailable($ticketType, $quantity));
+        $this->assertSame($expected, $sut->isAvailable($ticketType, $quantity));
     }
 
     public function provideIsAvailable()

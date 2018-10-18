@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ReadModel\TicketRecord;
 
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
@@ -9,7 +19,11 @@ use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use PHPUnit\Framework\TestCase;
 
-class TicketRecordTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class TicketRecordTest extends TestCase
 {
     public function testCreate()
     {
@@ -19,10 +33,10 @@ class TicketRecordTest extends TestCase
 
         $sut = new TicketRecord($ticketType, $purchaseRecord, 'ticketid');
 
-        self::assertEquals($ticketType, $sut->getTicketType());
-        self::assertEquals('ticketid', $sut->getTicketId());
-        self::assertEquals($purchaseRecord, $sut->getPurchase());
-        self::assertEquals(Delegate::emptyObject(), $sut->getDelegate());
+        $this->assertSame($ticketType, $sut->getTicketType());
+        $this->assertSame('ticketid', $sut->getTicketId());
+        $this->assertSame($purchaseRecord, $sut->getPurchase());
+        $this->assertSame(Delegate::emptyObject(), $sut->getDelegate());
     }
 
     public function testUpdateDelegate()
@@ -42,6 +56,6 @@ class TicketRecordTest extends TestCase
 
         $sut = new TicketRecord($ticketType, $purchaseRecord, 'ticketid');
         $sut->updateDelegate($delegate);
-        self::assertEquals($delegate, $sut->getDelegate());
+        $this->assertSame($delegate, $sut->getDelegate());
     }
 }

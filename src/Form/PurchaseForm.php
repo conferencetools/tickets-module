@@ -1,13 +1,20 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Form;
 
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
-use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
 use ConferenceTools\Tickets\Form\Fieldset\DelegateInformation;
-use ConferenceTools\Tickets\Hydrator\DelegateHydrator;
-use Zend\Form\Element\Collection;
 use Zend\Form\Element\Csrf;
 use Zend\Form\Element\Hidden;
 use Zend\Form\Element\Text;
@@ -26,14 +33,14 @@ class PurchaseForm extends Form
             'name' => 'purchase_email',
             'options' => [
                 'label' => 'Email',
-                'help-block' => 'Your receipt will be emailed to this address'
-            ]
+                'help-block' => 'Your receipt will be emailed to this address',
+            ],
         ]);
 
         foreach ($purchase->getTickets() as $i => $ticket) {
             /** @var TicketRecord $ticket */
             if (!$ticket->getTicketType()->isSupplementary()) {
-                $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_' . $i]);
+                $this->add(['type' => DelegateInformation::class, 'name' => 'delegates_'.$i]);
             }
         }
 
@@ -46,6 +53,5 @@ class PurchaseForm extends Form
             ->getValidatorChain()
             ->attach(new NotEmpty())
             ->attach(new EmailAddress());
-
     }
 }

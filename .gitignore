@@ -33,3 +33,4 @@ demos/
 extras/documentation
 
 # Created by .ignore support plugin (hsz.mobi)
+.php_cs.cache

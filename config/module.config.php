@@ -1,13 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 return [
     'router' => [
-        'routes' => require __DIR__ . '/routes.config.php',
+        'routes' => require __DIR__.'/routes.config.php',
     ],
     'navigation' => [
-        'default' => require __DIR__ . '/navigation.config.php',
+        'default' => require __DIR__.'/navigation.config.php',
     ],
-    'asset_manager' => require __DIR__ . '/asset.config.php',
+    'asset_manager' => require __DIR__.'/asset.config.php',
     'service_manager' => [
         'factories' => [
             \ConferenceTools\Tickets\Domain\Service\Configuration::class => \ConferenceTools\Tickets\Service\Factory\ConfigurationFactory::class,
@@ -101,7 +111,7 @@ return [
         ],
     ],
     'input_filter_specs' => [
-        \ConferenceTools\Tickets\Form\ManageTicket::class => include __DIR__ . '/input-filters/manage-ticket.config.php',
+        \ConferenceTools\Tickets\Form\ManageTicket::class => include __DIR__.'/input-filters/manage-ticket.config.php',
     ],
     'reports' => [
         'aliases' => [
@@ -137,15 +147,15 @@ return [
         'not_found_template' => 'error/404',
         'exception_template' => 'error/index',
         'template_map' => [
-            'tickets/layout' => __DIR__ . '/../view/layout/layout.phtml',
-            'error/404' => __DIR__ . '/../view/error/404.phtml',
-            'error/index' => __DIR__ . '/../view/error/index.phtml',
-            'email/receipt' => __DIR__ . '/../view/email/receipt.phtml',
-            'tickets/ticket/complete' => __DIR__ . '/../view/tickets/ticket/complete.phtml',
-            'tickets/ticket/manage' => __DIR__ . '/../view/tickets/ticket/manage.phtml',
-            'tickets/ticket/purchase' => __DIR__ . '/../view/tickets/ticket/purchase.phtml',
-            'tickets/ticket/select-tickets' => __DIR__ . '/../view/tickets/ticket/select-tickets.phtml',
-            'tickets/ticket/_orderInformation' => __DIR__ . '/../view/tickets/ticket/_orderInformation.phtml',
+            'tickets/layout' => __DIR__.'/../view/layout/layout.phtml',
+            'error/404' => __DIR__.'/../view/error/404.phtml',
+            'error/index' => __DIR__.'/../view/error/index.phtml',
+            'email/receipt' => __DIR__.'/../view/email/receipt.phtml',
+            'tickets/ticket/complete' => __DIR__.'/../view/tickets/ticket/complete.phtml',
+            'tickets/ticket/manage' => __DIR__.'/../view/tickets/ticket/manage.phtml',
+            'tickets/ticket/purchase' => __DIR__.'/../view/tickets/ticket/purchase.phtml',
+            'tickets/ticket/select-tickets' => __DIR__.'/../view/tickets/ticket/select-tickets.phtml',
+            'tickets/ticket/_orderInformation' => __DIR__.'/../view/tickets/ticket/_orderInformation.phtml',
         ],
         'controller_map' => [
             'ConferenceTools\Tickets\Controller' => 'tickets',
@@ -161,9 +171,9 @@ return [
     'doctrine' => [
         'driver' => [
             'conferencetools_tickets_read_orm_driver' => [
-                'class' =>'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
+                'class' => 'Doctrine\ORM\Mapping\Driver\AnnotationDriver',
                 'cache' => 'array',
-                'paths' => [__DIR__ . '/../src/Domain/ReadModel']
+                'paths' => [__DIR__.'/../src/Domain/ReadModel'],
             ],
             'orm_default' => [
                 'drivers' => [
@@ -181,14 +191,14 @@ return [
                 ],
             ],
         ],
-        'Log\\CommandBusLog'  => [
+        'Log\\CommandBusLog' => [
             'writers' => [
                 [
                     'name' => 'syslog',
                 ],
             ],
         ],
-        'Log\\EventManagerLog'  => [
+        'Log\\EventManagerLog' => [
             'writers' => [
                 [
                     'name' => 'syslog',

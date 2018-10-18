@@ -1,12 +1,23 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
-use JMS\Serializer\Annotation as Jms;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation as Jms;
 
 /**
- * Class Money
+ * Class Money.
+ *
  * @ORM\Embeddable()
  */
 class Price
@@ -69,82 +80,88 @@ class Price
 
     /**
      * @param Price $other
+     *
      * @return bool
      */
-    public function isSameTaxRate(Price $other): bool
+    public function isSameTaxRate(self $other): bool
     {
         return $this->taxRate->equals($other->taxRate);
     }
 
     /**
-     * @throws \InvalidArgumentException
-     */
-    private function assertSameTaxRate(Price $other)
-    {
-        if (!$this->isSameTaxRate($other)) {
-            throw new \InvalidArgumentException('Different tax rates');
-        }
-    }
-
-    /**
      * @param Price $other
+     *
      * @return bool
      */
-    public function equals(Price $other): bool
+    public function equals(self $other): bool
     {
-        return ($this->isSameTaxRate($other) && $other->net->equals($this->net));
+        return $this->isSameTaxRate($other) && $other->net->equals($this->net);
     }
 
     /**
      * @param Price $other
+     *
      * @return int
      */
-    public function compare(Price $other): int
+    public function compare(self $other): int
     {
         $this->assertSameTaxRate($other);
         if ($this->net->lessThan($other->net)) {
             return -1;
-        } elseif ($this->net->equals($other->net)) {
-            return 0;
-        } else {
-            return 1;
         }
+        if ($this->net->equals($other->net)) {
+            return 0;
+        }
+
+        return 1;
     }
 
     /**
      * @param Price $other
+     *
      * @return bool
      */
-    public function greaterThan(Price $other): bool
+    public function greaterThan(self $other): bool
     {
         return 1 === $this->compare($other);
     }
 
     /**
      * @param Price $other
+     *
      * @return bool
      */
-    public function lessThan(Price $other): bool
+    public function lessThan(self $other): bool
     {
         return -1 === $this->compare($other);
     }
 
-    public function add(Price $addend): Price
+    public function add(self $addend): self
     {
         $this->assertSameTaxRate($addend);
 
         return new self($this->net->add($addend->net), $this->taxRate);
     }
 
-    public function subtract(Price $subtrahend): Price
+    public function subtract(self $subtrahend): self
     {
         $this->assertSameTaxRate($subtrahend);
 
         return new self($this->net->subtract($subtrahend->net), $this->taxRate);
     }
 
-    public function multiply($multiple): Price
+    public function multiply($multiple): self
     {
         return new self($this->net->multiply($multiple), $this->taxRate);
+    }
+
+    /**
+     * @throws \InvalidArgumentException
+     */
+    private function assertSameTaxRate(self $other)
+    {
+        if (!$this->isSameTaxRate($other)) {
+            throw new \InvalidArgumentException('Different tax rates');
+        }
     }
 }

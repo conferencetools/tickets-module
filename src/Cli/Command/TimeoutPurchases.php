@@ -1,12 +1,21 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use Doctrine\ORM\EntityManagerInterface;
 use ConferenceTools\Tickets\Domain\Command\Ticket\TimeoutPurchase;
 use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\PurchaseRecord;
-use ConferenceTools\Tickets\Domain\ReadModel\TicketRecord\TicketRecord;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -53,5 +62,4 @@ class TimeoutPurchases extends Command
             }
         }
     }
-
 }

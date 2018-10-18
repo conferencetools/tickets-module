@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Service;
 
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
@@ -13,15 +23,15 @@ use Zend\Stdlib\ArrayUtils;
 
 class Configuration
 {
-    //@TODO change to private const
+    /** @TODO change to private const */
     private static $defaults = [
         'tickets' => [],
         'discountCodes' => [],
         'financial' => [
             'currency' => 'GBP',
             'taxRate' => 0,
-            'displayTax' => false
-        ]
+            'displayTax' => false,
+        ],
     ];
 
     /**
@@ -115,7 +125,7 @@ class Configuration
     private $discountCodes = [];
 
     /**
-     * Contains metadata about tickets eg when they are available for sale
+     * Contains metadata about tickets eg when they are available for sale.
      *
      * configkey: tickets->metadata
      * structure: [
@@ -128,7 +138,7 @@ class Configuration
     private $ticketMetadata;
 
     /**
-     * Contains metadata about discount codes eg when they are available for use
+     * Contains metadata about discount codes eg when they are available for use.
      *
      * configkey: discountCodes->metadata
      * structure: [
@@ -140,7 +150,9 @@ class Configuration
      */
     private $discountCodeMetadata;
 
-    private function __construct() {}
+    private function __construct()
+    {
+    }
 
     public static function fromArray(array $settings)
     {
@@ -158,10 +170,74 @@ class Configuration
 
         foreach ($settings['discountCodes'] as $identifier => $code) {
             $instance->addDiscountCodeInformation($code, $identifier);
-
         }
 
         return $instance;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCurrency(): string
+    {
+        return $this->currency;
+    }
+
+    /**
+     * @return TaxRate
+     */
+    public function getTaxRate(): TaxRate
+    {
+        return $this->taxRate;
+    }
+
+    /**
+     * @return bool
+     */
+    public function displayTax(): bool
+    {
+        return $this->displayTax;
+    }
+
+    /**
+     * @return TicketType[]
+     */
+    public function getTicketTypes(): array
+    {
+        return $this->ticketTypes;
+    }
+
+    /**
+     * @return TicketType
+     */
+    public function getTicketType(string $identifier): TicketType
+    {
+        return $this->ticketTypes[$identifier];
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return int
+     */
+    public function getAvailableTickets(string $identifier): int
+    {
+        return $this->avaliableTickets[$identifier];
+    }
+
+    public function getDiscountCodes(): array
+    {
+        return $this->discountCodes;
+    }
+
+    public function getTicketMetadata(string $identifier): TicketMetadata
+    {
+        return $this->ticketMetadata[$identifier];
+    }
+
+    public function getDiscountCodeMetadata(string $code): DiscountCodeMetadata
+    {
+        return $this->discountCodeMetadata[$code];
     }
 
     /**
@@ -195,7 +271,7 @@ class Configuration
     {
         // Be careful here; configuration object is still under constrcution at the time it is passed in
         // Might need to rethink this at some point
-        $discountType = call_user_func([$code['type'], 'fromArray'], $code['options'], $this);
+        $discountType = \call_user_func([$code['type'], 'fromArray'], $code['options'], $this);
         $this->discountCodes[$identifier] = new DiscountCode(
             $identifier,
             $code['name'],
@@ -206,69 +282,5 @@ class Configuration
             $this->discountCodes[$identifier],
             $code['metadata'] ?? []
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getCurrency(): string
-    {
-        return $this->currency;
-    }
-
-    /**
-     * @return TaxRate
-     */
-    public function getTaxRate(): TaxRate
-    {
-        return $this->taxRate;
-    }
-
-    /**
-     * @return boolean
-     */
-    public function displayTax(): bool
-    {
-        return $this->displayTax;
-    }
-
-    /**
-     * @return TicketType[]
-     */
-    public function getTicketTypes(): array
-    {
-        return $this->ticketTypes;
-    }
-
-    /**
-     * @return TicketType
-     */
-    public function getTicketType(string $identifier): TicketType
-    {
-        return $this->ticketTypes[$identifier];
-    }
-
-    /**
-     * @param string $identifier
-     * @return int
-     */
-    public function getAvailableTickets(string $identifier): int
-    {
-        return $this->avaliableTickets[$identifier];
-    }
-
-    public function getDiscountCodes(): array
-    {
-        return $this->discountCodes;
-    }
-
-    public function getTicketMetadata(string $identifier): TicketMetadata
-    {
-        return $this->ticketMetadata[$identifier];
-    }
-
-    public function getDiscountCodeMetadata(string $code): DiscountCodeMetadata
-    {
-        return $this->discountCodeMetadata[$code];
     }
 }

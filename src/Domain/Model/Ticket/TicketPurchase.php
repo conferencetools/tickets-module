@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Model\Ticket;
 
 use Carnage\Cqrs\Aggregate\AbstractAggregate;
@@ -7,9 +17,9 @@ use ConferenceTools\Tickets\Domain\Event\Ticket\DiscountCodeApplied;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketAssigned;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketCancelled;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseCreated;
+use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTimedout;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchaseTotalPriceCalculated;
-use ConferenceTools\Tickets\Domain\Event\Ticket\TicketPurchasePaid;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReleased;
 use ConferenceTools\Tickets\Domain\Event\Ticket\TicketReserved;
 use ConferenceTools\Tickets\Domain\ValueObject\Basket;
@@ -37,7 +47,7 @@ class TicketPurchase extends AbstractAggregate
      * @var bool
      */
     private $isTimedout = false;
-    
+
     /**
      * @var BookedTicket[]
      */
@@ -75,11 +85,11 @@ class TicketPurchase extends AbstractAggregate
 
     public function completePurchase(string $email, Delegate ...$delegateInformation)
     {
-        if (count($delegateInformation) !== count($this->tickets)) {
+        if (\count($delegateInformation) !== \count($this->tickets)) {
             throw new \DomainException('Number of delegates\' information supplied doesn\'t match number of tickets');
         }
 
-        $iterator = new \MultipleIterator(\MultipleIterator::MIT_KEYS_NUMERIC|\MultipleIterator::MIT_NEED_ALL);
+        $iterator = new \MultipleIterator(\MultipleIterator::MIT_KEYS_NUMERIC | \MultipleIterator::MIT_NEED_ALL);
         $iterator->attachIterator(new \ArrayIterator($delegateInformation), 'delegate');
         $iterator->attachIterator(new \ArrayIterator($this->tickets), 'ticketId');
 
@@ -97,6 +107,32 @@ class TicketPurchase extends AbstractAggregate
         }
 
         $this->apply(new TicketCancelled($this->id, $ticketId));
+    }
+
+    public function assignTicketToDelegate(string $id, Delegate $delegate)
+    {
+        $event = new TicketAssigned($id, $this->id, $delegate);
+        $this->apply($event);
+    }
+
+    public function timeoutPurchase()
+    {
+        if ($this->isPaid) {
+            throw new \DomainException('Booking cannot timeout once it has been paid for');
+        }
+
+        $event = new TicketPurchaseTimedout($this->id);
+        $this->apply($event);
+
+        foreach ($this->tickets as $ticket) {
+            $this->apply(new TicketReleased($ticket->getId(), $this->id, $ticket->getTicketType()));
+        }
+    }
+
+    public function markAsPaid(string $email)
+    {
+        $event = new TicketPurchasePaid($this->id, $email);
+        $this->apply($event);
     }
 
     protected function applyTicketCancelled(TicketCancelled $event)
@@ -119,40 +155,14 @@ class TicketPurchase extends AbstractAggregate
         $this->total = $event->getTotal();
     }
 
-    public function assignTicketToDelegate(string $id, Delegate $delegate)
-    {
-        $event = new TicketAssigned($id, $this->id, $delegate);
-        $this->apply($event);
-    }
-
     protected function applyTicketAssigned(TicketAssigned $event)
     {
         $this->tickets[$event->getTicketId()]->assignToDelegate($event);
     }
 
-    public function timeoutPurchase()
-    {
-        if ($this->isPaid) {
-            throw new \DomainException('Booking cannot timeout once it has been paid for');
-        }
-        
-        $event = new TicketPurchaseTimedout($this->id);
-        $this->apply($event);
-        
-        foreach ($this->tickets as $ticket) {
-            $this->apply(new TicketReleased($ticket->getId(), $this->id, $ticket->getTicketType()));
-        }
-    }
-
     protected function applyTicketPurchaseTimedout(TicketPurchaseTimedout $event)
     {
         $this->isTimedout = true;
-    }
-
-    public function markAsPaid(string $email)
-    {
-        $event = new TicketPurchasePaid($this->id, $email);
-        $this->apply($event);
     }
 
     protected function applyTicketPurchasePaid(TicketPurchasePaid $event)

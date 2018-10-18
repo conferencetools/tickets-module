@@ -1,10 +1,24 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use PHPUnit\Framework\TestCase;
 
-class DelegateTest extends TestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class DelegateTest extends TestCase
 {
     public function testFromArray()
     {
@@ -16,12 +30,12 @@ class DelegateTest extends TestCase
         $data['requirements'] = 'none';
 
         $sut = Delegate::fromArray($data);
-        self::assertEquals($data['firstname'], $sut->getFirstname());
-        self::assertEquals($data['lastname'], $sut->getLastname());
-        self::assertEquals($data['email'], $sut->getEmail());
-        self::assertEquals($data['company'], $sut->getCompany());
-        self::assertEquals($data['twitter'], $sut->getTwitter());
-        self::assertEquals($data['requirements'], $sut->getRequirements());
+        $this->assertSame($data['firstname'], $sut->getFirstname());
+        $this->assertSame($data['lastname'], $sut->getLastname());
+        $this->assertSame($data['email'], $sut->getEmail());
+        $this->assertSame($data['company'], $sut->getCompany());
+        $this->assertSame($data['twitter'], $sut->getTwitter());
+        $this->assertSame($data['requirements'], $sut->getRequirements());
     }
 
     public function testEmpty()
@@ -34,11 +48,11 @@ class DelegateTest extends TestCase
         $data['requirements'] = '';
 
         $sut = Delegate::emptyObject();
-        self::assertEquals($data['firstname'], $sut->getFirstname());
-        self::assertEquals($data['lastname'], $sut->getLastname());
-        self::assertEquals($data['email'], $sut->getEmail());
-        self::assertEquals($data['company'], $sut->getCompany());
-        self::assertEquals($data['twitter'], $sut->getTwitter());
-        self::assertEquals($data['requirements'], $sut->getRequirements());
+        $this->assertSame($data['firstname'], $sut->getFirstname());
+        $this->assertSame($data['lastname'], $sut->getLastname());
+        $this->assertSame($data['email'], $sut->getEmail());
+        $this->assertSame($data['company'], $sut->getCompany());
+        $this->assertSame($data['twitter'], $sut->getTwitter());
+        $this->assertSame($data['requirements'], $sut->getRequirements());
     }
 }

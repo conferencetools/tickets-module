@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Cli\Command;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
@@ -53,7 +63,7 @@ class IssueFreeTicket extends Command
                 new InputArgument('ticketType', InputArgument::REQUIRED, 'Ticket type to issue'),
                 new InputArgument('email', InputArgument::REQUIRED, 'Email address to send ticket to'),
                 new InputOption('number', '', InputOption::VALUE_OPTIONAL, 'Number of tickets to add to purchase', 1),
-                new InputOption('discountCode', '', InputOption::VALUE_OPTIONAL, 'Discount code to apply to the purchase')
+                new InputOption('discountCode', '', InputOption::VALUE_OPTIONAL, 'Discount code to apply to the purchase'),
             ]);
     }
 
@@ -74,26 +84,30 @@ class IssueFreeTicket extends Command
 
     /**
      * @param $numberOfTickets
+     *
      * @return Delegate[]
      */
     private function createDelegates($numberOfTickets): array
     {
         $delegateInfo = [];
 
-        for ($i = 0; $i < $numberOfTickets; $i++) {
+        for ($i = 0; $i < $numberOfTickets; ++$i) {
             $delegateInfo[] = Delegate::emptyObject();
         }
+
         return $delegateInfo;
     }
 
     /**
      * @param $ticketType
      * @param $numberOfTickets
+     * @param mixed $discountCode
+     *
      * @return string
      */
     private function reserveTickets($ticketType, $numberOfTickets, $discountCode): string
     {
-        if ($discountCode === null) {
+        if (null === $discountCode) {
             $command = ReserveTickets::withoutDiscountCode(
                 new TicketReservationRequest($ticketType, $numberOfTickets)
             );
@@ -108,13 +122,16 @@ class IssueFreeTicket extends Command
 
         /** @var TicketPurchaseCreated $event */
         $event = $this->eventCatcher->getEventsByType(TicketPurchaseCreated::class)[0];
+
         return $event->getId();
     }
 
     /**
      * @param $issueTicketType
-     * @return TicketType
+     *
      * @throws \Exception
+     *
+     * @return TicketType
      */
     private function getTicketType($issueTicketType): TicketType
     {
@@ -124,11 +141,10 @@ class IssueFreeTicket extends Command
             throw new \Exception('Invalid ticket type');
         }
 
-        $ticketType = $ticketTypes[$issueTicketType];
-        return $ticketType;
+        return $ticketTypes[$issueTicketType];
     }
 
-    private function getDiscountCode($type) /* : ?DiscountCode*/
+    private function getDiscountCode($type) // : ?DiscountCode
     {
         if (empty($type)) {
             return null;
@@ -140,7 +156,6 @@ class IssueFreeTicket extends Command
             throw new \Exception('Invalid discount code');
         }
 
-        $ticketType = $discountCodes[$type];
-        return $ticketType;
+        return $discountCodes[$type];
     }
 }

@@ -1,25 +1,35 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ReadModel\TicketRecord;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
-use Doctrine\ORM\Mapping as ORM;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountCode;
 use ConferenceTools\Tickets\Domain\ValueObject\Money;
 use ConferenceTools\Tickets\Domain\ValueObject\Price;
 use ConferenceTools\Tickets\Domain\ValueObject\TaxRate;
 use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\ORM\Mapping as ORM;
 
 /**
- * Class PurchaseRecord
- * @package ConferenceTools\Tickets\Domain\ReadModel\TicketRecord
+ * Class PurchaseRecord.
+ *
  * @ORM\Entity()
  */
 class PurchaseRecord
 {
     /**
-     * @var integer
+     * @var int
      * @ORM\Id @ORM\GeneratedValue @ORM\Column(type="integer")
      */
     private $id;
@@ -55,7 +65,7 @@ class PurchaseRecord
     private $tickets;
 
     /**
-     * @var integer
+     * @var int
      * @ORM\Column(type="integer")
      */
     private $ticketCount = 0;
@@ -74,12 +84,14 @@ class PurchaseRecord
 
     /**
      * @ORM\Column(type="json_object", nullable=true)
+     *
      * @var DiscountCode
      */
     private $discountCode;
 
     /**
      * PurchaseRecord constructor.
+     *
      * @param string $purchaseId
      */
     public function __construct(string $purchaseId)
@@ -131,7 +143,7 @@ class PurchaseRecord
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isPaid(): bool
     {
@@ -148,7 +160,7 @@ class PurchaseRecord
 
     public function hasDiscountCode(): bool
     {
-        return !($this->discountCode === null);
+        return !(null === $this->discountCode);
     }
 
     /**
@@ -162,7 +174,7 @@ class PurchaseRecord
     public function getTicketRecord($ticketId): TicketRecord
     {
         if (!isset($this->tickets[$ticketId])) {
-            throw new \InvalidArgumentException("Invalid Ticket Id");
+            throw new \InvalidArgumentException('Invalid Ticket Id');
         }
 
         return $this->tickets[$ticketId];
@@ -180,7 +192,7 @@ class PurchaseRecord
                 $tickets[$ticketTypeIdentifier]['lineTotal'] = $ticket->getTicketType()->getPrice();
                 $tickets[$ticketTypeIdentifier]['ticketType'] = $ticket->getTicketType();
             } else {
-                $tickets[$ticketTypeIdentifier]['quantity']++;
+                ++$tickets[$ticketTypeIdentifier]['quantity'];
                 $tickets[$ticketTypeIdentifier]['lineTotal'] =
                     $tickets[$ticketTypeIdentifier]['lineTotal']->add($ticket->getTicketType()->getPrice());
             }
@@ -193,7 +205,7 @@ class PurchaseRecord
     {
         $ticketRecord = new TicketRecord($ticketType, $this, $ticketId);
         $this->tickets->set($ticketId, $ticketRecord);
-        $this->ticketCount++;
+        ++$this->ticketCount;
     }
 
     /**
@@ -215,7 +227,7 @@ class PurchaseRecord
 
     public function hasTimedout()
     {
-        return ($this->createdAt < new \DateTime('-30 minutes'));
+        return $this->createdAt < new \DateTime('-30 minutes');
     }
 
     public function applyDiscountCode(DiscountCode $discountCode)
@@ -228,7 +240,7 @@ class PurchaseRecord
         $ticket = $this->getTicketRecord($ticketId);
         $ticket->cancel();
         $this->tickets->remove($ticketId);
-        $this->ticketCount--;
+        --$this->ticketCount;
     }
 
     public function shouldBeCancelled(): bool

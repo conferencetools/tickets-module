@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\ValueObject;
 
 use ConferenceTools\Tickets\Domain\Service\Basket\BasketValidator;
@@ -87,25 +97,17 @@ class Basket
 
     public function hasDiscountCode(): bool
     {
-        return !($this->discountCode === null);
+        return !(null === $this->discountCode);
     }
 
     /**
      * @TODO make nullable (PHP 7.1)
+     *
      * @return DiscountCode
      */
     public function getDiscountCode(): DiscountCode
     {
         return $this->discountCode;
-    }
-
-    private function calculateTotal(Price $total): Price
-    {
-        foreach ($this->tickets as $ticket) {
-            $total = $total->add($ticket->getTicketType()->getPrice());
-        }
-
-        return $total;
     }
 
     public function getPreDiscountTotal(): Price
@@ -117,7 +119,7 @@ class Basket
     {
         $filteredReservations = [];
         foreach ($this->tickets as $ticketReservation) {
-            if (in_array($ticketReservation->getTicketType(), $ticketTypes, false)) {
+            if (\in_array($ticketReservation->getTicketType(), $ticketTypes, false)) {
                 $filteredReservations[] = $ticketReservation;
             }
         }
@@ -135,5 +137,14 @@ class Basket
         $instance->total = $instance->preDiscountTotal;
 
         return $instance;
+    }
+
+    private function calculateTotal(Price $total): Price
+    {
+        foreach ($this->tickets as $ticket) {
+            $total = $total->add($ticket->getTicketType()->getPrice());
+        }
+
+        return $total;
     }
 }

@@ -1,13 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: imhotek
- * Date: 29/11/16
- * Time: 14:10
+
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
  */
 
 namespace ConferenceTools\Tickets\Domain\Command\Ticket;
-
 
 use Carnage\Cqrs\Command\CommandInterface;
 use ConferenceTools\Tickets\Domain\ValueObject\Delegate;
@@ -30,8 +33,9 @@ class CompletePurchase implements CommandInterface
 
     /**
      * CompletePurchase constructor.
-     * @param string $purchaseId
-     * @param string $purchaseEmail
+     *
+     * @param string     $purchaseId
+     * @param string     $purchaseEmail
      * @param Delegate[] ...$delegateInformation
      */
     public function __construct(string $purchaseId, string $purchaseEmail, Delegate ...$delegateInformation)

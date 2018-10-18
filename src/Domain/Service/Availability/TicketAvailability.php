@@ -1,14 +1,24 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
+use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
+use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
-use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use ConferenceTools\Tickets\Domain\ValueObject\TicketType;
-use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
 
 class TicketAvailability
 {
@@ -24,8 +34,9 @@ class TicketAvailability
 
     /**
      * TicketAvailability constructor.
+     *
      * @param RepositoryInterface $repository
-     * @param FilterInterface[] $filters
+     * @param FilterInterface[]   $filters
      */
     public function __construct(RepositoryInterface $repository, FilterInterface ...$filters)
     {
@@ -34,7 +45,7 @@ class TicketAvailability
     }
 
     /**
-     * @return TicketCounter[]|Collection
+     * @return Collection|TicketCounter[]
      */
     public function fetchAllAvailableTickets()
     {
@@ -46,6 +57,7 @@ class TicketAvailability
     public function isAvailable(TicketType $ticketType, int $quantity)
     {
         $tickets = $this->fetchAllAvailableTickets();
+
         return isset($tickets[$ticketType->getIdentifier()]) &&
             $tickets[$ticketType->getIdentifier()]->getRemaining() >= $quantity;
     }
@@ -64,7 +76,7 @@ class TicketAvailability
     {
         $result = [];
         foreach ($tickets as $ticket) {
-            /** @var TicketCounter $ticket */
+            // @var TicketCounter $ticket
             $result[$ticket->getTicketType()->getIdentifier()] = $ticket;
         }
 

@@ -1,5 +1,15 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Form\Fieldset;
 
 use Zend\Form\Element\Text;
@@ -10,7 +20,7 @@ use Zend\InputFilter\InputFilterProviderInterface;
 class DelegateInformation extends Fieldset implements InputFilterProviderInterface
 {
     /**
-     * {@inheritDoc}
+     * {@inheritdoc}
      */
     public function init()
     {
@@ -18,14 +28,14 @@ class DelegateInformation extends Fieldset implements InputFilterProviderInterfa
             'type' => Text::class,
             'name' => 'firstname',
             'options' => [
-                'label' => 'First name'
+                'label' => 'First name',
             ],
         ]);
         $this->add([
             'type' => Text::class,
             'name' => 'lastname',
             'options' => [
-                'label' => 'Family name'
+                'label' => 'Family name',
             ],
         ]);
         $this->add([
@@ -33,21 +43,21 @@ class DelegateInformation extends Fieldset implements InputFilterProviderInterfa
             'name' => 'email',
             'options' => [
                 'label' => 'Email',
-                'help-block' => 'We\'ll add this email to our attendees mailing list to keep you up to date'
+                'help-block' => 'We\'ll add this email to our attendees mailing list to keep you up to date',
             ],
         ]);
         $this->add([
             'type' => Text::class,
             'name' => 'company',
             'options' => [
-                'label' => 'Company'
+                'label' => 'Company',
             ],
         ]);
         $this->add([
             'type' => Text::class,
             'name' => 'twitter',
             'options' => [
-                'label' => 'Twitter handle'
+                'label' => 'Twitter handle',
             ],
         ]);
         $this->add([
@@ -55,7 +65,7 @@ class DelegateInformation extends Fieldset implements InputFilterProviderInterfa
             'name' => 'requirements',
             'options' => [
                 'label' => 'Any Requirements',
-                'help-block' => 'eg dietary needs, accessibility needs etc'
+                'help-block' => 'eg dietary needs, accessibility needs etc',
             ],
         ]);
     }

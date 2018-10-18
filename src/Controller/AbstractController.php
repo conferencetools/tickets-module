@@ -1,17 +1,27 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Controller;
 
 use Carnage\Cqrs\MessageBus\MessageBusInterface;
-use Doctrine\ORM\EntityManager;
 use ConferenceTools\Tickets\Domain\Service\Configuration;
+use Doctrine\ORM\EntityManager;
 use Zend\Mvc\Controller\AbstractActionController;
 use ZfrStripe\Client\StripeClient;
 
 /**
- * Class AbstractController
- * @package HirePower\Common\Mvc\Controller
- * @method \Zend\Form\Form commandForm(string $commandClass, array $additionalData = [], array $defaults = [])
+ * Class AbstractController.
+ *
+ * @method \Zend\Form\Form                            commandForm(string $commandClass, array $additionalData = [], array $defaults = [])
  * @method \Carnage\Cqrs\Mvc\Controller\Plugin\Events events()
  */
 abstract class AbstractController extends AbstractActionController
@@ -38,9 +48,10 @@ abstract class AbstractController extends AbstractActionController
 
     /**
      * AbstractController constructor.
+     *
      * @param MessageBusInterface $commandBus
-     * @param EntityManager $entityManager
-     * @param StripeClient $stripeClient
+     * @param EntityManager       $entityManager
+     * @param StripeClient        $stripeClient
      */
     public function __construct(
         MessageBusInterface $commandBus,

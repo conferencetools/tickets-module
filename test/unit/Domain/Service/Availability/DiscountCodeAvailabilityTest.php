@@ -1,18 +1,30 @@
 <?php
 
+/*
+ * This file is part of PHP CS Fixer.
+ *
+ * (c) Fabien Potencier <fabien@symfony.com>
+ *     Dariusz Rumiński <dariusz.ruminski@gmail.com>
+ *
+ * This source file is subject to the MIT license that is bundled
+ * with this source code in the file LICENSE.
+ */
+
 namespace ConferenceTools\Tickets\Domain\Service\Availability;
 
 use Carnage\Cqrs\Persistence\ReadModel\RepositoryInterface;
 use ConferenceTools\Tickets\Domain\Service\Availability\Filters\FilterInterface;
+use ConferenceTools\Tickets\Domain\Service\Configuration;
 use ConferenceTools\Tickets\Domain\ValueObject\DiscountType;
 use Doctrine\Common\Collections\ArrayCollection;
 use Mockery\Adapter\Phpunit\MockeryTestCase;
-use ConferenceTools\Tickets\Domain\Finder\TicketCounterInterface;
-use ConferenceTools\Tickets\Domain\ReadModel\TicketCounts\TicketCounter;
-use ConferenceTools\Tickets\Domain\Service\Configuration;
 use Mockery as m;
 
-class DiscountCodeAvailabilityTest extends MockeryTestCase
+/**
+ * @internal
+ * @coversNothing
+ */
+final class DiscountCodeAvailabilityTest extends MockeryTestCase
 {
     /**
      * @var Configuration
@@ -29,7 +41,7 @@ class DiscountCodeAvailabilityTest extends MockeryTestCase
      */
     private $filters;
 
-    public function __construct($name = null, array $data = array(), $dataName = '')
+    public function __construct($name = null, array $data = [], $dataName = '')
     {
         parent::__construct($name, $data, $dataName);
         $this->config = Configuration::fromArray([
@@ -42,18 +54,18 @@ class DiscountCodeAvailabilityTest extends MockeryTestCase
                     'options' => ['percentage' => 50],
                     'name' => '50% Off',
                     'metadata' => [
-                        'availableFrom' =>(new \DateTime)->sub(new \DateInterval('P2D')),
-                        'availableTo' =>(new \DateTime)->sub(new \DateInterval('P1D')),
-                    ]
+                        'availableFrom' => (new \DateTime())->sub(new \DateInterval('P2D')),
+                        'availableTo' => (new \DateTime())->sub(new \DateInterval('P1D')),
+                    ],
                 ],
                 '5offone' => [
                     'type' => DiscountType\Fixed::class,
                     'options' => ['net' => 500],
                     'name' => '$5 Off',
                     'metadata' => [
-                        'availableFrom' =>(new \DateTime)->sub(new \DateInterval('P1D')),
-                        'availableTo' =>(new \DateTime)->add(new \DateInterval('P1D')),
-                    ]
+                        'availableFrom' => (new \DateTime())->sub(new \DateInterval('P1D')),
+                        'availableTo' => (new \DateTime())->add(new \DateInterval('P1D')),
+                    ],
                 ],
                 '5offall' => [
                     'type' => DiscountType\FixedPerTicket::class,
@@ -64,8 +76,8 @@ class DiscountCodeAvailabilityTest extends MockeryTestCase
             'financial' => [
                 'taxRate' => 10,
                 'currency' => 'GBP',
-                'displayTax' => true
-            ]
+                'displayTax' => true,
+            ],
         ]);
 
         $this->filters = [
@@ -82,13 +94,15 @@ class DiscountCodeAvailabilityTest extends MockeryTestCase
 
         $result = $sut->fetchAllAvailableDiscountCodes();
 
-        self::assertTrue($result->count() === 2, 'The expected number of discount codes was not returned');
-        self::assertFalse($result->contains($this->config->getDiscountCodes()['50off']), 'Expired code was included in results');
+        $this->assertTrue(2 === $result->count(), 'The expected number of discount codes was not returned');
+        $this->assertFalse($result->contains($this->config->getDiscountCodes()['50off']), 'Expired code was included in results');
     }
 
     /**
      * @dataProvider provideIsAvailable
      *
+     * @param mixed $code
+     * @param mixed $expected
      */
     public function testIsAvailable($code, $expected)
     {
@@ -97,7 +111,7 @@ class DiscountCodeAvailabilityTest extends MockeryTestCase
 
         $sut = new DiscountCodeAvailability($mockFinder, ...$this->filters);
 
-        self::assertEquals($expected, $sut->isAvailable($code));
+        $this->assertSame($expected, $sut->isAvailable($code));
     }
 
     public function provideIsAvailable()
